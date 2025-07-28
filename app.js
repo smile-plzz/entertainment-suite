@@ -39,17 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- API CALLS ---
     const api = {
-        async fetchMovieByTitle(title) {
+        async fetchMovieByTitle(title, type = '') {
             try {
-                const response = await fetch(`http://www.omdbapi.com/?t=${title}&apikey=${apiKey}`);
+                let url = `https://www.omdbapi.com/?t=${title}&apikey=${apiKey}`;
+                if (type) {
+                    url += `&type=${type}`;
+                }
+                const response = await fetch(url);
                 return await response.json();
             } catch (error) {
                 console.error(`Error fetching movie by title (${title}):`, error);
             }
         },
-        async fetchMoviesBySearch(query, page = 1) {
+        async fetchMoviesBySearch(query, page = 1, type = '') {
             try {
-                const response = await fetch(`http://www.omdbapi.com/?s=${query}&page=${page}&apikey=${apiKey}`);
+                let url = `https://www.omdbapi.com/?s=${query}&page=${page}&apikey=${apiKey}`;
+                if (type) {
+                    url += `&type=${type}`;
+                }
+                const response = await fetch(url);
                 return await response.json();
             } catch (error) {
                 console.error(`Error fetching search results (${query}):`, error);
@@ -91,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         async renderHero(title) {
-            const movie = await api.fetchMovieByTitle(title);
+            const movie = await api.fetchMovieByTitle(title, 'movie');
             if (movie && movie.Response === 'True') {
                 heroSection.style.backgroundImage = `linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent), url(${movie.Poster})`;
                 heroTitle.textContent = movie.Title;
@@ -131,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.renderSkeletons(popularMoviesGrid, 4);
             }
 
-            const moviePromises = titlesToLoad.map(title => api.fetchMovieByTitle(title));
+            const moviePromises = titlesToLoad.map(title => api.fetchMovieByTitle(title, 'movie'));
             const movies = await Promise.all(moviePromises);
 
             if (!append) {
