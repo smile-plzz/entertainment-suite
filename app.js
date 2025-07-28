@@ -45,10 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (type) {
                     url += `&type=${type}`;
                 }
+                console.log(`Fetching movie by title: ${title}, URL: ${url}`);
                 const response = await fetch(url);
-                return await response.json();
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(`Response for ${title}:`, data);
+                return data;
             } catch (error) {
                 console.error(`Error fetching movie by title (${title}):`, error);
+                return { Response: 'False', Error: error.message };
             }
         },
         async fetchMoviesBySearch(query, page = 1, type = '') {
@@ -57,10 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (type) {
                     url += `&type=${type}`;
                 }
+                console.log(`Searching movies: ${query}, Page: ${page}, Type: ${type}, URL: ${url}`);
                 const response = await fetch(url);
-                return await response.json();
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(`Search response for ${query}:`, data);
+                return data;
             } catch (error) {
                 console.error(`Error fetching search results (${query}):`, error);
+                return { Response: 'False', Error: error.message };
             }
         },
     };
@@ -105,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroTitle.textContent = movie.Title;
                 heroOverview.textContent = movie.Plot;
                 watchNowButton.onclick = () => this.openVideoModal(movie.imdbID);
+            } else {
+                heroTitle.textContent = 'Error loading featured movie';
+                heroOverview.textContent = movie.Error || 'Could not fetch movie details.';
             }
         },
         async renderMovies(container, movieTitles, append = false) {
@@ -286,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         ui.showHomeView();
-        ui.renderHero('Inception');
     };
 
     init();
