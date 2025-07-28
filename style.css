@@ -1,0 +1,436 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #e50914;
+    --background-dark: #141414;
+    --background-light: #111;
+    --text-color: #fff;
+    --card-color: #222;
+    --border-color: #333;
+}
+
+body.light-mode {
+    --background-dark: #f0f2f5;
+    --background-light: #ffffff;
+    --text-color: #333;
+    --card-color: #e0e0e0;
+    --border-color: #ccc;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-color);
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- Navbar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--background-light);
+    transition: background-color 0.3s;
+}
+
+.navbar-brand a {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    margin-left: 1.5rem;
+}
+
+.navbar-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.search-container {
+    display: flex;
+}
+
+#search-input {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px 0 0 5px;
+    background-color: var(--card-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+#search-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.mobile-nav-links li {
+    margin-bottom: 1.5rem;
+}
+
+.mobile-nav-links a {
+    color: var(--text-color);
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+/* --- Theme Toggle --- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin-left: 1.5rem;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: 0.4s;
+    border-radius: 20px;
+}
+
+.theme-switch label:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.theme-switch input:checked + label {
+    background-color: var(--primary-color);
+}
+
+.theme-switch input:checked + label:before {
+    transform: translateX(20px);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    position: relative;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+    transition: background-image 1s ease-in-out;
+}
+
+.hero-content {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 600px;
+    animation: fadeIn 1s;
+}
+
+#hero-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#hero-overview {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+#watch-now-button {
+    padding: 0.8rem 2rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* --- Movies Section --- */
+.movies-section {
+    padding: 2rem;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.movie-card {
+    background-color: var(--card-color);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    animation: fadeIn 0.5s;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-card img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+
+.movie-card-body {
+    padding: 1rem;
+}
+
+.movie-card-title {
+    font-size: 1.1rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Skeleton Loader --- */
+.skeleton-card {
+    background-color: var(--card-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.skeleton-img {
+    width: 100%;
+    height: 300px;
+    background-color: var(--border-color);
+}
+
+.skeleton-body {
+    padding: 1rem;
+}
+
+.skeleton-title {
+    width: 80%;
+    height: 20px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+/* --- Video Modal --- */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 900px;
+}
+
+.close-button {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: var(--text-color);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.source-buttons {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.source-button {
+    padding: 0.5rem 1rem;
+    background-color: var(--border-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.source-button.active {
+    background-color: var(--primary-color);
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--background-light);
+    margin-top: 2rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- Load More Button --- */
+.load-more-button {
+    display: block;
+    margin: 2rem auto;
+    padding: 0.8rem 2rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .navbar-nav {
+        display: none; /* Hide nav links on smaller screens */
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
+
+    .mobile-nav-overlay.active {
+        display: flex;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    #hero-title {
+        font-size: 2rem;
+    }
+
+    #hero-overview {
+        font-size: 1rem;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .navbar-brand {
+        margin-bottom: 1rem;
+    }
+
+    .hero-section {
+        height: 60vh;
+        padding: 1rem;
+    }
+
+    #hero-title {
+        font-size: 1.5rem;
+    }
+
+    #watch-now-button {
+        font-size: 1rem;
+        padding: 0.6rem 1.5rem;
+    }
+
+    .movies-section {
+        padding: 1rem;
+    }
+
+    .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .movie-card-title {
+        font-size: 1rem;
+    }
+
+    .modal-content {
+        width: 95%;
+    }
+
+    .close-button {
+        top: -30px;
+        right: -10px;
+    }
+}
