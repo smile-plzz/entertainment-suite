@@ -4,9 +4,10 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 
 ## Features
 
-*   **Movie Search:** Search for movies using the OMDb API.
-*   **Movie Details:** View movie titles, overviews, and posters.
-*   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to, VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed) for improved reliability.
+*   **Movie Search:** Search for movies and TV shows using the OMDb API.
+*   **Movie/TV Show Details:** View titles, overviews, and posters.
+*   **Season & Episode Selection:** For TV shows, select specific seasons and episodes to watch.
+*   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to, VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
 *   **Modern UI/UX:** Clean design with subtle animations and skeleton loading for a smooth user experience.
 *   **Video Modal:** Seamless video playback within a modal window with availability indicators.
@@ -17,16 +18,10 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **CSS3:** For styling and responsive design.
 *   **JavaScript (ES6+):** For dynamic content, API interactions, and UI logic.
 *   **Node.js (Vercel Serverless Function):** For backend video availability checks.
-*   **OMDb API:** Used to fetch movie data (titles, plots, posters, IMDb IDs).
-*   **Third-Party Video Embeds:** Integrates with various video embedding services (e.g., VidSrc, SuperEmbed, 2Embed) to stream content.
+*   **OMDb API:** Used to fetch movie and TV show data (titles, plots, posters, IMDb IDs, season/episode details).
+*   **Third-Party Video Embeds:** Integrates with various video embedding services (e.g., VidSrc, SuperEmbed, 2Embed, Fmovies, LookMovie) to stream content.
 
-## Technologies Used
 
-*   **HTML5:** For the website structure.
-*   **CSS3:** For styling and responsive design.
-*   **JavaScript (ES6+):** For dynamic content, API interactions, and UI logic.
-*   **OMDb API:** Used to fetch movie data (titles, plots, posters, IMDb IDs).
-*   **Third-Party Video Embeds:** Integrates with various video embedding services (e.g., VidSrc, SuperEmbed, 2Embed) to stream content.
 
 ## Setup and Installation
 
