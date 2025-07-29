@@ -363,6 +363,14 @@ body {
     border-radius: 8px;
 }
 
+#video-availability-status {
+    text-align: center;
+    color: var(--text-color);
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
 /* --- Footer --- */
 .footer {
     text-align: center;

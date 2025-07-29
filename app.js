@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoModal = document.getElementById('video-modal');
     const videoPlayer = document.getElementById('video-player');
     const sourceButtonsContainer = document.getElementById('source-buttons');
+    const videoAvailabilityStatus = document.getElementById('video-availability-status');
     const closeButton = document.querySelector('.close-button');
     const homeButton = document.querySelector('.navbar-nav a[href="#"]');
     const themeToggle = document.getElementById('theme-toggle');
@@ -217,7 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
         async openVideoModal(imdbID) {
             sourceButtonsContainer.innerHTML = '';
             videoPlayer.src = ''; // Clear previous video
+            videoAvailabilityStatus.textContent = 'Checking video availability...';
             let firstAvailableSourceLoaded = false;
+            let anySourceAvailable = false;
 
             for (const source of videoSources) {
                 const button = document.createElement('button');
@@ -244,10 +247,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         firstAvailableSourceLoaded = true;
                         console.log(`[openVideoModal] Initial videoPlayer.src set to: ${fullUrl}`);
                     }
+                    anySourceAvailable = true;
                 } else {
                     button.classList.add('is-unavailable');
                     button.disabled = true; // Disable unavailable buttons
                 }
+            }
+
+            if (anySourceAvailable) {
+                videoAvailabilityStatus.textContent = ''; // Clear status if sources are available
+            } else {
+                videoAvailabilityStatus.textContent = 'No video sources available for this title.';
             }
 
             videoModal.style.display = 'flex';
