@@ -2,12 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM ELEMENTS ---
     const searchButton = document.getElementById('search-button');
     const searchInput = document.getElementById('search-input');
-    const heroSection = document.querySelector('.hero-section');
     const popularMoviesSection = document.querySelector('#popular-movies').parentElement;
     const searchResultsSection = document.querySelector('#search-results').parentElement;
-    const heroTitle = document.getElementById('hero-title');
-    const heroOverview = document.getElementById('hero-overview');
-    const watchNowButton = document.getElementById('watch-now-button');
     const popularMoviesGrid = document.getElementById('popular-movies');
     const searchResultsGrid = document.getElementById('search-results');
     const videoModal = document.getElementById('video-modal');
@@ -39,6 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- API CALLS ---
     const api = {
+        async checkVideoAvailability(url) {
+            console.log(`[checkVideoAvailability] Checking URL: ${url}`);
+            try {
+                const response = await fetch('/api/check-video', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ url }),
+                });
+                const data = await response.json();
+                console.log(`[checkVideoAvailability] Response for ${url}:`, data);
+                return data.available;
+            } catch (error) {
+                console.error(`[checkVideoAvailability] Error checking video availability for ${url}:`, error);
+                return false;
+            }
+        },
         async fetchMovieByTitle(title, type = '') {
             try {
                 let url = `https://www.omdbapi.com/?t=${title}&apikey=${apiKey}`;
@@ -81,6 +95,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- UI RENDERING ---
     const ui = {
+        displayError(message, container = searchResultsGrid) {
+            container.innerHTML = `<h2 class="error-message">${message}</h2>`;
+            if (container === searchResultsGrid) {
+                searchResultsSection.style.display = 'block';
+                popularMoviesSection.style.display = 'none';
+            }
+            loadMorePopularButton.style.display = 'none';
+            loadMoreSearchButton.style.display = 'none';
+        },
         createMovieCard(movie) {
             if (!movie || !movie.Poster || movie.Poster === 'N/A') return null;
 
@@ -112,24 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 container.appendChild(this.createSkeletonCard());
             }
         },
-        async renderHero(title) {
-            const movie = await api.fetchMovieByTitle(title, 'movie');
-            if (movie && movie.Response === 'True') {
-                heroSection.style.backgroundImage = `linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent), url(${movie.Poster})`;
-                heroTitle.textContent = movie.Title;
-                heroOverview.textContent = movie.Plot;
-                watchNowButton.onclick = () => this.openVideoModal(movie.imdbID);
-            } else {
-                heroTitle.textContent = 'Error loading featured movie';
-                heroOverview.textContent = movie.Error || 'Could not fetch movie details.';
-            }
-        },
-        async renderMovies(container, movieTitles, append = false) {
-            if (!append) {
-                this.renderSkeletons(container, movieTitles.length);
-            }
-            const moviePromises = movieTitles.map(title => api.fetchMovieByTitle(title));
-            const movies = await Promise.all(moviePromises);
+        
+        async renderMovieGrid(container, movies, append, loadMoreButton, currentPage, totalResults) {
             if (!append) {
                 container.innerHTML = '';
             }
@@ -139,42 +146,45 @@ document.addEventListener('DOMContentLoaded', () => {
                     container.appendChild(movieCard);
                 }
             });
+
+            if (loadMoreButton) {
+                if (totalResults && currentPage * 10 < totalResults) {
+                    loadMoreButton.style.display = 'block';
+                } else if (movies.length === 0 && !totalResults) { // For popular movies when all are loaded
+                    loadMoreButton.style.display = 'none';
+                } else if (totalResults === undefined && movies.length < 4) { // For popular movies when less than 4 are loaded
+                    loadMoreButton.style.display = 'none';
+                } else if (totalResults === undefined && movies.length > 0) { // For popular movies when more are available
+                    loadMoreButton.style.display = 'block';
+                } else {
+                    loadMoreButton.style.display = 'none';
+                }
+            }
         },
+
         async renderPopularMovies(append = false) {
             const popularTitles = ['Inception', 'The Matrix', 'Interstellar', 'The Avengers', 'Avatar', 'Titanic', 'Jurassic Park', 'Forrest Gump', 'The Lion King', 'Gladiator', 'Pulp Fiction', 'Fight Club', 'The Lord of the Rings', 'Star Wars', 'Dune'];
-            const startIndex = (popularMoviesPage - 1) * 4;
-            const endIndex = startIndex + 4;
+            const moviesPerPage = 4;
+            const startIndex = (popularMoviesPage - 1) * moviesPerPage;
+            const endIndex = startIndex + moviesPerPage;
             const titlesToLoad = popularTitles.slice(startIndex, endIndex);
 
-            if (titlesToLoad.length === 0) {
+            if (titlesToLoad.length === 0 && append) {
                 loadMorePopularButton.style.display = 'none';
                 return;
             }
 
             if (!append) {
                 popularMoviesGrid.innerHTML = '';
-                this.renderSkeletons(popularMoviesGrid, 4);
+                this.renderSkeletons(popularMoviesGrid, moviesPerPage);
             }
 
             const moviePromises = titlesToLoad.map(title => api.fetchMovieByTitle(title, 'movie'));
             const movies = await Promise.all(moviePromises);
 
-            if (!append) {
-                popularMoviesGrid.innerHTML = '';
-            }
-            movies.forEach(movie => {
-                const movieCard = this.createMovieCard(movie);
-                if (movieCard) {
-                    popularMoviesGrid.appendChild(movieCard);
-                }
-            });
-
-            if (endIndex >= popularTitles.length) {
-                loadMorePopularButton.style.display = 'none';
-            } else {
-                loadMorePopularButton.style.display = 'block';
-            }
+            this.renderMovieGrid(popularMoviesGrid, movies, append, loadMorePopularButton, popularMoviesPage, popularTitles.length);
         },
+
         async renderSearchResults(query, append = false) {
             currentSearchQuery = query;
             if (!append) {
@@ -186,31 +196,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const results = await api.fetchMoviesBySearch(query, searchResultsPage);
 
-            if (!append) {
-                searchResultsGrid.innerHTML = '';
-            }
-
-            if (results && results.Response === 'True') {
-                results.Search.forEach(movie => {
-                    const movieCard = this.createMovieCard(movie);
-                    if (movieCard) {
-                        searchResultsGrid.appendChild(movieCard);
-                    }
-                });
-                if (results.totalResults > searchResultsPage * 10) {
-                    loadMoreSearchButton.style.display = 'block';
-                } else {
-                    loadMoreSearchButton.style.display = 'none';
-                }
+            if (results && results.Response === 'True' && results.Search) {
+                this.renderMovieGrid(searchResultsGrid, results.Search, append, loadMoreSearchButton, searchResultsPage, results.totalResults);
             } else {
-                if (!append) {
-                    searchResultsGrid.innerHTML = '<h2>No movies or TV shows found. Please try another search.</h2>';
-                }
-                loadMoreSearchButton.style.display = 'none';
+                this.displayError(results.Error || 'No movies or TV shows found. Please try another search.', searchResultsGrid);
             }
         },
         showHomeView() {
-            heroSection.style.display = 'flex';
             popularMoviesSection.style.display = 'block';
             searchResultsSection.style.display = 'none';
             searchInput.value = '';
@@ -219,29 +211,46 @@ document.addEventListener('DOMContentLoaded', () => {
             this.renderPopularMovies(); // Re-render popular movies from start
         },
         showSearchView() {
-            heroSection.style.display = 'none';
             popularMoviesSection.style.display = 'none';
             searchResultsSection.style.display = 'block';
         },
-        openVideoModal(imdbID) {
+        async openVideoModal(imdbID) {
             sourceButtonsContainer.innerHTML = '';
-            videoSources.forEach((source, index) => {
+            videoPlayer.src = ''; // Clear previous video
+            let firstAvailableSourceLoaded = false;
+
+            for (const source of videoSources) {
                 const button = document.createElement('button');
                 button.className = 'source-button';
                 button.textContent = source.name;
-                button.onclick = () => {
-                    videoPlayer.src = `${source.url}${imdbID}`;
-                    document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                };
                 sourceButtonsContainer.appendChild(button);
 
-                if (index === 0) {
-                    button.click();
-                }
-            });
+                const fullUrl = `${source.url}${imdbID}`;
+                console.log(`[openVideoModal] Processing source: ${source.name}, URL: ${fullUrl}`);
+                const isAvailable = await api.checkVideoAvailability(fullUrl);
+                console.log(`[openVideoModal] Source ${source.name} availability: ${isAvailable}`);
 
-            videoModal.style.display = 'block';
+                if (isAvailable) {
+                    button.classList.add('is-available');
+                    button.onclick = () => {
+                        videoPlayer.src = fullUrl;
+                        console.log(`[openVideoModal] Setting videoPlayer.src to: ${fullUrl}`);
+                        document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                    };
+                    if (!firstAvailableSourceLoaded) {
+                        videoPlayer.src = fullUrl;
+                        button.classList.add('active');
+                        firstAvailableSourceLoaded = true;
+                        console.log(`[openVideoModal] Initial videoPlayer.src set to: ${fullUrl}`);
+                    }
+                } else {
+                    button.classList.add('is-unavailable');
+                    button.disabled = true; // Disable unavailable buttons
+                }
+            }
+
+            videoModal.style.display = 'flex';
         },
         closeVideoModal() {
             videoPlayer.src = '';
@@ -302,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggle.checked = true;
         }
 
-        ui.showHomeView();
+        ui.renderPopularMovies();
     };
 
     init();

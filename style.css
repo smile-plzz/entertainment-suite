@@ -198,55 +198,7 @@ body {
     transform: translateX(24px);
 }
 
-/* --- Hero Section --- */
-.hero-section {
-    position: relative;
-    height: 85vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
-    padding: 3rem;
-    transition: background-image 1s ease-in-out;
-    box-shadow: inset 0 -50px 50px rgba(0, 0, 0, 0.7);
-}
 
-.hero-content {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 2rem;
-    border-radius: 10px;
-    max-width: 700px;
-    animation: fadeIn 1s;
-    backdrop-filter: blur(5px);
-}
-
-#hero-title {
-    font-size: 3.5rem;
-    margin-bottom: 0.8rem;
-    font-weight: 700;
-}
-
-#hero-overview {
-    font-size: 1.15rem;
-    margin-bottom: 1.8rem;
-    color: var(--text-light);
-}
-
-#watch-now-button {
-    padding: 1rem 2.5rem;
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 5px;
-    font-size: 1.3rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s;
-}
-
-#watch-now-button:hover {
-    background-color: #cc0712;
-}
 
 /* --- Sections --- */
 .movies-section {
@@ -336,7 +288,7 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
-    display: flex;
+    display: none; /* Hidden by default */
     justify-content: center;
     align-items: center;
 }
@@ -391,6 +343,20 @@ body {
     color: white;
 }
 
+.source-button.is-available {
+    background-color: #4CAF50; /* Green for available */
+    border-color: #4CAF50;
+    color: white;
+}
+
+.source-button.is-unavailable {
+    background-color: #f44336; /* Red for unavailable */
+    border-color: #f44336;
+    color: white;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .modal-content iframe {
     width: 100%;
     height: 500px; /* Fixed height for video player */
@@ -434,148 +400,3 @@ body {
 }
 
 /* --- Responsive Design --- */
-@media (max-width: 1024px) {
-    .navbar {
-        padding: 1rem 2rem;
-    }
-    .navbar-nav li {
-        margin-left: 1.5rem;
-    }
-    .hero-section {
-        height: 70vh;
-        padding: 2rem;
-    }
-    #hero-title {
-        font-size: 3rem;
-    }
-    .movies-section {
-        padding: 2rem;
-    }
-    .movies-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 1.5rem;
-    }
-    .movie-card img {
-        height: 270px;
-    }
-    .skeleton-img {
-        height: 270px;
-    }
-    .modal-content iframe {
-        height: 400px;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar-nav {
-        display: none;
-    }
-    .hamburger-menu {
-        display: block;
-    }
-    .mobile-nav-overlay.active {
-        display: flex;
-    }
-    .hero-section {
-        height: 60vh;
-        padding: 1.5rem;
-    }
-    .hero-content {
-        padding: 1.5rem;
-    }
-    #hero-title {
-        font-size: 2.5rem;
-    }
-    #hero-overview {
-        font-size: 1rem;
-    }
-    #watch-now-button {
-        font-size: 1.1rem;
-        padding: 0.8rem 2rem;
-    }
-    .movies-section {
-        padding: 1.5rem;
-    }
-    .movies-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 1rem;
-    }
-    .movie-card img {
-        height: 240px;
-    }
-    .skeleton-img {
-        height: 240px;
-    }
-    .modal-content {
-        width: 95%;
-    }
-    .modal-content iframe {
-        height: 300px;
-    }
-    .close-button {
-        font-size: 2rem;
-        top: 5px;
-        right: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        flex-direction: column;
-        padding: 1rem;
-    }
-    .navbar-brand {
-        margin-bottom: 1rem;
-    }
-    .search-container {
-        width: 100%;
-        margin-top: 1rem;
-    }
-    #search-input {
-        width: 100%;
-    }
-    .theme-switch {
-        margin-left: 0;
-        margin-top: 1rem;
-    }
-    .hero-section {
-        height: 50vh;
-        padding: 1rem;
-    }
-    #hero-title {
-        font-size: 2rem;
-    }
-    #hero-overview {
-        font-size: 0.9rem;
-    }
-    #watch-now-button {
-        font-size: 1rem;
-        padding: 0.6rem 1.5rem;
-    }
-    .movies-section {
-        padding: 1rem;
-    }
-    .movies-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-    }
-    .movie-card img {
-        height: 200px;
-    }
-    .skeleton-img {
-        height: 200px;
-    }
-    .movie-card-title {
-        font-size: 1rem;
-    }
-    .modal-content iframe {
-        height: 250px;
-    }
-    .source-button {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-    }
-    .footer {
-        padding: 1.5rem;
-    }
-}

@@ -21,17 +21,26 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 
 ## Setup and Installation
 
-This project is a client-side only application and does not require any complex setup or server. To get started:
+This project now includes a small backend component (a Vercel Serverless Function) to check video source availability. To get started:
 
 1.  **Clone or Download:** Download the project files to your local machine.
-2.  **Open `index.html`:** Simply open the `index.html` file in your preferred web browser.
+2.  **Install Dependencies (Backend):** Navigate to the project root in your terminal and run `npm install node-fetch` to install the necessary dependency for the serverless function.
+3.  **Run Locally (Optional - for development with backend):**
+    *   Install Vercel CLI: `npm install -g vercel`
+    *   From the project root, run `vercel dev` to start a local development server that includes the serverless function.
+    *   Open `http://localhost:3000` (or the port indicated by Vercel CLI) in your browser.
+4.  **Deploy to Vercel:**
+    *   Ensure you have a Vercel account and the Vercel CLI installed and logged in (`vercel login`).
+    *   From the project root, run `vercel deploy`.
+    *   Follow the prompts to deploy your project. Vercel will automatically detect the serverless function in the `api` directory.
+5.  **Open `index.html` (Client-side only):** If you only want to run the client-side without the backend availability checks, simply open the `index.html` file in your preferred web browser. Note that the video source availability indicators will not function without the backend.
 
 ## Usage
 
 1.  **Search for a Movie:** Use the search bar in the navigation to find a movie. Type the movie title and press Enter or click the search button.
 2.  **Browse Popular Movies:** The homepage displays a selection of popular movies.
-3.  **Watch a Movie:** Click on a movie card or the "Watch Now" button in the hero section to open the video player modal.
-4.  **Switch Sources:** Inside the video player modal, if a video fails to load or play, you can click on the different source buttons (e.g., "VidSrc.to", "SuperEmbed") to try an alternative streaming source.
+3.  **Watch a Movie:** Click on a movie card to open the video player modal.
+4.  **Switch Sources:** Inside the video player modal, you will see source buttons. Buttons will be colored green if the backend indicates the source is likely available, and red if it's unavailable. Click on different source buttons (e.g., "VidSrc.to", "SuperEmbed") to try alternative streaming sources. Disabled (red) buttons cannot be clicked.
 
 ## API Key
 
@@ -45,12 +54,12 @@ If you wish to use a different OMDb API key, you can replace this value in `app.
 
 ## Disclaimer
 
-This project relies on third-party video embedding services. The availability and content of streams are dependent on these external services. Users are advised to be aware of the terms of service and content policies of these third-party providers.
+This project relies on third-party video embedding services. The availability and content of streams are dependent on these external services. While a backend check has been implemented to improve reliability, it is still an estimation. Users are advised to be aware of the terms of service and content policies of these third-party providers.
 
 ## Future Enhancements
 
 *   **Genre/Category Filtering:** Add options to browse movies by genre or category.
 *   **User Accounts:** Implement user authentication and personalized watchlists.
 *   **Improved Search:** Add more advanced search filters (e.g., year, director).
-*   **Error Handling:** More robust error handling for API requests and video loading.
-*   **Backend Integration:** Develop a backend to manage movie data and user preferences more efficiently.
+*   **More Robust Backend Checks:** Enhance the backend to perform deeper content analysis (e.g., parsing HTML for "unavailable" messages).
+*   **Backend Integration:** Develop a more comprehensive backend to manage movie data and user preferences more efficiently.
