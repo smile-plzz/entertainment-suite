@@ -349,6 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 api.checkVideoAvailability(fullUrl).then(isAvailable => {
                     if (isAvailable) {
                         button.classList.add('is-available');
+                    } else {
+                        button.classList.add('is-unavailable');
                     }
                 });
             }
@@ -397,6 +399,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 api.checkVideoAvailability(fullUrl).then(isAvailable => {
                     if (isAvailable) {
                         button.classList.add('is-available');
+                    } else {
+                        button.classList.add('is-unavailable');
                     }
                 });
             }
