@@ -219,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sourceButtonsContainer.innerHTML = '';
             videoPlayer.src = ''; // Clear previous video
             videoAvailabilityStatus.textContent = 'Checking video availability...';
+            videoAvailabilityStatus.style.display = 'block'; // Show loading status
             let firstAvailableSourceLoaded = false;
             let anySourceAvailable = false;
 
@@ -256,8 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (anySourceAvailable) {
                 videoAvailabilityStatus.textContent = ''; // Clear status if sources are available
+                videoAvailabilityStatus.style.display = 'none';
             } else {
                 videoAvailabilityStatus.textContent = 'No video sources available for this title.';
+                videoAvailabilityStatus.style.display = 'block';
             }
 
             videoModal.style.display = 'flex';
@@ -265,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         closeVideoModal() {
             videoPlayer.src = '';
             videoModal.style.display = 'none';
+            videoAvailabilityStatus.style.display = 'none'; // Hide status when modal is closed
         },
     };
 
