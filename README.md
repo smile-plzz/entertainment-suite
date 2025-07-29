@@ -31,10 +31,12 @@ This project includes a small backend component (a Vercel Serverless Function) t
 2.  **Install Dependencies:** Navigate to the project root in your terminal and run `npm install` to install both frontend and backend dependencies.
 3.  **Run Locally (for development with backend):**
     *   Install Vercel CLI: `npm install -g vercel`
+    *   **Set OMDb API Key:** Before running, set your OMDb API key as an environment variable. For local development, you can create a `.env` file in your project root with `OMDB_API_KEY=your_omdb_api_key_here`.
     *   From the project root, run `vercel dev` to start a local development server that includes the serverless function.
     *   Open the URL provided by Vercel CLI (e.g., `http://localhost:3000`) in your browser.
 4.  **Deploy to Vercel:**
     *   Ensure you have a Vercel account and the Vercel CLI installed and logged in (`vercel login`).
+    *   **Set OMDb API Key on Vercel:** Go to your Vercel project dashboard -> Settings -> Environment Variables. Add a new variable named `OMDB_API_KEY` with your OMDb API key as its value.
     *   From the project root, run `vercel deploy`.
     *   Follow the prompts to deploy your project. Vercel will automatically detect the serverless function in the `api` directory.
 
@@ -43,11 +45,11 @@ This project includes a small backend component (a Vercel Serverless Function) t
 1.  **Search for a Movie:** Use the search bar in the navigation to find a movie. Type the movie title and press Enter or click the search button.
 2.  **Browse Popular Movies:** The homepage displays a selection of popular movies.
 3.  **Watch a Movie:** Click on a movie card to open the video player modal.
-4.  **Switch Sources:** Inside the video player modal, you will see source buttons. Buttons will be colored green if the backend indicates the source is likely available, and red if it's unavailable. Click on different source buttons (e.g., "VidSrc.to", "SuperEmbed") to try alternative streaming sources. Disabled (red) buttons cannot be clicked.
+4.  **Switch Sources:** Inside the video player modal, you will see source buttons. Buttons will be colored green if the backend indicates the source is likely available, and red if it's unavailable. All buttons are clickable, allowing you to manually try any source.
 
 ## API Key
 
-This project uses the OMDb API to fetch movie data. The API key is configured in `app.js`.
+This project uses the OMDb API to fetch movie data. The API key is now securely handled server-side via a Vercel Serverless Function (`api/omdb-proxy.js`). You must set the `OMDB_API_KEY` environment variable in your Vercel project settings for the application to function correctly.
 
 ## Disclaimer
 
