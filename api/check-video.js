@@ -1,6 +1,10 @@
 
 import fetch from 'node-fetch';
 
+// Ensure fetch is correctly polyfilled for older Node.js versions if necessary
+// This line might not be needed if Vercel's Node.js runtime has native fetch
+// global.fetch = global.fetch || require('node-fetch');
+
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { url } = req.body;
@@ -14,7 +18,13 @@ export default async function handler(req, res) {
             const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
             try {
-                const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
+                const response = await fetch(url, {
+                method: 'HEAD',
+                signal: controller.signal,
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (compatible; NowShowing/1.0)' // Add a User-Agent header
+                }
+            });
                 clearTimeout(timeoutId);
 
                 if (!response.ok) {

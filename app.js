@@ -27,11 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const videoSources = [
         { name: 'VidSrc.to', url: 'https://vidsrc.to/embed/movie/' },
-        { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/' },
-        { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/' },
-        { name: 'SuperEmbed', url: 'https://superembed.stream/movie/' },
-        { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/' },
-        { name: '2Embed', url: 'https://2embed.cc/embed/' },
+        // Temporarily disable other sources for debugging
+        // { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/' },
+        // { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/' },
+        // { name: 'SuperEmbed', url: 'https://superembed.stream/movie/' },
+        // { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/' },
+        // { name: '2Embed', url: 'https://2embed.cc/embed/' },
     ];
 
     // --- API CALLS ---
