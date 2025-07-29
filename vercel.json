@@ -20,6 +20,14 @@
   ],
   "routes": [
     {
+      "src": "/app.js",
+      "dest": "/app.js"
+    },
+    {
+      "src": "/style.css",
+      "dest": "/style.css"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/api/check-video.js"
     },
