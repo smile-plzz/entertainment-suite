@@ -46,7 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     body: JSON.stringify({ url }),
                 });
-                const data = await response.json();
+                let data;
+                try {
+                    data = await response.json();
+                } catch (jsonError) {
+                    console.error(`[checkVideoAvailability] Failed to parse JSON response for ${url}:`, jsonError);
+                    const textResponse = await response.text();
+                    console.error(`[checkVideoAvailability] Non-JSON response for ${url}:`, textResponse);
+                    return false; // Treat as unavailable if response is not valid JSON
+                }
                 console.log(`[checkVideoAvailability] Response for ${url}:`, data);
                 return data.available;
             } catch (error) {
