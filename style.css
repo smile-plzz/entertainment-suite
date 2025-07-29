@@ -325,6 +325,39 @@ main {
     margin: 0 auto;
 }
 
+/* --- Season & Episode Selectors --- */
+#season-episode-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+#season-episode-selector label {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#season-episode-selector select {
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#season-episode-selector select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.3);
+}
+
 /* --- Video Modal --- */
 .video-modal {
     display: none;

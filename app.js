@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoPlayer = document.getElementById('video-player');
     const sourceButtonsContainer = document.getElementById('source-buttons');
     const videoAvailabilityStatus = document.getElementById('video-availability-status');
+    const seasonEpisodeSelector = document.getElementById('season-episode-selector');
+    const seasonSelect = document.getElementById('season-select');
+    const episodeSelect = document.getElementById('episode-select');
     const closeButton = document.querySelector('.close-button');
     const homeButton = document.querySelector('.navbar-nav a[href="#"]');
     const themeToggle = document.getElementById('theme-toggle');
@@ -83,6 +86,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return { Response: 'False', Error: error.message };
             }
         },
+        async fetchMovieDetails(imdbID) {
+            try {
+                const url = `https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=${apiKey}`;
+                console.log(`Fetching movie details for IMDB ID: ${imdbID}, URL: ${url}`);
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(`Details response for ${imdbID}:`, data);
+                return data;
+            } catch (error) {
+                console.error(`Error fetching movie details (${imdbID}):`, error);
+                return { Response: 'False', Error: error.message };
+            }
+        },
         async fetchMoviesBySearch(query, page = 1, type = '') {
             try {
                 let url = `https://www.omdbapi.com/?s=${query}&page=${page}&apikey=${apiKey}`;
@@ -99,6 +118,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 return data;
             } catch (error) {
                 console.error(`Error fetching search results (${query}):`, error);
+                return { Response: 'False', Error: error.message };
+            }
+        },
+        async fetchTvShowSeason(imdbID, seasonNumber) {
+            try {
+                const url = `https://www.omdbapi.com/?i=${imdbID}&Season=${seasonNumber}&apikey=${apiKey}`;
+                console.log(`Fetching season ${seasonNumber} for IMDB ID: ${imdbID}, URL: ${url}`);
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(`Season ${seasonNumber} response for ${imdbID}:`, data);
+                return data;
+            } catch (error) {
+                console.error(`Error fetching season ${seasonNumber} for ${imdbID}:`, error);
                 return { Response: 'False', Error: error.message };
             }
         },
@@ -230,7 +265,63 @@ document.addEventListener('DOMContentLoaded', () => {
             videoPlayer.src = ''; // Clear previous video
             videoAvailabilityStatus.textContent = 'Loading video sources...';
             videoAvailabilityStatus.style.display = 'block';
+            seasonEpisodeSelector.style.display = 'none'; // Hide by default
 
+            const details = await api.fetchMovieDetails(imdbID);
+
+            if (details && details.Response === 'True') {
+                if (details.Type === 'series') {
+                    seasonEpisodeSelector.style.display = 'block';
+                    // Populate seasons
+                    seasonSelect.innerHTML = '';
+                    for (let i = 1; i <= parseInt(details.totalSeasons); i++) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = `Season ${i}`;
+                        seasonSelect.appendChild(option);
+                    }
+                    // Load episodes for the first season by default
+                    await this.populateEpisodes(imdbID, 1);
+
+                    seasonSelect.onchange = async (event) => {
+                        await this.populateEpisodes(imdbID, event.target.value);
+                    };
+                    episodeSelect.onchange = () => this.loadVideoForSelectedEpisode(imdbID);
+
+                } else { // It's a movie
+                    seasonEpisodeSelector.style.display = 'none';
+                    this.loadVideoForMovie(imdbID);
+                }
+            } else {
+                videoAvailabilityStatus.textContent = 'Could not fetch details for this title.';
+                videoAvailabilityStatus.style.display = 'block';
+                return;
+            }
+
+            videoModal.style.display = 'flex';
+        },
+
+        async populateEpisodes(imdbID, seasonNumber) {
+            episodeSelect.innerHTML = '';
+            const seasonData = await api.fetchTvShowSeason(imdbID, seasonNumber);
+            if (seasonData && seasonData.Response === 'True' && seasonData.Episodes) {
+                seasonData.Episodes.forEach(episode => {
+                    const option = document.createElement('option');
+                    option.value = episode.Episode;
+                    option.textContent = `Episode ${episode.Episode}: ${episode.Title}`;
+                    episodeSelect.appendChild(option);
+                });
+                this.loadVideoForSelectedEpisode(imdbID); // Load video for the first episode of the selected season
+            } else {
+                videoAvailabilityStatus.textContent = 'No episodes found for this season.';
+                videoAvailabilityStatus.style.display = 'block';
+            }
+        },
+
+        async loadVideoForMovie(imdbID) {
+            videoPlayer.src = '';
+            videoAvailabilityStatus.textContent = 'Loading video sources...';
+            videoAvailabilityStatus.style.display = 'block';
             let firstSourceAttempted = false;
 
             for (const source of videoSources) {
@@ -241,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const fullUrl = `${source.url}${imdbID}`;
 
-                // Immediately try to load the first source
                 if (!firstSourceAttempted) {
                     videoPlayer.src = fullUrl;
                     button.classList.add('active');
@@ -256,7 +346,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     videoAvailabilityStatus.textContent = `Loading from ${source.name}...`;
                 };
 
-                // Asynchronously check availability and update button style
                 api.checkVideoAvailability(fullUrl).then(isAvailable => {
                     if (isAvailable) {
                         button.classList.add('is-available');
@@ -266,8 +355,57 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             }
+        },
 
-            videoModal.style.display = 'flex';
+        async loadVideoForSelectedEpisode(imdbID) {
+            const season = seasonSelect.value;
+            const episode = episodeSelect.value;
+            if (!season || !episode) return;
+
+            videoPlayer.src = '';
+            videoAvailabilityStatus.textContent = `Loading video sources for S${season}E${episode}...`;
+            videoAvailabilityStatus.style.display = 'block';
+            sourceButtonsContainer.innerHTML = ''; // Clear old source buttons
+
+            let firstSourceAttempted = false;
+
+            for (const source of videoSources) {
+                const button = document.createElement('button');
+                button.className = 'source-button';
+                button.textContent = source.name;
+                sourceButtonsContainer.appendChild(button);
+
+                // Construct URL for TV show episode
+                let fullUrl = source.url;
+                if (source.name.includes('VidSrc')) {
+                    fullUrl = `${source.url}${imdbID}/${season}/${episode}`;
+                } else { // Fallback for other sources, might need adjustment based on their API
+                    fullUrl = `${source.url}${imdbID}-S${season}E${episode}`;
+                }
+
+                if (!firstSourceAttempted) {
+                    videoPlayer.src = fullUrl;
+                    button.classList.add('active');
+                    videoAvailabilityStatus.textContent = `Attempting to load from ${source.name} (S${season}E${episode})...`;
+                    firstSourceAttempted = true;
+                }
+
+                button.onclick = () => {
+                    videoPlayer.src = fullUrl;
+                    document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    videoAvailabilityStatus.textContent = `Loading from ${source.name} (S${season}E${episode})...`;
+                };
+
+                api.checkVideoAvailability(fullUrl).then(isAvailable => {
+                    if (isAvailable) {
+                        button.classList.add('is-available');
+                    } else {
+                        button.classList.add('is-unavailable');
+                        button.disabled = true;
+                    }
+                });
+            }
         },
         closeVideoModal() {
             videoPlayer.src = '';
