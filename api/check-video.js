@@ -14,18 +14,13 @@ export default async function handler(req, res) {
         }
 
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-
             try {
                 const response = await fetch(url, {
-                method: 'HEAD',
-                signal: controller.signal,
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (compatible; NowShowing/1.0)' // Add a User-Agent header
-                }
-            });
-                clearTimeout(timeoutId);
+                    method: 'HEAD',
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (compatible; NowShowing/1.0)' // Add a User-Agent header
+                    }
+                });
 
                 if (!response.ok) {
                     console.error(`[checkVideoAvailability] Failed to fetch ${url}: Status ${response.status} ${response.statusText}`);
@@ -41,7 +36,6 @@ export default async function handler(req, res) {
 
                 res.status(200).json({ url, available: response.ok });
             } catch (error) {
-                clearTimeout(timeoutId);
                 console.error(`[checkVideoAvailability] Error during fetch for ${url}: ${error.name} - ${error.message}`);
                 res.status(200).json({ url, available: false, error: `Network error: ${error.message}` });
         }
