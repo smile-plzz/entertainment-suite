@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSearchQuery = '';
 
     const videoSources = [
-        { name: 'VidSrc.to', url: 'https://vidsrc.to/embed/movie/' },
-        { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/' },
-        { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/' },
-        { name: 'SuperEmbed', url: 'https://superembed.stream/movie/' },
-        { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/' },
-        { name: '2Embed', url: 'https://2embed.cc/embed/' },
-        { name: 'Fmovies', url: 'https://fmovies.to/embed/' }, // Example of adding more sources
-        { name: 'LookMovie', url: 'https://lookmovie.io/player/' },
+        { name: 'VidSrc.to', url: 'https://vidsrc.to/embed/movie/', tvUrl: 'https://vidsrc.to/embed/tv/' },
+        { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/', tvUrl: 'https://vidsrc.xyz/embed/tv/' },
+        { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/', tvUrl: 'https://vidsrc.in/embed/tv/' },
+        { name: 'SuperEmbed', url: 'https://superembed.stream/movie/', tvUrl: 'https://superembed.stream/tv/' },
+        { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/', tvUrl: 'https://moviesapi.club/tv/' },
+        { name: '2Embed', url: 'https://2embed.cc/embed/', tvUrl: 'https://2embed.cc/embed/' },
+        { name: 'Fmovies', url: 'https://fmovies.to/embed/', tvUrl: 'https://fmovies.to/embed/' },
+        { name: 'LookMovie', url: 'https://lookmovie.io/player/', tvUrl: 'https://lookmovie.io/player/' },
     ];
 
     // --- API CALLS ---
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.textContent = source.name;
                 sourceButtonsContainer.appendChild(button);
 
-                const fullUrl = `${source.url}${imdbID}`;
+                const fullUrl = this.constructVideoUrl(source, imdbID, null, null, 'movie');
 
                 if (!firstSourceAttempted) {
                     videoPlayer.src = fullUrl;
@@ -374,13 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.textContent = source.name;
                 sourceButtonsContainer.appendChild(button);
 
-                // Construct URL for TV show episode
-                let fullUrl = source.url;
-                if (source.name.includes('VidSrc')) {
-                    fullUrl = `${source.url}${imdbID}/${season}/${episode}`;
-                } else { // Fallback for other sources, might need adjustment based on their API
-                    fullUrl = `${source.url}${imdbID}-S${season}E${episode}`;
-                }
+                const fullUrl = this.constructVideoUrl(source, imdbID, season, episode, 'series');
 
                 if (!firstSourceAttempted) {
                     videoPlayer.src = fullUrl;
@@ -409,6 +403,31 @@ document.addEventListener('DOMContentLoaded', () => {
             videoPlayer.src = '';
             videoModal.style.display = 'none';
             videoAvailabilityStatus.style.display = 'none'; // Hide status when modal is closed
+        },
+        constructVideoUrl(source, imdbID, season = null, episode = null, mediaType) {
+            let baseUrl = mediaType === 'series' && source.tvUrl ? source.tvUrl : source.url;
+            let url = `${baseUrl}${imdbID}`;
+
+            if (mediaType === 'series' && season && episode) {
+                // Specific handling for VidSrc sources
+                if (source.name.includes('VidSrc')) {
+                    url = `${baseUrl}${imdbID}/${season}/${episode}`;
+                } else if (source.name === '2Embed') {
+                    url = `${baseUrl}tv?id=${imdbID}&s=${season}&e=${episode}`;
+                } else if (source.name === 'SuperEmbed') {
+                    url = `${baseUrl}${imdbID}-${season}-${episode}`;
+                } else if (source.name === 'MoviesAPI') {
+                    url = `${baseUrl}${imdbID}/season/${season}/episode/${episode}`;
+                } else if (source.name === 'Fmovies') {
+                    url = `${baseUrl}tv/${imdbID}/season/${season}/episode/${episode}`;
+                } else if (source.name === 'LookMovie') {
+                    url = `${baseUrl}tv/${imdbID}/season/${season}/episode/${episode}`;
+                } else {
+                    // Generic fallback for other TV show sources
+                    url = `${baseUrl}${imdbID}-S${season}E${episode}`;
+                }
+            }
+            return url;
         },
     };
 
