@@ -1,0 +1,402 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #e50914;
+    --background-dark: #0a0a0a;
+    --background-light: #1a1a1a;
+    --text-color: #f0f0f0;
+    --text-light: #b0b0b0;
+    --card-background: #1c1c1c;
+    --border-color: #333;
+    --skeleton-color: #2a2a2a;
+}
+
+body.light-mode {
+    --primary-color: #e50914;
+    --background-dark: #f8f8f8;
+    --background-light: #ffffff;
+    --text-color: #333;
+    --text-light: #666;
+    --card-background: #e8e8e8;
+    --border-color: #ddd;
+    --skeleton-color: #e0e0e0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-color);
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+    line-height: 1.6;
+}
+
+/* --- Navbar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background-color: var(--background-light);
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand a {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    margin-left: 2.5rem;
+}
+
+.navbar-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    font-size: 1.05rem;
+}
+
+.navbar-nav a:hover {
+    color: var(--text-color);
+}
+
+.search-container {
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#search-input {
+    padding: 0.7rem 1rem;
+    border: none;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-size: 1rem;
+    outline: none;
+    width: 200px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#search-input::placeholder {
+    color: var(--text-light);
+}
+
+#search-button {
+    padding: 0.7rem 1rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#search-button:hover {
+    background-color: #cc0712;
+}
+
+.hamburger-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.mobile-nav-overlay.active {
+    display: flex;
+}
+
+.mobile-nav-links {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.mobile-nav-links li {
+    margin-bottom: 2rem;
+}
+
+.mobile-nav-links a {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- Theme Toggle --- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    margin-left: 2rem;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.theme-switch label:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.theme-switch input:checked + label {
+    background-color: var(--primary-color);
+}
+
+.theme-switch input:checked + label:before {
+    transform: translateX(24px);
+}
+
+
+
+/* --- Sections --- */
+.movies-section {
+    padding: 2.5rem 3rem;
+}
+
+.movies-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.movie-card {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    animation: fadeIn 0.5s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.movie-card img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.movie-card-body {
+    padding: 1.2rem;
+}
+
+.movie-card-title {
+    font-size: 1.15rem;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+/* --- Skeleton Loader --- */
+.skeleton-card {
+    background-color: var(--skeleton-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-img {
+    width: 100%;
+    height: 330px; /* Adjusted for new card size */
+    background-color: var(--border-color);
+}
+
+.skeleton-body {
+    padding: 1.2rem;
+}
+
+.skeleton-title {
+    width: 90%;
+    height: 22px;
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+/* --- Video Modal --- */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    background-color: var(--background-dark);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.source-buttons {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+}
+
+.source-button {
+    padding: 0.6rem 1.2rem;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.source-button:hover {
+    background-color: var(--border-color);
+}
+
+.source-button.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.source-button.is-available {
+    background-color: #4CAF50; /* Green for available */
+    border-color: #4CAF50;
+    color: white;
+}
+
+.source-button.is-unavailable {
+    background-color: #f44336; /* Red for unavailable */
+    border-color: #f44336;
+    color: white;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.modal-content iframe {
+    width: 100%;
+    height: 500px; /* Fixed height for video player */
+    border-radius: 8px;
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--background-light);
+    margin-top: 3rem;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* --- Load More Button --- */
+.load-more-button {
+    display: block;
+    margin: 3rem auto 1rem auto;
+    padding: 1rem 2.5rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.load-more-button:hover {
+    background-color: #cc0712;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- Responsive Design --- */
