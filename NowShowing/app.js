@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- API CALLS ---
     const api = {
         async checkVideoAvailability(url) {
+            console.log(`[checkVideoAvailability] Checking URL: ${url}`);
             try {
                 const response = await fetch('/api/check-video', {
                     method: 'POST',
@@ -45,9 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ url }),
                 });
                 const data = await response.json();
+                console.log(`[checkVideoAvailability] Response for ${url}:`, data);
                 return data.available;
             } catch (error) {
-                console.error('Error checking video availability:', error);
+                console.error(`[checkVideoAvailability] Error checking video availability for ${url}:`, error);
                 return false;
             }
         },
@@ -224,27 +226,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 sourceButtonsContainer.appendChild(button);
 
                 const fullUrl = `${source.url}${imdbID}`;
+                console.log(`[openVideoModal] Processing source: ${source.name}, URL: ${fullUrl}`);
                 const isAvailable = await api.checkVideoAvailability(fullUrl);
+                console.log(`[openVideoModal] Source ${source.name} availability: ${isAvailable}`);
 
                 if (isAvailable) {
                     button.classList.add('is-available');
+                    button.onclick = () => {
+                        videoPlayer.src = fullUrl;
+                        console.log(`[openVideoModal] Setting videoPlayer.src to: ${fullUrl}`);
+                        document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                    };
                     if (!firstAvailableSourceLoaded) {
                         videoPlayer.src = fullUrl;
                         button.classList.add('active');
                         firstAvailableSourceLoaded = true;
+                        console.log(`[openVideoModal] Initial videoPlayer.src set to: ${fullUrl}`);
                     }
                 } else {
                     button.classList.add('is-unavailable');
                     button.disabled = true; // Disable unavailable buttons
                 }
-
-                button.onclick = () => {
-                    if (isAvailable) {
-                        videoPlayer.src = fullUrl;
-                        document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                    }
-                };
             }
 
             videoModal.style.display = 'flex';
