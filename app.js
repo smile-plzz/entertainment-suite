@@ -27,12 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const videoSources = [
         { name: 'VidSrc.to', url: 'https://vidsrc.to/embed/movie/' },
-        // Temporarily disable other sources for debugging
-        // { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/' },
-        // { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/' },
-        // { name: 'SuperEmbed', url: 'https://superembed.stream/movie/' },
-        // { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/' },
-        // { name: '2Embed', url: 'https://2embed.cc/embed/' },
+        { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/' },
+        { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/' },
+        { name: 'SuperEmbed', url: 'https://superembed.stream/movie/' },
+        { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/' },
+        { name: '2Embed', url: 'https://2embed.cc/embed/' },
+        { name: 'Fmovies', url: 'https://fmovies.to/embed/' }, // Example of adding more sources
+        { name: 'LookMovie', url: 'https://lookmovie.io/player/' },
     ];
 
     // --- API CALLS ---
@@ -227,10 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
         async openVideoModal(imdbID) {
             sourceButtonsContainer.innerHTML = '';
             videoPlayer.src = ''; // Clear previous video
-            videoAvailabilityStatus.textContent = 'Checking video availability...';
-            videoAvailabilityStatus.style.display = 'block'; // Show loading status
-            let firstAvailableSourceLoaded = false;
-            let anySourceAvailable = false;
+            videoAvailabilityStatus.textContent = 'Loading video sources...';
+            videoAvailabilityStatus.style.display = 'block';
+
+            let firstSourceAttempted = false;
 
             for (const source of videoSources) {
                 const button = document.createElement('button');
@@ -239,37 +240,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 sourceButtonsContainer.appendChild(button);
 
                 const fullUrl = `${source.url}${imdbID}`;
-                console.log(`[openVideoModal] Processing source: ${source.name}, URL: ${fullUrl}`);
-                const isAvailable = await api.checkVideoAvailability(fullUrl);
-                console.log(`[openVideoModal] Source ${source.name} availability: ${isAvailable}`);
 
-                if (isAvailable) {
-                    button.classList.add('is-available');
-                    button.onclick = () => {
-                        videoPlayer.src = fullUrl;
-                        console.log(`[openVideoModal] Setting videoPlayer.src to: ${fullUrl}`);
-                        document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                    };
-                    if (!firstAvailableSourceLoaded) {
-                        videoPlayer.src = fullUrl;
-                        button.classList.add('active');
-                        firstAvailableSourceLoaded = true;
-                        console.log(`[openVideoModal] Initial videoPlayer.src set to: ${fullUrl}`);
-                    }
-                    anySourceAvailable = true;
-                } else {
-                    button.classList.add('is-unavailable');
-                    button.disabled = true; // Disable unavailable buttons
+                // Immediately try to load the first source
+                if (!firstSourceAttempted) {
+                    videoPlayer.src = fullUrl;
+                    button.classList.add('active');
+                    videoAvailabilityStatus.textContent = `Attempting to load from ${source.name}...`;
+                    firstSourceAttempted = true;
                 }
-            }
 
-            if (anySourceAvailable) {
-                videoAvailabilityStatus.textContent = ''; // Clear status if sources are available
-                videoAvailabilityStatus.style.display = 'none';
-            } else {
-                videoAvailabilityStatus.textContent = 'No video sources available for this title.';
-                videoAvailabilityStatus.style.display = 'block';
+                button.onclick = () => {
+                    videoPlayer.src = fullUrl;
+                    document.querySelectorAll('.source-button').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    videoAvailabilityStatus.textContent = `Loading from ${source.name}...`;
+                };
+
+                // Asynchronously check availability and update button style
+                api.checkVideoAvailability(fullUrl).then(isAvailable => {
+                    if (isAvailable) {
+                        button.classList.add('is-available');
+                    } else {
+                        button.classList.add('is-unavailable');
+                        button.disabled = true;
+                    }
+                });
             }
 
             videoModal.style.display = 'flex';
