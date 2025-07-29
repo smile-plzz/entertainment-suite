@@ -9,7 +9,16 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to, VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed) for improved reliability.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
 *   **Modern UI/UX:** Clean design with subtle animations and skeleton loading for a smooth user experience.
-*   **Video Modal:** Seamless video playback within a modal window.
+*   **Video Modal:** Seamless video playback within a modal window with availability indicators.
+
+## Technologies Used
+
+*   **HTML5:** For the website structure.
+*   **CSS3:** For styling and responsive design.
+*   **JavaScript (ES6+):** For dynamic content, API interactions, and UI logic.
+*   **Node.js (Vercel Serverless Function):** For backend video availability checks.
+*   **OMDb API:** Used to fetch movie data (titles, plots, posters, IMDb IDs).
+*   **Third-Party Video Embeds:** Integrates with various video embedding services (e.g., VidSrc, SuperEmbed, 2Embed) to stream content.
 
 ## Technologies Used
 
@@ -21,19 +30,18 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 
 ## Setup and Installation
 
-This project now includes a small backend component (a Vercel Serverless Function) to check video source availability. To get started:
+This project includes a small backend component (a Vercel Serverless Function) to check video source availability. To get started:
 
 1.  **Clone or Download:** Download the project files to your local machine.
-2.  **Install Dependencies (Backend):** Navigate to the project root in your terminal and run `npm install node-fetch` to install the necessary dependency for the serverless function.
-3.  **Run Locally (Optional - for development with backend):**
+2.  **Install Dependencies:** Navigate to the project root in your terminal and run `npm install` to install both frontend and backend dependencies.
+3.  **Run Locally (for development with backend):**
     *   Install Vercel CLI: `npm install -g vercel`
     *   From the project root, run `vercel dev` to start a local development server that includes the serverless function.
-    *   Open `http://localhost:3000` (or the port indicated by Vercel CLI) in your browser.
+    *   Open the URL provided by Vercel CLI (e.g., `http://localhost:3000`) in your browser.
 4.  **Deploy to Vercel:**
     *   Ensure you have a Vercel account and the Vercel CLI installed and logged in (`vercel login`).
     *   From the project root, run `vercel deploy`.
     *   Follow the prompts to deploy your project. Vercel will automatically detect the serverless function in the `api` directory.
-5.  **Open `index.html` (Client-side only):** If you only want to run the client-side without the backend availability checks, simply open the `index.html` file in your preferred web browser. Note that the video source availability indicators will not function without the backend.
 
 ## Usage
 
@@ -44,13 +52,7 @@ This project now includes a small backend component (a Vercel Serverless Functio
 
 ## API Key
 
-This project uses the OMDb API to fetch movie data. Your API key (`1a944117`) is embedded directly in the `app.js` file:
-
-```javascript
-const apiKey = '1a944117';
-```
-
-If you wish to use a different OMDb API key, you can replace this value in `app.js`.
+This project uses the OMDb API to fetch movie data. The API key is configured in `app.js`.
 
 ## Disclaimer
 
