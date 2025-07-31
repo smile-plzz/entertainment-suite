@@ -6,6 +6,10 @@
       "use": "@vercel/node"
     },
     {
+      "src": "api/fetch-news.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "index.html",
       "use": "@vercel/static"
     },
@@ -28,8 +32,12 @@
       "dest": "/style.css"
     },
     {
-      "src": "/api/(.*)",
+      "src": "/api/check-video",
       "dest": "/api/check-video.js"
+    },
+    {
+      "src": "/api/fetch-news",
+      "dest": "/api/fetch-news.js"
     },
     {
       "src": "/(.*)",
