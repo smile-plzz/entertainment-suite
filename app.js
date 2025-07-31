@@ -275,12 +275,15 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         async renderNews(append = false) {
-            const newsApiKey = 'cc55d9392c4a4cb5b866ce342a7d65f3';
-            const url = `https://newsapi.org/v2/everything?q=movie%20OR%20television&apiKey=${newsApiKey}&language=en&pageSize=6&page=${newsPage}`;
+            const url = `/api/fetch-news?page=${newsPage}`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
 
                 if (data.articles) {
                     if (!append) {
@@ -313,6 +316,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error('Error fetching news:', error);
+                if (!append) { // Only show the error message on the initial load
+                    newsGrid.innerHTML = `<p class="error-message">Could not load news. Please try again later.</p>`;
+                }
+                loadMoreNewsButton.style.display = 'none';
             }
         },
 
