@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSearchQuery = '';
 
     const videoSources = [
+        { name: 'VidCloud', url: 'https://vidcloud.stream/', tvUrl: 'https://vidcloud.stream/' },
+        { name: 'fsapi.xyz', url: 'https://fsapi.xyz/movie/', tvUrl: 'https://fsapi.xyz/tv-imdb/' },
+        { name: 'CurtStream', url: 'https://curtstream.com/movies/imdb/', tvUrl: null },
         { name: 'VidSrc.to', url: 'https://vidsrc.to/embed/movie/', tvUrl: 'https://vidsrc.to/embed/tv/' },
         { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/', tvUrl: 'https://vidsrc.xyz/embed/tv/' },
         { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/', tvUrl: 'https://vidsrc.in/embed/tv/' },
@@ -426,23 +429,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         async loadVideoForMovie(imdbID) {
             videoPlayer.src = '';
+            sourceButtonsContainer.innerHTML = ''; // Clear buttons
             videoAvailabilityStatus.textContent = 'Loading video sources...';
             videoAvailabilityStatus.style.display = 'block';
-            let firstSourceAttempted = false;
 
+            const defaultSource = videoSources.find(s => s.name === 'VidSrc.to');
+            const activeSource = defaultSource || videoSources[0];
+
+            if (activeSource) {
+                const activeUrl = this.constructVideoUrl(activeSource, imdbID, null, null, 'movie');
+                if (activeUrl) {
+                    videoPlayer.src = activeUrl;
+                    videoAvailabilityStatus.textContent = `Attempting to load from ${activeSource.name}...`;
+                }
+            } else {
+                videoAvailabilityStatus.textContent = 'No video sources available.';
+                return;
+            }
+
+            // Create buttons for all sources
             for (const source of videoSources) {
+                const fullUrl = this.constructVideoUrl(source, imdbID, null, null, 'movie');
+                if (!fullUrl) continue; // Skip sources that don't support this media type
+
                 const button = document.createElement('button');
                 button.className = 'source-button';
                 button.textContent = source.name;
                 sourceButtonsContainer.appendChild(button);
 
-                const fullUrl = this.constructVideoUrl(source, imdbID, null, null, 'movie');
-
-                if (!firstSourceAttempted) {
-                    videoPlayer.src = fullUrl;
+                // Set the active class on the default button
+                if (source.name === activeSource.name) {
                     button.classList.add('active');
-                    videoAvailabilityStatus.textContent = `Attempting to load from ${source.name}...`;
-                    firstSourceAttempted = true;
                 }
 
                 button.onclick = () => {
@@ -468,25 +485,35 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!season || !episode) return;
 
             videoPlayer.src = '';
+            sourceButtonsContainer.innerHTML = ''; // Clear old source buttons
             videoAvailabilityStatus.textContent = `Loading video sources for S${season}E${episode}...`;
             videoAvailabilityStatus.style.display = 'block';
-            sourceButtonsContainer.innerHTML = ''; // Clear old source buttons
 
-            let firstSourceAttempted = false;
+            const defaultSource = videoSources.find(s => s.name === 'VidSrc.to');
+            const activeSource = defaultSource || videoSources.find(s => s.tvUrl); // Find first source that supports TV
+
+            if (activeSource) {
+                const activeUrl = this.constructVideoUrl(activeSource, imdbID, season, episode, 'series');
+                if (activeUrl) {
+                    videoPlayer.src = activeUrl;
+                    videoAvailabilityStatus.textContent = `Attempting to load from ${activeSource.name} (S${season}E${episode})...`;
+                }
+            } else {
+                videoAvailabilityStatus.textContent = 'No TV show sources available.';
+                return;
+            }
 
             for (const source of videoSources) {
+                const fullUrl = this.constructVideoUrl(source, imdbID, season, episode, 'series');
+                if (!fullUrl) continue; // Skip sources that don't support TV shows
+
                 const button = document.createElement('button');
                 button.className = 'source-button';
                 button.textContent = source.name;
                 sourceButtonsContainer.appendChild(button);
 
-                const fullUrl = this.constructVideoUrl(source, imdbID, season, episode, 'series');
-
-                if (!firstSourceAttempted) {
-                    videoPlayer.src = fullUrl;
+                if (source.name === activeSource.name) {
                     button.classList.add('active');
-                    videoAvailabilityStatus.textContent = `Attempting to load from ${source.name} (S${season}E${episode})...`;
-                    firstSourceAttempted = true;
                 }
 
                 button.onclick = () => {
@@ -513,6 +540,8 @@ document.addEventListener('DOMContentLoaded', () => {
             videoPlayOverlay.style.display = 'none'; // Hide play overlay when modal is closed
         },
         constructVideoUrl(source, imdbID, season = null, episode = null, mediaType) {
+            if (mediaType === 'series' && !source.tvUrl) return null; // Don't construct a URL if the source doesn't support TV shows
+
             let baseUrl = mediaType === 'series' && source.tvUrl ? source.tvUrl : source.url;
             let url = `${baseUrl}${imdbID}`;
 
@@ -520,6 +549,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Specific handling for VidSrc sources
                 if (source.name.includes('VidSrc')) {
                     url = `${baseUrl}${imdbID}/${season}/${episode}`;
+                } else if (source.name === 'VidCloud') {
+                    url = `${baseUrl}${imdbID}-S${season}-E${episode}.html`;
+                } else if (source.name === 'fsapi.xyz') {
+                    url = `${baseUrl}${imdbID}-${season}-${episode}`;
                 } else if (source.name === '2Embed') {
                     url = `${baseUrl}tv?id=${imdbID}&s=${season}&e=${episode}`;
                 } else if (source.name === 'SuperEmbed') {
