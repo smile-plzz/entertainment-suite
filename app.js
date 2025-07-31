@@ -372,11 +372,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('modal-movie-genre').textContent = details.Genre;
                 document.getElementById('modal-movie-released').textContent = details.Released;
                 document.getElementById('modal-movie-rating').textContent = details.imdbRating;
+                document.getElementById('modal-movie-rated').textContent = details.Rated;
+
+                const otherRatingsContainer = document.getElementById('modal-movie-other-ratings');
+                otherRatingsContainer.innerHTML = ''; // Clear previous ratings
+                if (details.Ratings && details.Ratings.length > 0) {
+                    details.Ratings.forEach(rating => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<strong>${rating.Source}:</strong> ${rating.Value}`;
+                        otherRatingsContainer.appendChild(p);
+                    });
+                }
                 document.getElementById('modal-movie-poster').src = details.Poster;
                 document.getElementById('modal-movie-director').textContent = details.Director;
                 document.getElementById('modal-movie-writer').textContent = details.Writer;
                 document.getElementById('modal-movie-actors').textContent = details.Actors;
                 document.getElementById('modal-movie-awards').textContent = details.Awards;
+                document.getElementById('modal-movie-runtime').textContent = details.Runtime;
+                document.getElementById('modal-movie-language').textContent = details.Language;
+                document.getElementById('modal-movie-country').textContent = details.Country;
+                document.getElementById('modal-movie-metascore').textContent = details.Metascore;
+                document.getElementById('modal-movie-boxoffice').textContent = details.BoxOffice;
+                document.getElementById('modal-movie-production').textContent = details.Production;
+                document.getElementById('modal-movie-website').textContent = details.Website;
 
                 if (details.Type === 'series') {
                     seasonEpisodeSelector.style.display = 'block';

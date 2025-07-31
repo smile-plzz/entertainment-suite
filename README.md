@@ -7,12 +7,12 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **Movie Search:** Search for movies and TV shows using the OMDb API.
 *   **Movie/TV Show Details:** View titles, overviews, and posters.
 *   **Season & Episode Selection:** For TV shows, select specific seasons and episodes to watch.
-*   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to, VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability, with robust handling for both movies and TV show episodes.
+*   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to (default), VidCloud, fsapi.xyz, CurtStream (movies only), VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability, with robust handling for both movies and TV show episodes.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
 *   **Modern UI/UX:** Clean design with subtle animations, skeleton loading for a smooth user experience, and a dynamic hero section.
 *   **Movie/TV Show Navigation:** Easily switch between popular movies and TV shows using dedicated navigation links.
-*   **News Widget:** Stay updated with the latest movie and TV show news from NewsAPI.org, with a "Load More" option to fetch more articles.
-*   **Video Modal:** Seamless video playback within a modal window with availability indicators and autoplay enabled.
+*   **News Widget:** Stay updated with the latest movie and TV show news from GNews API, with a "Load More" option to fetch more articles (note: GNews free tier has limitations on pagination).
+*   **Video Modal:** Seamless video playback within a modal window with availability indicators, autoplay enabled, and comprehensive details including ratings (IMDb, Rotten Tomatoes, Metacritic), MPAA/TV rating, runtime, language, country, box office, production, and website.
 
 ## Technologies Used
 
@@ -33,12 +33,12 @@ This project includes a small backend component (a Vercel Serverless Function) t
 2.  **Install Dependencies:** Navigate to the project root in your terminal and run `npm install` to install both frontend and backend dependencies.
 3.  **Run Locally (for development with backend):**
     *   Install Vercel CLI: `npm install -g vercel`
-    *   **Set OMDb API Key:** Before running, set your OMDb API key as an environment variable. For local development, you can create a `.env` file in your project root with `OMDB_API_KEY=your_omdb_api_key_here`.
+    *   **Set OMDb API Key & GNews API Key:** Before running, set your OMDb API key and GNews API key as environment variables. For local development, you can create a `.env` file in your project root with `OMDB_API_KEY=your_omdb_api_key_here` and `GNEWS_API_KEY=your_gnews_api_key_here`.
     *   From the project root, run `vercel dev` to start a local development server that includes the serverless function.
     *   Open the URL provided by Vercel CLI (e.g., `http://localhost:3000`) in your browser.
 4.  **Deploy to Vercel:**
     *   Ensure you have a Vercel account and the Vercel CLI installed and logged in (`vercel login`).
-    *   **Set OMDb API Key on Vercel:** Go to your Vercel project dashboard -> Settings -> Environment Variables. Add a new variable named `OMDB_API_KEY` with your OMDb API key as its value.
+    *   **Set OMDb API Key & GNews API Key on Vercel:** Go to your Vercel project dashboard -> Settings -> Environment Variables. Add new variables named `OMDB_API_KEY` and `GNEWS_API_KEY` with your respective API keys as their values.
     *   From the project root, run `vercel deploy`.
     *   Follow the prompts to deploy your project. Vercel will automatically detect the serverless function in the `api` directory.
 
@@ -51,11 +51,11 @@ This project includes a small backend component (a Vercel Serverless Function) t
 
 ## API Key
 
-This project uses the OMDb API to fetch movie data. The API key is now securely handled server-side via a Vercel Serverless Function (`api/omdb-proxy.js`). You must set the `OMDB_API_KEY` environment variable in your Vercel project settings for the application to function correctly.
+This project uses the OMDb API to fetch movie data and the GNews API for news. You must set the `OMDB_API_KEY` and `GNEWS_API_KEY` environment variables in your Vercel project settings for the application to function correctly.
 
 ## Disclaimer
 
-This project relies on third-party video embedding services. The availability and content of streams are dependent on these external services. While a backend check has been implemented to improve reliability, it is still an estimation. Users are advised to be aware of the terms of service and content policies of these third-party providers.
+This project relies on third-party video embedding services. The availability and content of streams are dependent on these external services, and their reliability can vary. While a backend check has been implemented to improve reliability, it is still an estimation. Users are advised to be aware of the terms of service and content policies of these third-party providers.
 
 ## Future Enhancements
 
