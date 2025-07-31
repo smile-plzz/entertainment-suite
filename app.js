@@ -4,10 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const popularMoviesSection = document.querySelector('#popular-movies').parentElement;
     const searchResultsSection = document.querySelector('#search-results').parentElement;
+    const popularTvShowsSection = document.querySelector('#popular-tv-shows').parentElement;
     const popularMoviesGrid = document.getElementById('popular-movies');
     const searchResultsGrid = document.getElementById('search-results');
+    const popularTvShowsGrid = document.getElementById('popular-tv-shows');
+    const newsGrid = document.getElementById('news-grid');
+    const loadMoreNewsButton = document.getElementById('load-more-news');
     const videoModal = document.getElementById('video-modal');
     const videoPlayer = document.getElementById('video-player');
+    const videoPlayOverlay = document.getElementById('video-play-overlay');
     const sourceButtonsContainer = document.getElementById('source-buttons');
     const videoAvailabilityStatus = document.getElementById('video-availability-status');
     const seasonEpisodeSelector = document.getElementById('season-episode-selector');
@@ -21,10 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileNavLinks = document.querySelector('.mobile-nav-links');
     const loadMorePopularButton = document.getElementById('load-more-popular');
     const loadMoreSearchButton = document.getElementById('load-more-search');
+    const loadMorePopularTvButton = document.getElementById('load-more-popular-tv');
+
+    const moviesNavLink = document.getElementById('movies-nav-link');
+    const tvShowsNavLink = document.getElementById('tv-shows-nav-link');
+    const mobileMoviesNavLink = document.getElementById('mobile-movies-nav-link');
+    const mobileTvShowsNavLink = document.getElementById('mobile-tv-shows-nav-link');
 
     // --- API & CONFIG ---
     const apiKey = '1a944117';
     let popularMoviesPage = 1;
+    let popularTvShowsPage = 1;
+    let newsPage = 1;
     let searchResultsPage = 1;
     let currentSearchQuery = '';
 
@@ -156,7 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const movieCard = document.createElement('div');
             movieCard.className = 'movie-card';
             movieCard.innerHTML = `
-                <img src="${movie.Poster}" alt="${movie.Title}">
+                <div class="movie-card-image-container">
+                    <img src="${movie.Poster}" alt="${movie.Title}">
+                    <i class="fas fa-play play-icon"></i>
+                </div>
                 <div class="movie-card-body">
                     <h3 class="movie-card-title">${movie.Title}</h3>
                 </div>
@@ -194,13 +210,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (loadMoreButton) {
-                if (totalResults && currentPage * 10 < totalResults) {
-                    loadMoreButton.style.display = 'block';
-                } else if (movies.length === 0 && !totalResults) { // For popular movies when all are loaded
-                    loadMoreButton.style.display = 'none';
-                } else if (totalResults === undefined && movies.length < 4) { // For popular movies when less than 4 are loaded
-                    loadMoreButton.style.display = 'none';
-                } else if (totalResults === undefined && movies.length > 0) { // For popular movies when more are available
+                let hasMore = false;
+                if (container.id === 'search-results') {
+                    // OMDb API search returns 10 per page
+                    hasMore = currentPage * 10 < totalResults;
+                } else {
+                    // Popular lists are hardcoded with 4 per page
+                    const itemsPerPage = 4;
+                    hasMore = currentPage * itemsPerPage < totalResults;
+                }
+
+                if (hasMore) {
                     loadMoreButton.style.display = 'block';
                 } else {
                     loadMoreButton.style.display = 'none';
@@ -231,6 +251,71 @@ document.addEventListener('DOMContentLoaded', () => {
             this.renderMovieGrid(popularMoviesGrid, movies, append, loadMorePopularButton, popularMoviesPage, popularTitles.length);
         },
 
+        async renderPopularTvShows(append = false) {
+            const popularTitles = ['Breaking Bad', 'Game of Thrones', 'The Office', 'Friends', 'The Simpsons', 'Stranger Things', 'The Mandalorian', 'The Crown', 'Westworld', 'Chernobyl', 'The Witcher', 'Black Mirror'];
+            const showsPerPage = 4;
+            const startIndex = (popularTvShowsPage - 1) * showsPerPage;
+            const endIndex = startIndex + showsPerPage;
+            const titlesToLoad = popularTitles.slice(startIndex, endIndex);
+
+            if (titlesToLoad.length === 0 && append) {
+                loadMorePopularTvButton.style.display = 'none';
+                return;
+            }
+
+            if (!append) {
+                popularTvShowsGrid.innerHTML = '';
+                this.renderSkeletons(popularTvShowsGrid, showsPerPage);
+            }
+
+            const showPromises = titlesToLoad.map(title => api.fetchMovieByTitle(title, 'series'));
+            const shows = await Promise.all(showPromises);
+
+            this.renderMovieGrid(popularTvShowsGrid, shows, append, loadMorePopularTvButton, popularMoviesPage, popularTitles.length);
+        },
+
+        async renderNews(append = false) {
+            const newsApiKey = 'cc55d9392c4a4cb5b866ce342a7d65f3';
+            const url = `https://newsapi.org/v2/everything?q=movie%20OR%20television&apiKey=${newsApiKey}&language=en&pageSize=6&page=${newsPage}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.articles) {
+                    if (!append) {
+                        newsGrid.innerHTML = '';
+                    }
+                    data.articles.forEach(article => {
+                        const newsCard = document.createElement('a');
+                        newsCard.className = 'news-card';
+                        newsCard.href = article.url;
+                        newsCard.target = '_blank';
+
+                        newsCard.innerHTML = `
+                            <img src="${article.urlToImage || ''}" alt="${article.title}">
+                            <div class="news-card-body">
+                                <h3 class="news-card-title">${article.title}</h3>
+                                <p class="news-card-source">${article.source.name}</p>
+                            </div>
+                        `;
+
+                        newsGrid.appendChild(newsCard);
+                    });
+
+                    // Show/hide load more button
+                    if (newsPage * 6 < data.totalResults) {
+                        loadMoreNewsButton.style.display = 'block';
+                    } else {
+                        loadMoreNewsButton.style.display = 'none';
+                    }
+
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+            }
+        },
+
         async renderSearchResults(query, append = false) {
             currentSearchQuery = query;
             if (!append) {
@@ -251,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showHomeView() {
             popularMoviesSection.style.display = 'block';
             searchResultsSection.style.display = 'none';
+            popularTvShowsSection.style.display = 'none';
             searchInput.value = '';
             loadMorePopularButton.style.display = 'block'; // Ensure it's visible on home view
             popularMoviesPage = 1; // Reset popular movies page
@@ -259,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showSearchView() {
             popularMoviesSection.style.display = 'none';
             searchResultsSection.style.display = 'block';
+            popularTvShowsSection.style.display = 'none';
         },
         async openVideoModal(imdbID) {
             sourceButtonsContainer.innerHTML = '';
@@ -270,6 +357,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const details = await api.fetchMovieDetails(imdbID);
 
             if (details && details.Response === 'True') {
+                document.getElementById('modal-movie-title').textContent = details.Title;
+                document.getElementById('modal-movie-plot').textContent = details.Plot;
+                document.getElementById('modal-movie-genre').textContent = details.Genre;
+                document.getElementById('modal-movie-released').textContent = details.Released;
+                document.getElementById('modal-movie-rating').textContent = details.imdbRating;
+                document.getElementById('modal-movie-poster').src = details.Poster;
+                document.getElementById('modal-movie-director').textContent = details.Director;
+                document.getElementById('modal-movie-writer').textContent = details.Writer;
+                document.getElementById('modal-movie-actors').textContent = details.Actors;
+                document.getElementById('modal-movie-awards').textContent = details.Awards;
+
                 if (details.Type === 'series') {
                     seasonEpisodeSelector.style.display = 'block';
                     // Populate seasons
@@ -299,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             videoModal.style.display = 'flex';
+            videoPlayOverlay.style.display = 'flex'; // Show play overlay initially
         },
 
         async populateEpisodes(imdbID, seasonNumber) {
@@ -399,10 +498,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         },
+
         closeVideoModal() {
             videoPlayer.src = '';
             videoModal.style.display = 'none';
             videoAvailabilityStatus.style.display = 'none'; // Hide status when modal is closed
+            videoPlayOverlay.style.display = 'none'; // Hide play overlay when modal is closed
         },
         constructVideoUrl(source, imdbID, season = null, episode = null, mediaType) {
             let baseUrl = mediaType === 'series' && source.tvUrl ? source.tvUrl : source.url;
@@ -451,6 +552,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    videoPlayOverlay.addEventListener('click', () => {
+        videoPlayOverlay.style.display = 'none';
+        // The iframe src is already set in openVideoModal, so just ensure it's loaded/playing
+        // For some embeds, simply setting display to none might not trigger play, 
+        // but for most iframe embeds, the content loads when the iframe is visible.
+        // If issues persist, consider re-setting videoPlayer.src here or adding a specific play method if the embed API allows.
+    });
+
     themeToggle.addEventListener('change', () => {
         document.body.classList.toggle('light-mode');
         localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
@@ -476,6 +585,58 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.renderSearchResults(currentSearchQuery, true);
     });
 
+    loadMorePopularTvButton.addEventListener('click', () => {
+        popularTvShowsPage++;
+        ui.renderPopularTvShows(true);
+    });
+
+    loadMoreNewsButton.addEventListener('click', () => {
+        newsPage++;
+        ui.renderNews(true);
+    });
+
+    moviesNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        popularMoviesSection.style.display = 'block';
+        searchResultsSection.style.display = 'none';
+        popularTvShowsSection.style.display = 'none';
+        popularMoviesPage = 1;
+        popularTvShowsPage = 1;
+        ui.renderPopularMovies();
+    });
+
+    tvShowsNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        popularMoviesSection.style.display = 'none';
+        searchResultsSection.style.display = 'none';
+        popularTvShowsSection.style.display = 'block';
+        popularMoviesPage = 1;
+        popularTvShowsPage = 1;
+        ui.renderPopularTvShows();
+    });
+
+    mobileMoviesNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        mobileNavOverlay.classList.remove('active');
+        popularMoviesSection.style.display = 'block';
+        searchResultsSection.style.display = 'none';
+        popularTvShowsSection.style.display = 'none';
+        popularMoviesPage = 1;
+        popularTvShowsPage = 1;
+        ui.renderPopularMovies();
+    });
+
+    mobileTvShowsNavLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        mobileNavOverlay.classList.remove('active');
+        popularMoviesSection.style.display = 'none';
+        searchResultsSection.style.display = 'none';
+        popularTvShowsSection.style.display = 'block';
+        popularMoviesPage = 1;
+        popularTvShowsPage = 1;
+        ui.renderPopularTvShows();
+    });
+
     // --- INITIAL LOAD ---
     const init = () => {
         const savedTheme = localStorage.getItem('theme');
@@ -485,6 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         ui.renderPopularMovies();
+        ui.renderNews();
     };
 
     init();

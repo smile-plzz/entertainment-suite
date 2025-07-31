@@ -14,16 +14,12 @@
         </div>
         <ul class="navbar-nav" id="main-nav">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Movies</a></li>
-            <li><a href="#">TV Shows</a></li>
+            <li><a href="#" id="movies-nav-link">Movies</a></li>
+            <li><a href="#" id="tv-shows-nav-link">TV Shows</a></li>
         </ul>
         <div class="theme-switch">
             <input type="checkbox" id="theme-toggle" class="theme-toggle">
             <label for="theme-toggle"></label>
-        </div>
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="Search...">
-            <button id="search-button"><i class="fas fa-search"></i></button>
         </div>
         <button class="hamburger-menu" id="hamburger-menu">
             <i class="fas fa-bars"></i>
@@ -33,10 +29,21 @@
     <div class="mobile-nav-overlay" id="mobile-nav-overlay">
         <ul class="mobile-nav-links">
             <li><a href="#">Home</a></li>
-            <li><a href="#">Movies</a></li>
-            <li><a href="#">TV Shows</a></li>
+            <li><a href="#" id="mobile-movies-nav-link">Movies</a></li>
+            <li><a href="#" id="mobile-tv-shows-nav-link">TV Shows</a></li>
         </ul>
     </div>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Find Your Next Favorite Movie</h1>
+            <p class="hero-subtitle">Stream thousands of movies and TV shows for free.</p>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for a movie or TV show...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
 
     
 
@@ -52,6 +59,18 @@
             <div class="movies-grid" id="search-results"></div>
             <button id="load-more-search" class="load-more-button">Load More</button>
         </section>
+
+        <section class="movies-section" style="display: none;">
+            <h2>Popular TV Shows</h2>
+            <div class="movies-grid" id="popular-tv-shows"></div>
+            <button id="load-more-popular-tv" class="load-more-button">Load More</button>
+        </section>
+
+        <section class="news-section">
+            <h2>Latest News</h2>
+            <div class="news-grid" id="news-grid"></div>
+            <button id="load-more-news" class="load-more-button" style="display: none;">Load More News</button>
+        </section>
     </main>
 
     <div class="video-modal" id="video-modal">
@@ -65,7 +84,26 @@
                 <select id="episode-select"></select>
             </div>
             <div id="video-availability-status"></div>
-            <iframe id="video-player" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            <div class="video-player-container">
+                <iframe id="video-player" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+                <div class="play-overlay" id="video-play-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="video-details-container">
+                <img id="modal-movie-poster" src="" alt="Movie Poster">
+                <div class="video-details">
+                    <h2 id="modal-movie-title"></h2>
+                    <p id="modal-movie-plot"></p>
+                    <p><strong>Genre:</strong> <span id="modal-movie-genre"></span></p>
+                    <p><strong>Released:</strong> <span id="modal-movie-released"></span></p>
+                    <p><strong>Rating:</strong> <span id="modal-movie-rating"></span></p>
+                    <p><strong>Director:</strong> <span id="modal-movie-director"></span></p>
+                    <p><strong>Writer:</strong> <span id="modal-movie-writer"></span></p>
+                    <p><strong>Actors:</strong> <span id="modal-movie-actors"></span></p>
+                    <p><strong>Awards:</strong> <span id="modal-movie-awards"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 

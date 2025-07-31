@@ -9,8 +9,10 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **Season & Episode Selection:** For TV shows, select specific seasons and episodes to watch.
 *   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to, VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability, with robust handling for both movies and TV show episodes.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
-*   **Modern UI/UX:** Clean design with subtle animations and skeleton loading for a smooth user experience.
-*   **Video Modal:** Seamless video playback within a modal window with availability indicators.
+*   **Modern UI/UX:** Clean design with subtle animations, skeleton loading for a smooth user experience, and a dynamic hero section.
+*   **Movie/TV Show Navigation:** Easily switch between popular movies and TV shows using dedicated navigation links.
+*   **News Widget:** Stay updated with the latest movie and TV show news from NewsAPI.org, with a "Load More" option to fetch more articles.
+*   **Video Modal:** Seamless video playback within a modal window with availability indicators and autoplay enabled.
 
 ## Technologies Used
 
