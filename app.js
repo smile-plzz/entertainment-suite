@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMoviesNavLink = document.getElementById('mobile-movies-nav-link');
     const mobileTvShowsNavLink = document.getElementById('mobile-tv-shows-nav-link');
 
+    // --- Notification Elements ---
+    const notificationButton = document.getElementById('notification-button');
+    const notificationModal = document.getElementById('notification-modal');
+    const closeNotificationModal = document.getElementById('close-notification-modal');
+
+    const switchSourceNotificationModal = document.getElementById('switch-source-notification-modal');
+    const closeSwitchSourceNotification = document.getElementById('close-switch-source-notification');
+
     // --- API & CONFIG ---
     const apiKey = '1a944117';
     let popularMoviesPage = 1;
@@ -693,6 +701,28 @@ document.addEventListener('DOMContentLoaded', () => {
         popularMoviesPage = 1;
         popularTvShowsPage = 1;
         ui.renderPopularTvShows();
+    });
+
+    // --- Notification Logic ---
+    const hasSeenNotification = localStorage.getItem('hasSeenBraveNotification');
+    if (!hasSeenNotification) {
+        notificationModal.style.display = 'flex';
+    }
+
+    notificationButton.addEventListener('click', () => {
+        notificationModal.style.display = 'flex';
+    });
+
+    closeNotificationModal.addEventListener('click', () => {
+        notificationModal.style.display = 'none';
+        localStorage.setItem('hasSeenBraveNotification', 'true');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === notificationModal) {
+            notificationModal.style.display = 'none';
+            localStorage.setItem('hasSeenBraveNotification', 'true');
+        }
     });
 
     // --- INITIAL LOAD ---

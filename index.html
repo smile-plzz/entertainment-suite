@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <nav class="navbar">
         <div class="navbar-brand">
             <a href="#">NowShowing</a>
@@ -21,6 +22,9 @@
             <input type="checkbox" id="theme-toggle" class="theme-toggle">
             <label for="theme-toggle"></label>
         </div>
+        <button class="notification-button" id="notification-button">
+            <i class="fas fa-bell"></i>
+        </button>
         <button class="hamburger-menu" id="hamburger-menu">
             <i class="fas fa-bars"></i>
         </button>
@@ -113,6 +117,39 @@
                     <p><strong>Website:</strong> <span id="modal-movie-website"></span></p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="notification-modal" id="notification-modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-notification-modal">&times;</span>
+            <h2 class="notification-title">⚠️ Best Viewed on Brave Browser</h2>
+            <p>NowShowing works best with Brave Browser due to its aggressive ad and tracker blocking capabilities, which significantly improve performance and reduce interruptions from third-party streaming sources.</p>
+            <p>While other browsers may work, Brave offers:</p>
+            <ul>
+                <li><strong>Better playback stability</strong> across streaming sources</li>
+                <li><strong>Fewer pop-ups, redirects, and unwanted ads</strong></li>
+                <li><strong>Faster loading</strong> with enhanced privacy</li>
+            </ul>
+            <p>We highly recommend Brave for the smoothest viewing experience.</p>
+            <h3 class="notification-subtitle">Why This Matters</h3>
+            <p>NowShowing pulls in video streams via third-party embedded players like VidSrc, SuperEmbed, 2Embed, and others. These sources often:</p>
+            <ul>
+                <li>Inject ads/popups before or during playback</li>
+                <li>Redirect users to unrelated pages</li>
+                <li>Load extra scripts that slow down or break the experience</li>
+                <li>Behave inconsistently across browsers depending on ad blockers or script permissions</li>
+            </ul>
+            <p>This makes the experience unreliable in default browsers like Chrome, Edge, or Safari — unless heavily modified with extensions.</p>
+        </div>
+    </div>
+
+    <div class="notification-modal" id="switch-source-notification-modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-switch-source-notification">&times;</span>
+            <h2 class="notification-title">Having trouble with this stream?</h2>
+            <p>Try clicking the other source buttons below the video player to find a working link!</p>
+            <p>Different sources may offer better performance or availability depending on your location and network.</p>
         </div>
     </div>
 
