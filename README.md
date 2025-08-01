@@ -7,7 +7,7 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **Movie Search:** Search for movies and TV shows using the OMDb API.
 *   **Movie/TV Show Details:** View titles, overviews, and posters.
 *   **Season & Episode Selection:** For TV shows, select specific seasons and episodes to watch.
-*   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to (default), VidCloud, fsapi.xyz, CurtStream (movies only), VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability, with robust handling for both movies and TV show episodes.
+*   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to (default), VidCloud, fsapi.xyz, CurtStream (movies only), VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability, with robust handling for both movies and TV show episodes. If no sources are available, a detailed notification will guide the user to troubleshoot and try other options.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices, with improved navbar layout on smaller screens.
 *   **Modern UI/UX:** Clean design with subtle animations, skeleton loading for a smooth user experience, and a dynamic hero section.
 *   **Movie/TV Show Navigation:** Easily switch between popular movies and TV shows using dedicated navigation links. (Note: Popular movie and TV show lists are currently hardcoded due to OMDb API limitations. For dynamic popular content, consider integrating an API like TMDb.)
@@ -69,3 +69,8 @@ This project relies on third-party video embedding services. The availability an
 *   **Improved Search:** Add more advanced search filters (e.g., year, director).
 *   **More Robust Backend Checks:** Enhance the backend to perform deeper content analysis (e.g., parsing HTML for "unavailable" messages).
 *   **Backend Integration:** Develop a more comprehensive backend to manage movie data and user preferences more efficiently.
+
+## Additional Documentation
+
+*   **API Documentation:** Detailed information on the serverless functions and their usage can be found in [API.md](api/API.md).
+*   **Troubleshooting Guide:** For common issues and their solutions, please refer to the [TROUBLESHOOTING.md](TROUBLESHOOTING.md) guide.
