@@ -14,6 +14,7 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **News Widget:** Stay updated with the latest movie and TV show news from GNews API, with a "Load More" option to fetch more articles (note: GNews free tier has limitations on pagination).
 *   **Video Modal:** Seamless video playback within a modal window with availability indicators, autoplay enabled, and comprehensive details including ratings (IMDb, Rotten Tomatoes, Metacritic), MPAA/TV rating, runtime, language, country, box office, production, and website. Improved performance and responsiveness for extended use by optimizing event listener management.
 *   **Accessibility Enhancements:** Improved keyboard navigation, focus management for modals, and added ARIA attributes for better screen reader compatibility.
+*   **Developer Message:** A dedicated button and modal to share a message from the developer, including contact information and GitHub profile.
 
 ## Technologies Used
 

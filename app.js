@@ -41,6 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const switchSourceNotificationModal = document.getElementById('switch-source-notification-modal');
     const closeSwitchSourceNotification = document.getElementById('close-switch-source-notification');
 
+    const developerMessageButton = document.getElementById('developer-message-button');
+    const developerMessageModal = document.getElementById('developer-message-modal');
+    const closeDeveloperMessageModal = document.getElementById('close-developer-message-modal');
+
     // Note: The opening mechanism for switchSourceNotificationModal (setting display: 'flex')
     // is not explicitly found in app.js. Ensure that wherever this modal is opened,
     // ui.trapFocus(switchSourceNotificationModal) is called to enable focus trapping.
@@ -713,6 +717,12 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (switchSourceNotificationModal.style.display === 'flex') {
                 switchSourceNotificationModal.style.display = 'none';
                 document.removeEventListener('keydown', ui.handleModalTabKey);
+            } else if (developerMessageModal.style.display === 'flex') {
+                developerMessageModal.style.display = 'none';
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus();
+                }
+                document.removeEventListener('keydown', ui.handleModalTabKey);
             }
         }
     });
@@ -809,6 +819,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target === notificationModal) {
             notificationModal.style.display = 'none';
             localStorage.setItem('hasSeenBraveNotification', 'true');
+            document.removeEventListener('keydown', ui.handleModalTabKey);
+        }
+    });
+
+    developerMessageButton.addEventListener('click', () => {
+        developerMessageModal.style.display = 'flex';
+        ui.trapFocus(developerMessageModal);
+    });
+
+    closeDeveloperMessageModal.addEventListener('click', () => {
+        developerMessageModal.style.display = 'none';
+        if (lastFocusedElement) {
+            lastFocusedElement.focus();
+        }
+        document.removeEventListener('keydown', ui.handleModalTabKey);
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === developerMessageModal) {
+            developerMessageModal.style.display = 'none';
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
             document.removeEventListener('keydown', ui.handleModalTabKey);
         }
     });

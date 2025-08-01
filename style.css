@@ -857,6 +857,20 @@ main {
     color: var(--primary-color);
 }
 
+.developer-message-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: color 0.2s ease;
+}
+
+.developer-message-button:hover {
+    color: var(--primary-color);
+}
+
 /* --- Notification Modal --- */
 .notification-modal {
     display: none; /* Hidden by default */
