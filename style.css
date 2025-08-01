@@ -771,7 +771,12 @@ main {
     }
 
     .theme-switch {
-        margin-left: 1rem;
+        margin-left: 0.8rem;
+    }
+
+    .notification-button,
+    .developer-message-button {
+        margin-left: 0.8rem;
     }
 
     .hamburger-menu {
