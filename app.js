@@ -41,6 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const switchSourceNotificationModal = document.getElementById('switch-source-notification-modal');
     const closeSwitchSourceNotification = document.getElementById('close-switch-source-notification');
 
+    // Note: The opening mechanism for switchSourceNotificationModal (setting display: 'flex')
+    // is not explicitly found in app.js. Ensure that wherever this modal is opened,
+    // ui.trapFocus(switchSourceNotificationModal) is called to enable focus trapping.
+    closeSwitchSourceNotification.addEventListener('click', () => {
+        switchSourceNotificationModal.style.display = 'none';
+        document.removeEventListener('keydown', ui.handleModalTabKey);
+    });
+
     // --- API & CONFIG ---
     
     let popularMoviesPage = 1;
@@ -48,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let newsPage = 1;
     let searchResultsPage = 1;
     let currentSearchQuery = '';
+    let lastFocusedElement = null; // To store the element that had focus before modal opened
 
     const videoSources = [
         { name: 'VidCloud', url: 'https://vidcloud.stream/', tvUrl: 'https://vidcloud.stream/' },
@@ -185,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             movieCard.innerHTML = `
                 <div class="movie-card-image-container">
                     <img src="${movie.Poster}" alt="${movie.Title}">
-                    <i class="fas fa-play play-icon"></i>
+                    <i class="fas fa-play play-icon" aria-hidden="true"></i>
                 </div>
                 <div class="movie-card-body">
                     <h3 class="movie-card-title">${movie.Title}</h3>
@@ -452,6 +461,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             videoModal.style.display = 'flex';
             videoPlayOverlay.style.display = 'flex'; // Show play overlay initially
+            lastFocusedElement = document.activeElement; // Save the element that had focus
+            videoModal.focus(); // Set focus to the modal
+            this.trapFocus(videoModal);
         },
 
         async populateEpisodes(imdbID, seasonNumber) {
@@ -592,6 +604,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 episodeSelect.removeEventListener('change', ui.currentEpisodeChangeListener);
                 ui.currentEpisodeChangeListener = null; // Clear reference
             }
+
+            if (lastFocusedElement) {
+                lastFocusedElement.focus(); // Return focus to the element that opened the modal
+                lastFocusedElement = null;
+            }
+            document.removeEventListener('keydown', this.handleModalTabKey);
+        },
+        handleModalTabKey: null, // To store the function reference for removal
+        trapFocus(modalElement) {
+            const focusableElements = modalElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstFocusableElement = focusableElements[0];
+            const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+            this.handleModalTabKey = (event) => {
+                const isTabPressed = (event.key === 'Tab' || event.keyCode === 9);
+
+                if (!isTabPressed) {
+                    return;
+                }
+
+                if (event.shiftKey) { // if shift key pressed for shift + tab combination
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus(); // add focus to the last focusable element
+                        event.preventDefault();
+                    }
+                } else { // if tab key is pressed
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus(); // add focus to the first focusable element
+                        event.preventDefault();
+                    }
+                }
+            };
+
+            document.addEventListener('keydown', this.handleModalTabKey);
         },
         constructVideoUrl(source, imdbID, season = null, episode = null, mediaType) {
             if (mediaType === 'series' && !source.tvUrl) return null; // Don't construct a URL if the source doesn't support TV shows
@@ -650,6 +696,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('click', (event) => {
         if (event.target === videoModal) {
             ui.closeVideoModal();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (videoModal.style.display === 'flex') {
+                ui.closeVideoModal();
+            } else if (notificationModal.style.display === 'flex') {
+                notificationModal.style.display = 'none';
+                localStorage.setItem('hasSeenBraveNotification', 'true');
+            } else if (switchSourceNotificationModal.style.display === 'flex') {
+                switchSourceNotificationModal.style.display = 'none';
+                document.removeEventListener('keydown', ui.handleModalTabKey);
+            }
         }
     });
 
@@ -727,21 +787,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasSeenNotification = localStorage.getItem('hasSeenBraveNotification');
     if (!hasSeenNotification) {
         notificationModal.style.display = 'flex';
+        ui.trapFocus(notificationModal);
     }
 
     notificationButton.addEventListener('click', () => {
         notificationModal.style.display = 'flex';
+        ui.trapFocus(notificationModal);
     });
 
     closeNotificationModal.addEventListener('click', () => {
         notificationModal.style.display = 'none';
         localStorage.setItem('hasSeenBraveNotification', 'true');
+        document.removeEventListener('keydown', ui.handleModalTabKey);
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === notificationModal) {
             notificationModal.style.display = 'none';
             localStorage.setItem('hasSeenBraveNotification', 'true');
+            document.removeEventListener('keydown', ui.handleModalTabKey);
         }
     });
 
