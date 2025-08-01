@@ -38,7 +38,7 @@ describe('check-video API', () => {
     );
 
     await handler(mockReq, mockRes);
-    expect(fetch).toHaveBeenCalledWith('http://example.com/video.mp4', { method: 'HEAD' });
+    expect(fetch).toHaveBeenCalledWith('http://example.com/video.mp4', { method: 'HEAD', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NowShowing/1.0)' } });
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(mockRes.json).toHaveBeenCalledWith({ url: 'http://example.com/video.mp4', available: true });
   });
@@ -52,7 +52,7 @@ describe('check-video API', () => {
     );
 
     await handler(mockReq, mockRes);
-    expect(fetch).toHaveBeenCalledWith('http://example.com/video.mp4', { method: 'HEAD' });
+    expect(fetch).toHaveBeenCalledWith('http://example.com/video.mp4', { method: 'HEAD', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NowShowing/1.0)' } });
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(mockRes.json).toHaveBeenCalledWith({ url: 'http://example.com/video.mp4', available: false });
   });
@@ -62,9 +62,9 @@ describe('check-video API', () => {
     fetch.mockImplementation(() => Promise.reject(new Error(errorMessage)));
 
     await handler(mockReq, mockRes);
-    expect(fetch).toHaveBeenCalledWith('http://example.com/video.mp4', { method: 'HEAD' });
+    expect(fetch).toHaveBeenCalledWith('http://example.com/video.mp4', { method: 'HEAD', headers: { 'User-Agent': 'Mozilla/5.0 (compatible; NowShowing/1.0)' } });
     expect(mockRes.status).toHaveBeenCalledWith(200);
-    expect(mockRes.json).toHaveBeenCalledWith({ url: 'http://example.com/video.mp4', available: false, error: errorMessage });
+    expect(mockRes.json).toHaveBeenCalledWith({ url: 'http://example.com/video.mp4', available: false, error: `Network error: ${errorMessage}` });
   });
 
   it('should return 405 for non-POST requests', async () => {

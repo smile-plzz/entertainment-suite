@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeSwitchSourceNotification = document.getElementById('close-switch-source-notification');
 
     // --- API & CONFIG ---
-    const apiKey = '1a944117';
+    
     let popularMoviesPage = 1;
     let popularTvShowsPage = 1;
     let newsPage = 1;
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         async fetchMovieByTitle(title, type = '') {
             try {
-                let url = `https://www.omdbapi.com/?t=${title}&apikey=${apiKey}`;
+                let url = `/api/omdb-proxy?title=${encodeURIComponent(title)}`;
                 if (type) {
                     url += `&type=${type}`;
                 }
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         async fetchMovieDetails(imdbID) {
             try {
-                const url = `https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=${apiKey}`;
+                const url = `/api/omdb-proxy?imdbID=${imdbID}&plot=full`;
                 console.log(`Fetching movie details for IMDB ID: ${imdbID}, URL: ${url}`);
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         async fetchMoviesBySearch(query, page = 1, type = '') {
             try {
-                let url = `https://www.omdbapi.com/?s=${query}&page=${page}&apikey=${apiKey}`;
+                let url = `/api/omdb-proxy?s=${encodeURIComponent(query)}&page=${page}`;
                 if (type) {
                     url += `&type=${type}`;
                 }
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         async fetchTvShowSeason(imdbID, seasonNumber) {
             try {
-                const url = `https://www.omdbapi.com/?i=${imdbID}&Season=${seasonNumber}&apikey=${apiKey}`;
+                const url = `/api/omdb-proxy?imdbID=${imdbID}&seasonNumber=${seasonNumber}`;
                 console.log(`Fetching season ${seasonNumber} for IMDB ID: ${imdbID}, URL: ${url}`);
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -240,6 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         async renderPopularMovies(append = false) {
+            // Popular titles are hardcoded as the OMDb API does not provide a direct endpoint for trending or popular movies.
+            // For dynamic popular lists, consider integrating a different API like TMDb.
             const popularTitles = ['Inception', 'The Matrix', 'Interstellar', 'The Avengers', 'Avatar', 'Titanic', 'Jurassic Park', 'Forrest Gump', 'The Lion King', 'Gladiator', 'Pulp Fiction', 'Fight Club', 'The Lord of the Rings', 'Star Wars', 'Dune'];
             const moviesPerPage = 4;
             const startIndex = (popularMoviesPage - 1) * moviesPerPage;
@@ -263,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         async renderPopularTvShows(append = false) {
+            // Popular TV show titles are hardcoded as the OMDb API does not provide a direct endpoint for trending or popular TV shows.
+            // For dynamic popular lists, consider integrating a different API like TMDb.
             const popularTitles = ['Breaking Bad', 'Game of Thrones', 'The Office', 'Friends', 'The Simpsons', 'Stranger Things', 'The Mandalorian', 'The Crown', 'Westworld', 'Chernobyl', 'The Witcher', 'Black Mirror'];
             const showsPerPage = 4;
             const startIndex = (popularTvShowsPage - 1) * showsPerPage;
@@ -328,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error('Error fetching news:', error);
                 if (!append) { // Only show the error message on the initial load
-                    newsGrid.innerHTML = `<p class="error-message">Could not load news. Please try again later.</p>`;
+                    newsGrid.innerHTML = `<p class="error-message">Could not load news: ${error.message}. Please try again later.</p>`;
                 }
                 loadMoreNewsButton.style.display = 'none';
             }
@@ -348,7 +352,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (results && results.Response === 'True' && results.Search) {
                 this.renderMovieGrid(searchResultsGrid, results.Search, append, loadMoreSearchButton, searchResultsPage, results.totalResults);
             } else {
-                this.displayError(results.Error || 'No movies or TV shows found. Please try another search.', searchResultsGrid);
+                let errorMessage = 'No movies or TV shows found. Please try another search.';
+                if (results.Error) {
+                    if (results.Error === 'Movie not found!') {
+                        errorMessage = 'No movies or TV shows found matching your search. Please try a different query.';
+                    } else if (results.Error.includes('limit')) {
+                        errorMessage = 'API request limit reached. Please try again later.';
+                    } else {
+                        errorMessage = `Error searching: ${results.Error}. Please try again.`;
+                    }
+                }
+                this.displayError(errorMessage, searchResultsGrid);
             }
         },
         showHomeView() {
@@ -427,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.loadVideoForMovie(imdbID);
                 }
             } else {
-                videoAvailabilityStatus.textContent = 'Could not fetch details for this title.';
+                videoAvailabilityStatus.textContent = `Could not fetch details for this title: ${details.Error || 'Unknown error.'}`;
                 videoAvailabilityStatus.style.display = 'block';
                 return;
             }
@@ -599,6 +613,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- EVENT LISTENERS ---
+    const setupLoadMoreButton = (button, pageVar, renderFunction, query = null) => {
+        button.addEventListener('click', () => {
+            window[pageVar]++;
+            renderFunction(true, query);
+        });
+    };
+
     searchButton.addEventListener('click', () => ui.renderSearchResults(searchInput.value.trim()));
     searchInput.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
@@ -641,25 +662,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    loadMorePopularButton.addEventListener('click', () => {
-        popularMoviesPage++;
-        ui.renderPopularMovies(true);
-    });
-
-    loadMoreSearchButton.addEventListener('click', () => {
-        searchResultsPage++;
-        ui.renderSearchResults(currentSearchQuery, true);
-    });
-
-    loadMorePopularTvButton.addEventListener('click', () => {
-        popularTvShowsPage++;
-        ui.renderPopularTvShows(true);
-    });
-
-    loadMoreNewsButton.addEventListener('click', () => {
-        newsPage++;
-        ui.renderNews(true);
-    });
+    setupLoadMoreButton(loadMorePopularButton, 'popularMoviesPage', ui.renderPopularMovies);
+    setupLoadMoreButton(loadMoreSearchButton, 'searchResultsPage', ui.renderSearchResults, currentSearchQuery);
+    setupLoadMoreButton(loadMorePopularTvButton, 'popularTvShowsPage', ui.renderPopularTvShows);
+    setupLoadMoreButton(loadMoreNewsButton, 'newsPage', ui.renderNews);
 
     moviesNavLink.addEventListener('click', (e) => {
         e.preventDefault();

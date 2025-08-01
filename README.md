@@ -10,7 +10,7 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **Multiple Streaming Sources:** Switch between different video sources (VidSrc.to (default), VidCloud, fsapi.xyz, CurtStream (movies only), VidSrc.xyz, VidSrc.in, SuperEmbed, MoviesAPI, 2Embed, Fmovies, LookMovie) for improved reliability, with robust handling for both movies and TV show episodes.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
 *   **Modern UI/UX:** Clean design with subtle animations, skeleton loading for a smooth user experience, and a dynamic hero section.
-*   **Movie/TV Show Navigation:** Easily switch between popular movies and TV shows using dedicated navigation links.
+*   **Movie/TV Show Navigation:** Easily switch between popular movies and TV shows using dedicated navigation links. (Note: Popular movie and TV show lists are currently hardcoded due to OMDb API limitations. For dynamic popular content, consider integrating an API like TMDb.)
 *   **News Widget:** Stay updated with the latest movie and TV show news from GNews API, with a "Load More" option to fetch more articles (note: GNews free tier has limitations on pagination).
 *   **Video Modal:** Seamless video playback within a modal window with availability indicators, autoplay enabled, and comprehensive details including ratings (IMDb, Rotten Tomatoes, Metacritic), MPAA/TV rating, runtime, language, country, box office, production, and website.
 
@@ -19,7 +19,7 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **HTML5:** For the website structure.
 *   **CSS3:** For styling and responsive design.
 *   **JavaScript (ES6+):** For dynamic content, API interactions, and UI logic.
-*   **Node.js (Vercel Serverless Function):** For backend video availability checks.
+*   **Node.js (Vercel Serverless Functions):** For backend video availability checks (`check-video.js`, `fetch-news.js`, `omdb-proxy.js`).
 *   **OMDb API:** Used to fetch movie and TV show data (titles, plots, posters, IMDb IDs, season/episode details).
 *   **Third-Party Video Embeds:** Integrates with various video embedding services (e.g., VidSrc, SuperEmbed, 2Embed, Fmovies, LookMovie) to stream content.
 
@@ -31,9 +31,12 @@ This project includes a small backend component (a Vercel Serverless Function) t
 
 1.  **Clone or Download:** Download the project files to your local machine.
 2.  **Install Dependencies:** Navigate to the project root in your terminal and run `npm install` to install both frontend and backend dependencies.
-3.  **Run Locally (for development with backend):**
+3.  **Testing:**
+    *   This project uses Jest for testing. The configuration is in `jest.config.cjs` and Babel configuration in `babel.config.cjs`.
+    *   Run tests using `npm test`.
+4.  **Run Locally (for development with backend):**
     *   Install Vercel CLI: `npm install -g vercel`
-    *   **Set OMDb API Key & GNews API Key:** Before running, set your OMDb API key and GNews API key as environment variables. For local development, you can create a `.env` file in your project root with `OMDB_API_KEY=your_omdb_api_key_here` and `GNEWS_API_KEY=your_gnews_api_key_here`.
+    *   **Set OMDb API Key & GNews API Key:** Before running, set your OMDb API key and GNews API key as environment variables. The OMDb API key is now used by a serverless proxy function to protect it from client-side exposure. For local development, you can create a `.env` file in your project root with `OMDB_API_KEY=your_omdb_api_key_here` and `GNEWS_API_KEY=your_gnews_api_key_here`.
     *   From the project root, run `vercel dev` to start a local development server that includes the serverless function.
     *   Open the URL provided by Vercel CLI (e.g., `http://localhost:3000`) in your browser.
 4.  **Deploy to Vercel:**
