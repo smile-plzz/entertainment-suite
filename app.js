@@ -500,6 +500,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 videoAvailabilityStatus.textContent = 'No video sources available.';
+                switchSourceNotificationModal.style.display = 'flex'; // Show the switch source notification
+                ui.trapFocus(switchSourceNotificationModal); // Trap focus within the notification modal
                 return;
             }
 
@@ -556,6 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 videoAvailabilityStatus.textContent = 'No TV show sources available.';
+                switchSourceNotificationModal.style.display = 'flex'; // Show the switch source notification
+                ui.trapFocus(switchSourceNotificationModal); // Trap focus within the notification modal
                 return;
             }
 
