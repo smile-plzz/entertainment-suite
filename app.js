@@ -164,6 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- UI RENDERING ---
+    // Best practice: For dynamically added elements or elements whose event listeners
+    // might change, store references to the listener functions and explicitly remove them
+    // when the element is no longer needed or its behavior changes, to prevent memory leaks.
     const ui = {
         displayError(message, container = searchResultsGrid) {
             container.innerHTML = `<h2 class="error-message">${message}</h2>`;
@@ -434,7 +437,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     seasonSelect.onchange = async (event) => {
                         await this.populateEpisodes(imdbID, event.target.value);
                     };
-                    episodeSelect.onchange = () => this.loadVideoForSelectedEpisode(imdbID);
+                    ui.currentEpisodeChangeListener = () => this.loadVideoForSelectedEpisode(imdbID);
+                    episodeSelect.addEventListener('change', ui.currentEpisodeChangeListener);
 
                 } else { // It's a movie
                     seasonEpisodeSelector.style.display = 'none';
@@ -574,10 +578,20 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         closeVideoModal() {
-            videoPlayer.src = '';
+            videoPlayer.src = 'about:blank'; // Clear iframe content to stop playback and release resources
             videoModal.style.display = 'none';
             videoAvailabilityStatus.style.display = 'none'; // Hide status when modal is closed
             videoPlayOverlay.style.display = 'none'; // Hide play overlay when modal is closed
+
+            // Remove event listeners to prevent memory leaks
+            if (seasonSelect && ui.currentSeasonChangeListener) {
+                seasonSelect.removeEventListener('change', ui.currentSeasonChangeListener);
+                ui.currentSeasonChangeListener = null; // Clear reference
+            }
+            if (episodeSelect && ui.currentEpisodeChangeListener) {
+                episodeSelect.removeEventListener('change', ui.currentEpisodeChangeListener);
+                ui.currentEpisodeChangeListener = null; // Clear reference
+            }
         },
         constructVideoUrl(source, imdbID, season = null, episode = null, mediaType) {
             if (mediaType === 'series' && !source.tvUrl) return null; // Don't construct a URL if the source doesn't support TV shows

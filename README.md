@@ -12,7 +12,7 @@ NowShowing is a simple, responsive movie streaming website that allows users to 
 *   **Modern UI/UX:** Clean design with subtle animations, skeleton loading for a smooth user experience, and a dynamic hero section.
 *   **Movie/TV Show Navigation:** Easily switch between popular movies and TV shows using dedicated navigation links. (Note: Popular movie and TV show lists are currently hardcoded due to OMDb API limitations. For dynamic popular content, consider integrating an API like TMDb.)
 *   **News Widget:** Stay updated with the latest movie and TV show news from GNews API, with a "Load More" option to fetch more articles (note: GNews free tier has limitations on pagination).
-*   **Video Modal:** Seamless video playback within a modal window with availability indicators, autoplay enabled, and comprehensive details including ratings (IMDb, Rotten Tomatoes, Metacritic), MPAA/TV rating, runtime, language, country, box office, production, and website.
+*   **Video Modal:** Seamless video playback within a modal window with availability indicators, autoplay enabled, and comprehensive details including ratings (IMDb, Rotten Tomatoes, Metacritic), MPAA/TV rating, runtime, language, country, box office, production, and website. Improved performance and responsiveness for extended use by optimizing event listener management.
 
 ## Technologies Used
 
