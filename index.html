@@ -1,36 +1,49 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NowShowing</title>
+    <title>Entertainment Suite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="navbar-brand">
-            <a href="#">NowShowing</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="navbar-content">
+                        <div class="navbar-brand">
+                            <a href="#">Entertainment Suite</a>
+                        </div>
+                        <ul class="navbar-nav" id="main-nav">
+                            <li><a href="#">Browse</a></li>
+                            <li><a href="news.html">News</a></li>
+                            <li><a href="#">My List</a></li>
+                        </ul>
+                        <div class="navbar-right">
+                            <div class="search-container">
+                                <input type="text" id="search-input-nav" placeholder="Search...">
+                                <button id="search-button-nav" aria-label="Search"><i class="fas fa-search"></i></button>
+                                <button id="voice-search-button" aria-label="Voice Search"><i class="fas fa-microphone"></i></button>
+                            </div>
+                            <button class="mood-nav-button" id="mood-nav-button" aria-label="Select Mood">
+                                <i class="fas fa-theater-masks"></i>
+                            </button>
+                            <button class="profile-button" id="profile-button" aria-label="Profile">
+                                <i class="fas fa-user"></i>
+                            </button>
+                        </div>
+                        <button class="hamburger-menu" id="hamburger-menu" aria-label="Open mobile menu">
+                            <i class="fas fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <ul class="navbar-nav" id="main-nav">
-            <li><a href="#">Home</a></li>
-            <li><a href="#" id="movies-nav-link">Movies</a></li>
-            <li><a href="#" id="tv-shows-nav-link">TV Shows</a></li>
-        </ul>
-        <div class="theme-switch">
-            <input type="checkbox" id="theme-toggle" class="theme-toggle">
-            <label for="theme-toggle"></label>
-        </div>
-        <button class="notification-button" id="notification-button" aria-label="Notifications">
-            <i class="fas fa-bell" aria-hidden="true"></i>
-        </button>
-        <button class="developer-message-button" id="developer-message-button" aria-label="Developer Message">
-            <i class="fas fa-info-circle" aria-hidden="true"></i>
-        </button>
-        <button class="hamburger-menu" id="hamburger-menu" aria-label="Open mobile menu">
-            <i class="fas fa-bars" aria-hidden="true"></i>
-        </button>
     </nav>
 
     <div class="mobile-nav-overlay" id="mobile-nav-overlay">
@@ -42,41 +55,118 @@
     </div>
 
     <section class="hero-section">
+        <video autoplay muted loop class="hero-video" id="hero-video">
+            <source src="https://videos.pexels.com/video-files/2759484/2759484-hd_1280_720_25fps.mp4" type="video/mp4">
+        </video>
         <div class="hero-content">
-            <h1 class="hero-title">Find Your Next Favorite Movie</h1>
-            <p class="hero-subtitle">Stream thousands of movies and TV shows for free.</p>
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search for a movie or TV show...">
-                <button id="search-button" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></button>
+            <div class="hero-text">
+                <h1 class="hero-title">The Silent Guardian</h1>
+                <div class="mood-labels">
+                    <span class="mood-label">🔥 Intense</span>
+                    <span class="mood-label">😢 Emotional</span>
+                </div>
+                <div class="hero-buttons">
+                    <button class="hero-button play-now"><i class="fas fa-play"></i> Play Now</button>
+                    <button class="hero-button add-to-list"><i class="fas fa-plus"></i> Add to List</button>
+                </div>
             </div>
         </div>
     </section>
 
-    
-
-    <main>
+    <main class="container">
         <section class="movies-section">
-            <h2>Popular Movies</h2>
-            <div class="movies-grid" id="popular-movies" aria-live="polite"></div>
-            <button id="load-more-popular" class="load-more-button">Load More</button>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Recommendations by Mood</h2>
+                    <div class="row" id="movie-recommendations" aria-live="polite"></div>
+                    <button id="load-more-mood-recommendations" class="load-more-button" style="display: none;">Load More</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Mood-matched picks</h2>
+                    <div class="carousel" id="mood-matched-carousel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Because you watched...</h2>
+                    <div class="carousel" id="because-you-watched-carousel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Top 10</h2>
+                    <div class="carousel" id="top-10-carousel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Originals</h2>
+                    <div class="carousel" id="originals-carousel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Continue Watching</h2>
+                    <div class="carousel" id="continue-watching-carousel"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Popular Movies</h2>
+                    <div class="row" id="popular-movies" aria-live="polite"></div>
+                    <button id="load-more-popular" class="load-more-button">Load More</button>
+                </div>
+            </div>
         </section>
 
         <section class="movies-section" style="display: none;">
-            <h2>Search Results</h2>
-            <div class="movies-grid" id="search-results" aria-live="polite"></div>
-            <button id="load-more-search" class="load-more-button">Load More</button>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Search Results</h2>
+                    <div class="row" id="search-results" aria-live="polite"></div>
+                    <button id="load-more-search" class="load-more-button">Load More</button>
+                </div>
+            </div>
         </section>
 
         <section class="movies-section" style="display: none;">
-            <h2>Popular TV Shows</h2>
-            <div class="movies-grid" id="popular-tv-shows" aria-live="polite"></div>
-            <button id="load-more-popular-tv" class="load-more-button">Load More</button>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Popular TV Shows</h2>
+                    <div class="row" id="popular-tv-shows" aria-live="polite"></div>
+                    <button id="load-more-popular-tv" class="load-more-button">Load More</button>
+                </div>
+            </div>
         </section>
 
         <section class="news-section">
-            <h2>Latest News</h2>
-            <div class="news-grid" id="news-grid" aria-live="polite"></div>
-            <button id="load-more-news" class="load-more-button" style="display: none;">Load More News</button>
+            <div class="row">
+                <div class="col-12">
+                    <h2>Latest News</h2>
+                    <div class="row" id="news-grid" aria-live="polite"></div>
+                    <button id="load-more-news" class="load-more-button" style="display: none;">Load More News</button>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -151,7 +241,7 @@
                 <li><strong>Enhanced privacy:</strong> Protection against unwanted tracking.</li>
                 <li><strong>Fewer interruptions:</strong> A cleaner viewing experience without pop-ups or redirects.</li>
             </ul>
-            <p>While we strive to make NowShowing work across all browsers, the nature of third-party video sources means that a browser like Brave, with its built-in protections, can offer a significantly smoother and more reliable streaming experience.</p>
+            <p>While we strive to make NowShowing work across all browsers, the nature of a browser like Brave, with its built-in protections, can offer a significantly smoother and more reliable streaming experience.</p>
         </div>
     </div>
 
@@ -159,7 +249,7 @@
         <div class="modal-content">
             <span class="close-button" id="close-switch-source-notification">&times;</span>
             <h2 class="notification-title">Having trouble with this stream?</h2>
-            <p>Video streams can sometimes be unreliable due to various factors, including:</p>
+            <p>Video streams can sometimes be unreliable due0to various factors, including:</p>
             <ul>
                 <li><strong>Browser Ad Blockers:</strong> Aggressive ad blockers might interfere with the video player.</li>
                 <li><strong>Geographical Restrictions:</strong> Some sources may not be available in your region.</li>
@@ -200,18 +290,55 @@
 
             <p><strong>Contact me:</strong> ismailhossain013@gmail.com | <a href="https://github.com/smile-plzz" target="_blank">GitHub: smile-plzz</a></p>
 
-            <p>Thanks for being here!
-            — Ismail</p>
-
             <p>(Fun fact: I also run a small video production firm called 15 Miles — we make drone films, documentaries, and creative content.)</p>
         </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; 2025 NowShowing. All Rights Reserved.</p>
+        <p>&copy; 2025 Entertainment Suite. All Rights Reserved.</p>
         <p>Powered by OMDb and VidSrc</p>
     </footer>
 
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" id="bottom-nav-mood-btn">
+            <i class="fas fa-theater-masks"></i>
+            <span>Mood</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>Browse</span>
+        </a>
+        <a href="news.html" class="nav-item">
+            <i class="fas fa-newspaper"></i>
+            <span>News</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <div class="mood-drawer" id="mood-drawer">
+        <div class="mood-drawer-header">
+            <h3>Select Your Mood</h3>
+            <button class="close-mood-drawer" id="close-mood-drawer">&times;</button>
+        </div>
+        <div class="mood-drawer-content">
+            <div class="mood-options">
+                <button class="mood-option-btn" data-mood="all">All</button>
+                <button class="mood-option-btn" data-mood="funny">🎭 Funny</button>
+                <button class="mood-option-btn" data-mood="romantic">😍 Romantic</button>
+                <button class="mood-option-btn" data-mood="mind-blown">🤯 Mind-blown</button>
+                <button class="mood-option-btn" data-mood="chill">😴 Chill</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
+    <script src="carousels.js"></script>
 </body>
 </html>

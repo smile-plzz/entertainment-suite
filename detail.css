@@ -1,0 +1,266 @@
+.detail-hero-section {
+    position: relative;
+    height: 70vh;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+    padding: 4rem 2rem;
+    overflow: hidden;
+}
+
+.hero-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -2;
+}
+
+.hero-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+    transform: scale(1.05); /* For parallax effect */
+}
+
+.hero-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 10%, transparent 80%);
+    z-index: -1;
+}
+
+.detail-hero-content {
+    z-index: 1;
+    max-width: 800px;
+}
+
+.detail-hero-content h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.meta-data span {
+    margin-right: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+.mood-tags {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.mood-tag {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-right: 0.5rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.detail-hero-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+}
+
+.detail-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.details-section h2, .episodes-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.cast-carousel .carousel-item {
+    width: 150px;
+    text-align: center;
+}
+
+.cast-carousel .carousel-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+}
+
+.cast-carousel .carousel-item p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+#details-container p {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+#details-container strong {
+    color: var(--text-color);
+}
+
+#ratings-reviews .rating-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: var(--card-background);
+    border-radius: 8px;
+}
+
+#ratings-reviews .rating-item strong {
+    font-size: 1.1rem;
+}
+
+#related-titles .movie-card {
+    margin-bottom: 1rem;
+}
+
+.trailer-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+}
+
+.trailer-modal .modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    background-color: var(--background-light);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.trailer-modal .close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: var(--text-color);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.trailer-modal .video-player-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    border-radius: 10px;
+}
+
+.trailer-modal iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.episodes-section {
+    margin-top: 3rem;
+}
+
+#season-selector, #episodes-list {
+    margin-bottom: 1.5rem;
+}
+
+#season-selector select, #episodes-list select {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+
+.episode-item {
+    background-color: var(--card-background);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.episode-item h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.episode-item p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.video-controls {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#video-availability-status {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.source-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.source-button {
+    background-color: var(--button-background);
+    color: var(--button-text);
+    border: 1px solid var(--button-border);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.source-button:hover {
+    background-color: var(--button-hover-background);
+}
+
+.source-button.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+.source-button.is-available {
+    border-color: #4CAF50; /* Green */
+}
+
+.source-button.is-unavailable {
+    border-color: #f44336; /* Red */
+    opacity: 0.7;
+}

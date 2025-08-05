@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="navbar-content">
+                        <div class="navbar-brand">
+                            <a href="index.html">Entertainment Suite</a>
+                        </div>
+                        <ul class="navbar-nav" id="main-nav">
+                            <li><a href="index.html">Browse</a></li>
+                            <li><a href="news.html">News</a></li>
+                            <li><a href="#">My List</a></li>
+                        </ul>
+                        <div class="navbar-right">
+                            <div class="search-container">
+                                <input type="text" id="search-input-nav" placeholder="Search...">
+                                <button id="search-button-nav" aria-label="Search"><i class="fas fa-search"></i></button>
+                            </div>
+                            <button class="mood-nav-button" id="mood-nav-button" aria-label="Select Mood">
+                                <i class="fas fa-theater-masks"></i>
+                            </button>
+                            <button class="profile-button" id="profile-button" aria-label="Profile">
+                                <i class="fas fa-user"></i>
+                            </button>
+                        </div>
+                        <button class="hamburger-menu" id="hamburger-menu" aria-label="Open mobile menu">
+                            <i class="fas fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="detail-hero-section">
+            <div class="hero-image-container">
+                <img src="" alt="" id="hero-image">
+                <div class="hero-image-overlay"></div>
+            </div>
+            <div class="detail-hero-content">
+                <h1 id="title"></h1>
+                <div class="meta-data">
+                    <span id="rating"></span>
+                    <span id="year"></span>
+                    <span id="runtime"></span>
+                </div>
+                <div class="mood-tags" id="mood-tags"></div>
+                <p id="plot"></p>
+                <div class="detail-buttons">
+                    <button class="hero-button play-trailer"><i class="fas fa-play"></i> Play Trailer</button>
+                    <button class="hero-button add-to-list"><i class="fas fa-plus"></i> Add to List</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="details-section">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Cast</h2>
+                    <div class="cast-carousel" id="cast-carousel"></div>
+                    <h2>Details</h2>
+                    <div id="details-container"></div>
+                    <h2>Ratings & Reviews</h2>
+                    <div id="ratings-reviews"></div>
+                </div>
+                <div class="col-md-4">
+                    <h2>Related Titles</h2>
+                    <div id="related-titles"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="episodes-section" style="display: none;">
+            <h2>Episodes</h2>
+            <div id="season-selector"></div>
+            <div id="episodes-list"></div>
+        </section>
+    </main>
+
+    <div class="trailer-modal" id="trailer-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="video-player-container">
+                <iframe id="trailer-player" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-controls">
+                <p id="video-availability-status">Loading video sources...</p>
+                <div id="source-buttons-container" class="source-buttons-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Entertainment Suite. All Rights Reserved.</p>
+        <p>Powered by OMDb and VidSrc</p>
+    </footer>
+
+    <script src="detail.js"></script>
+</body>
+</html>

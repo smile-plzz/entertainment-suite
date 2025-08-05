@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entertainment News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="news.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="navbar-content">
+                        <div class="navbar-brand">
+                            <a href="index.html">Entertainment Suite</a>
+                        </div>
+                        <ul class="navbar-nav" id="main-nav">
+                            <li><a href="index.html">Browse</a></li>
+                            <li><a href="news.html">News</a></li>
+                            <li><a href="#">My List</a></li>
+                        </ul>
+                        <div class="navbar-right">
+                            <div class="search-container">
+                                <input type="text" id="search-input-nav" placeholder="Search...">
+                                <button id="search-button-nav" aria-label="Search"><i class="fas fa-search"></i></button>
+                            </div>
+                            <button class="mood-nav-button" id="mood-nav-button" aria-label="Select Mood">
+                                <i class="fas fa-theater-masks"></i>
+                            </button>
+                            <button class="profile-button" id="profile-button" aria-label="Profile">
+                                <i class="fas fa-user"></i>
+                            </button>
+                        </div>
+                        <button class="hamburger-menu" id="hamburger-menu" aria-label="Open mobile menu">
+                            <i class="fas fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="news-section">
+            <h1>Latest Entertainment News</h1>
+            <div class="news-categories">
+                <button class="category-button active" data-category="trending">Trending</button>
+                <button class="category-button" data-category="behind-the-scenes">Behind the Scenes</button>
+                <button class="category-button" data-category="awards">Awards</button>
+                <button class="category-button" data-category="trailers">Trailers</button>
+            </div>
+            <div class="news-grid" id="news-grid"></div>
+            <button id="load-more-news" class="load-more-button">Load More News</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Entertainment Suite. All Rights Reserved.</p>
+        <p>Powered by GNews API</p>
+    </footer>
+
+    <script src="news.js"></script>
+</body>
+</html>

@@ -1,18 +1,18 @@
 # NowShowing Troubleshooting Guide
 
-This guide provides solutions to common issues you might encounter while using or developing the NowShowing application.
+This guide provides solutions to common issues you might encounter while using or developing the Entertainment Suite application.
 
 ## 1. Video Playback Issues (Continuous Reloading, Not Loading, Black Screen)
 
-**Problem:** The video player in the modal is continuously reloading, showing a black screen, or not loading the stream at all.
+**Problem:** The video player on the detail page is continuously reloading, showing a black screen, or not loading the stream at all.
 
 **Reason:** This is almost always due to the aggressive nature of third-party video embed services. They often employ tactics like ad injection, redirects, or anti-bot measures that are blocked by browsers (especially with ad blockers), leading to playback failures.
 
 **Solutions:**
 
-*   **Try Other Sources:** Inside the video modal, click the different source buttons below the video player. Green buttons indicate sources that are likely available, but sometimes a red (unavailable) source might still work, or vice-versa. Experiment with all available options.
-*   **Disable Ad Blocker (Temporarily):** If you are using an ad blocker (e.g., uBlock Origin, AdBlock Plus), try temporarily disabling it for `nowshowing-app.vercel.app` (or your local development URL) and then reloading the page. Ad blockers can sometimes interfere with legitimate video embeds.
-*   **Use Brave Browser:** NowShowing is optimized for Brave Browser. Brave has built-in ad and tracker blocking that handles many of these third-party embed issues more gracefully, often providing a smoother and more reliable streaming experience.
+*   **Try Other Sources:** On the detail page, if multiple video sources are available, try switching between them. Green buttons indicate sources that are likely available, but sometimes a red (unavailable) source might still work, or vice-versa. Experiment with all available options.
+*   **Disable Ad Blocker (Temporarily):** If you are using an ad blocker (e.g., uBlock Origin, AdBlock Plus), try temporarily disabling it for your application's domain (e.g., `entertainmentsuite.vercel.app` or your local development URL) and then reloading the page. Ad blockers can sometimes interfere with legitimate video embeds.
+*   **Use Brave Browser:** Entertainment Suite is optimized for Brave Browser. Brave has built-in ad and tracker blocking that handles many of these third-party embed issues more gracefully, often providing a smoother and more reliable streaming experience.
 *   **Check Your Internet Connection:** Ensure you have a stable and reasonably fast internet connection.
 *   **Clear Browser Cache:** Sometimes old cached data can cause conflicts. Try clearing your browser's cache and cookies.
 

@@ -82,6 +82,7 @@ Fetches news articles related to movies and TV shows.
 
 ## 3. OMDb Proxy API
 
+
 Proxies requests to the OMDb API to protect the API key from client-side exposure.
 
 *   **Endpoint:** `/api/omdb-proxy`
