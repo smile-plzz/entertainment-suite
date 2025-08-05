@@ -24,6 +24,38 @@
     {
       "src": "app.js",
       "use": "@vercel/static"
+    },
+    {
+      "src": "carousels.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "carousels.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "news.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "news.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "news.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "detail.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "detail.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "detail.css",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -34,6 +66,38 @@
     {
       "src": "/style.css",
       "dest": "/style.css"
+    },
+    {
+      "src": "/carousels.js",
+      "dest": "/carousels.js"
+    },
+    {
+      "src": "/carousels.css",
+      "dest": "/carousels.css"
+    },
+    {
+      "src": "/news.html",
+      "dest": "/news.html"
+    },
+    {
+      "src": "/news.js",
+      "dest": "/news.js"
+    },
+    {
+      "src": "/news.css",
+      "dest": "/news.css"
+    },
+    {
+      "src": "/detail.html",
+      "dest": "/detail.html"
+    },
+    {
+      "src": "/detail.js",
+      "dest": "/detail.js"
+    },
+    {
+      "src": "/detail.css",
+      "dest": "/detail.css"
     },
     {
       "src": "/api/check-video",

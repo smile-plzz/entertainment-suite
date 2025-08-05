@@ -36,6 +36,12 @@ Entertainment Suite is a web application that combines the features of two previ
     *   Set the `OMDB_API_KEY` and `GNEWS_API_KEY` environment variables in your Vercel project settings.
     *   Run `vercel deploy` to deploy the project.
 
+    **Important Vercel Configuration:**
+    Due to Vercel's default routing behavior, all static assets (HTML, CSS, JS files) must be explicitly listed in the `builds` and `routes` sections of `vercel.json` to ensure they are served correctly. If new static files are added, they must be added to `vercel.json`.
+
+    **Note on Video Background:**
+    The ambient video background on the homepage (`index.html`) using a Pexels video has been removed due to a 403 Forbidden error when deployed. If you wish to re-enable a video background, you will need to source a new video and update `index.html` accordingly.
+
 ## Additional Documentation
 
 *   **API Documentation:** Detailed information on the serverless functions and their usage can be found in [API.md](api/API.md).
