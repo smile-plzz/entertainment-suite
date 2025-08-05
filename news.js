@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (articles && articles.length > 0) {
                 articles.forEach(article => {
                     const newsCard = document.createElement('a');
-                    newsCard.className = 'news-card';
+                    newsCard.className = 'col-12 col-md-6 col-lg-4 news-card';
                     newsCard.href = article.url;
                     newsCard.target = '_blank';
 
                     newsCard.innerHTML = `
-                        <img src="\${article.urlToImage || ''}" alt="\${article.title}">
+                        <img src="\${article.urlToImage || 'https://via.placeholder.com/400x200?text=No+Image'}" alt="\${article.title}">
                         <div class="news-card-body">
                             <h3 class="news-card-title">\${article.title}</h3>
                             <p class="news-card-source">\${article.source.name}</p>
