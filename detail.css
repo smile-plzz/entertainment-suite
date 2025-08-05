@@ -4,7 +4,7 @@
     display: flex;
     align-items: flex-end;
     color: white;
-    padding: 4rem 2rem;
+    padding: var(--spacing-xl) var(--spacing-lg);
     overflow: hidden;
 }
 
@@ -44,45 +44,45 @@
 .detail-hero-content h1 {
     font-size: 4rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .meta-data span {
-    margin-right: 1.5rem;
-    font-size: 1.1rem;
+    margin-right: var(--spacing-md);
+    font-size: var(--font-size-lg);
     color: var(--text-light);
 }
 
 .mood-tags {
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
 .mood-tag {
     background-color: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    margin-right: 0.5rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-pill);
+    margin-right: var(--spacing-xs);
     font-weight: 600;
     display: inline-block;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .detail-hero-content p {
-    font-size: 1.1rem;
+    font-size: var(--font-size-lg);
     line-height: 1.8;
     color: var(--text-color);
 }
 
 .detail-buttons {
     display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
 }
 
 .details-section h2, .episodes-section h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1.5rem;
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--spacing-md);
     font-weight: 700;
     color: var(--text-color);
 }
@@ -97,17 +97,17 @@
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .cast-carousel .carousel-item p {
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     color: var(--text-light);
 }
 
 #details-container p {
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-md);
     color: var(--text-light);
 }
 
@@ -116,18 +116,18 @@
 }
 
 #ratings-reviews .rating-item {
-    margin-bottom: 1rem;
-    padding: 1rem;
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-sm);
     background-color: var(--card-background);
-    border-radius: 8px;
+    border-radius: var(--border-radius-md);
 }
 
 #ratings-reviews .rating-item strong {
-    font-size: 1.1rem;
+    font-size: var(--font-size-lg);
 }
 
 #related-titles .movie-card {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .trailer-modal {
@@ -149,17 +149,17 @@
     width: 90%;
     max-width: 900px;
     background-color: var(--background-light);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-lg);
 }
 
 .trailer-modal .close-button {
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: var(--spacing-sm);
+    right: var(--spacing-md);
     color: var(--text-color);
-    font-size: 2rem;
+    font-size: var(--font-size-xxl);
     cursor: pointer;
 }
 
@@ -170,7 +170,7 @@
     overflow: hidden;
     max-width: 100%;
     background: #000;
-    border-radius: 10px;
+    border-radius: var(--border-radius-md);
 }
 
 .trailer-modal iframe {
@@ -182,77 +182,77 @@
 }
 
 .episodes-section {
-    margin-top: 3rem;
+    margin-top: var(--spacing-xl);
 }
 
 #season-selector, #episodes-list {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-md);
 }
 
 #season-selector select, #episodes-list select {
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
     border: 1px solid var(--border-color);
     background-color: var(--card-background);
     color: var(--text-color);
-    font-size: 1rem;
-    margin-right: 1rem;
+    font-size: var(--font-size-md);
+    margin-right: var(--spacing-sm);
 }
 
 .episode-item {
     background-color: var(--card-background);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 .episode-item h4 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-color);
 }
 
 .episode-item p {
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     color: var(--text-light);
 }
 
 .video-controls {
-    margin-top: 1rem;
+    margin-top: var(--spacing-sm);
     text-align: center;
 }
 
 #video-availability-status {
     color: var(--text-light);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
 .source-buttons-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
 }
 
 .source-button {
-    background-color: var(--button-background);
-    color: var(--button-text);
-    border: 1px solid var(--button-border);
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed) var(--transition-timing);
 }
 
 .source-button:hover {
-    background-color: var(--button-hover-background);
+    background-color: var(--border-color);
 }
 
 .source-button.active {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
     color: white;
 }
 
@@ -261,6 +261,6 @@
 }
 
 .source-button.is-unavailable {
-    border-color: #f44336; /* Red */
+    border-color: var(--error-color); /* Red */
     opacity: 0.7;
 }

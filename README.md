@@ -10,7 +10,7 @@ Entertainment Suite is a simple, responsive movie streaming website that allows 
 *   **Season & Episode Selection:** For TV shows, select specific seasons and episodes to watch.
 *   **Multiple Streaming Sources:** Switch between different video sources for improved reliability.
 *   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
-*   **Modern UI/UX:** A dark-mode-first design with subtle animations and a dynamic hero section.
+*   **Modern UI/UX:** A dark-mode-first design with a consistent and refined visual language, utilizing CSS variables for cohesive styling, subtle animations, and a dynamic hero section.
 
 *   **News Widget:** Stay updated with the latest movie and TV show news from GNews API.
 *   **Video Modal:** Seamless video playback within a modal window with availability indicators and comprehensive details.

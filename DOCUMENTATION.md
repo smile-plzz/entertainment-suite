@@ -11,7 +11,8 @@ Entertainment Suite is a web application that combines the features of two previ
 *   **Movie/TV Show Details Page:** View titles, overviews, posters, and other details on a dedicated page (`detail.html`).
 *   **Streaming:** Stream movies and TV shows from multiple third-party sources on the `detail.html` page.
 *   **News Widget:** Stay updated with the latest movie and TV show news from the GNews API.
-*   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices.
+*   **Responsive Design:** Optimized for viewing on desktops, tablets, and mobile devices, with a consistent and adaptive layout.
+*   **Modern UI/UX:** A dark-mode-first design with a refined visual language, utilizing CSS variables for cohesive styling, subtle animations, and a dynamic hero section.
 
 ## Tech Stack
 

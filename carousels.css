@@ -18,7 +18,7 @@
 .carousel-item {
     flex: 0 0 auto;
     width: 200px;
-    margin-right: 1rem;
+    margin-right: var(--spacing-md);
     scroll-snap-align: start;
 }
 
@@ -37,7 +37,13 @@
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 1rem;
+    padding: var(--spacing-sm);
     cursor: pointer;
     z-index: 1;
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-speed) var(--transition-timing);
+}
+
+.carousel-nav button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
 }

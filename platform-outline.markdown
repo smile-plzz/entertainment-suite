@@ -73,6 +73,18 @@ A dark-mode-first platform with emotionally intuitive navigation, smooth micro-i
 - Click → Slide-over article drawer
 - "Mood Tag" on news for personalization (e.g., 🔥 Hype News)
 
+### Phase 5: Visual Design Refinement and Consistency
+
+**Objective:** Conduct a comprehensive review and overhaul of the application's visual design and styling to ensure consistency, maintainability, and address specific UI bugs.
+
+**Tasks:**
+
+1.  **News Preview Bug Fix:** Modified `news.js` to include `article.description` in news cards and updated `news.css` to style the new description, resolving the news preview bug.
+2.  **Centralized Design Tokens:** Introduced a comprehensive `:root` section in `style.css` to define CSS variables for colors, fonts, spacing, shadows, and transitions, establishing a consistent design system.
+3.  **CSS File Alignment:** Updated `news.css`, `detail.css`, and `carousels.css` to utilize the newly defined CSS variables, ensuring all styling adheres to the new design tokens.
+4.  **HTML Refactoring:** Removed inline `style="display: none;"` attributes from `index.html` sections and buttons.
+5.  **JavaScript Refactoring:** Updated `app.js` to use `classList.add()` and `classList.remove()` with new `hidden-section` and `hidden-button` classes (defined in `style.css`) for managing element visibility, replacing direct `style.display` manipulations. This improves maintainability and aligns with modern CSS practices.
+
 
 
 ## 🎭 Mood Discovery UX

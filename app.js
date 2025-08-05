@@ -130,11 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
         displayError(message, container = searchResultsGrid) {
             container.innerHTML = `<h2 class="error-message">${message}</h2>`;
             if (container === searchResultsGrid) {
-                searchResultsSection.style.display = 'block';
-                popularMoviesSection.style.display = 'none';
+                searchResultsSection.classList.remove('hidden-section');
+                popularMoviesSection.classList.add('hidden-section');
             }
-            loadMorePopularButton.style.display = 'none';
-            loadMoreSearchButton.style.display = 'none';
+            loadMorePopularButton.classList.add('hidden-button');
+            loadMoreSearchButton.classList.add('hidden-button');
         },
         createMovieCard(movie) {
             if (!movie || !movie.Poster || movie.Poster === 'N/A') return null;
@@ -184,9 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (hasMore) {
-                    loadMoreButton.style.display = 'block';
+                    loadMoreButton.classList.remove('hidden-button');
                 } else {
-                    loadMoreButton.style.display = 'none';
+                    loadMoreButton.classList.add('hidden-button');
                 }
             }
         },
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const titlesToLoad = popularTitles.slice(startIndex, endIndex);
 
             if (titlesToLoad.length === 0 && append) {
-                loadMorePopularButton.style.display = 'none';
+                loadMorePopularButton.classList.add('hidden-button');
                 return;
             }
 
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const titlesToLoad = popularTitles.slice(startIndex, endIndex);
 
             if (titlesToLoad.length === 0 && append) {
-                loadMorePopularTvButton.style.display = 'none';
+                loadMorePopularTvButton.classList.add('hidden-button');
                 return;
             }
 
@@ -263,24 +263,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         },
         showHomeView() {
-            popularMoviesSection.style.display = 'block';
-            searchResultsSection.style.display = 'none';
-            popularTvShowsSection.style.display = 'none';
+            popularMoviesSection.classList.remove('hidden-section');
+            searchResultsSection.classList.add('hidden-section');
+            popularTvShowsSection.classList.add('hidden-section');
             searchInputNav.value = '';
-            loadMorePopularButton.style.display = 'block';
+            loadMorePopularButton.classList.remove('hidden-button');
             popularMoviesPage = 1;
             this.renderPopularMovies();
         },
         showSearchView() {
-            popularMoviesSection.style.display = 'none';
-            searchResultsSection.style.display = 'block';
-            popularTvShowsSection.style.display = 'none';
+            popularMoviesSection.classList.add('hidden-section');
+            searchResultsSection.classList.remove('hidden-section');
+            popularTvShowsSection.classList.add('hidden-section');
         },
         showNewsView() {
-            popularMoviesSection.style.display = 'none';
-            searchResultsSection.style.display = 'none';
-            popularTvShowsSection.style.display = 'none';
-            newsSection.style.display = 'block';
+            popularMoviesSection.classList.add('hidden-section');
+            searchResultsSection.classList.add('hidden-section');
+            popularTvShowsSection.classList.add('hidden-section');
+            newsSection.classList.remove('hidden-section');
         },
         async renderNews(append = false) {
             if (!append) {
@@ -307,9 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         newsGrid.appendChild(newsCard);
                     });
                     if (newsPage * 10 < data.totalResults) {
-                        loadMoreNewsButton.style.display = 'block';
+                        loadMoreNewsButton.classList.remove('hidden-button');
                     } else {
-                        loadMoreNewsButton.style.display = 'none';
+                        loadMoreNewsButton.classList.add('hidden-button');
                     }
                 } else {
                     this.displayError('No news articles found.', newsGrid);
@@ -382,13 +382,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            if (notificationModal.style.display === 'flex') {
-                notificationModal.style.display = 'none';
+            if (notificationModal.classList.contains('open')) {
+                notificationModal.classList.remove('open');
                 localStorage.setItem('hasSeenBraveNotification', 'true');
-            } else if (switchSourceNotificationModal.style.display === 'flex') {
-                switchSourceNotificationModal.style.display = 'none';
-            } else if (developerMessageModal.style.display === 'flex') {
-                developerMessageModal.style.display = 'none';
+            } else if (switchSourceNotificationModal.classList.contains('open')) {
+                switchSourceNotificationModal.classList.remove('open');
+            } else if (developerMessageModal.classList.contains('open')) {
+                developerMessageModal.classList.remove('open');
                 if (lastFocusedElement) {
                     lastFocusedElement.focus();
                 }
@@ -406,31 +406,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Notification Logic ---
     const hasSeenNotification = localStorage.getItem('hasSeenBraveNotification');
     if (!hasSeenNotification) {
-        notificationModal.style.display = 'flex';
+        notificationModal.classList.add('open');
     }
 
     notificationButton.addEventListener('click', () => {
-        notificationModal.style.display = 'flex';
+        notificationModal.classList.add('open');
     });
 
     closeNotificationModal.addEventListener('click', () => {
-        notificationModal.style.display = 'none';
+        notificationModal.classList.remove('open');
         localStorage.setItem('hasSeenBraveNotification', 'true');
     });
 
     window.addEventListener('click', (event) => {
         if (event.target === notificationModal) {
-            notificationModal.style.display = 'none';
+            notificationModal.classList.remove('open');
             localStorage.setItem('hasSeenBraveNotification', 'true');
         }
     });
 
     developerMessageButton.addEventListener('click', () => {
-        developerMessageModal.style.display = 'flex';
+        developerMessageModal.classList.add('open');
     });
 
     closeDeveloperMessageModal.addEventListener('click', () => {
-        developerMessageModal.style.display = 'none';
+        developerMessageModal.classList.remove('open');
         if (lastFocusedElement) {
             lastFocusedElement.focus();
         }
@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('click', (event) => {
         if (event.target === developerMessageModal) {
-            developerMessageModal.style.display = 'none';
+            developerMessageModal.classList.remove('open');
             if (lastFocusedElement) {
                 lastFocusedElement.focus();
             }

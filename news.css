@@ -1,11 +1,11 @@
 .news-section {
-    padding: 2rem 0;
+    padding: var(--spacing-lg) 0;
 }
 
 .news-section h1 {
-    font-size: 2.5rem;
+    font-size: var(--font-size-xxl);
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
     color: var(--text-color);
     text-align: center;
 }
@@ -14,53 +14,54 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
 }
 
 .category-button {
-    background-color: var(--button-background);
-    color: var(--button-text);
-    border: 1px solid var(--button-border);
-    padding: 0.7rem 1.5rem;
-    border-radius: 25px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius-pill);
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    font-size: 1rem;
+    transition: all var(--transition-speed) var(--transition-timing);
+    font-size: var(--font-size-md);
     font-weight: 600;
 }
 
 .category-button:hover {
-    background-color: var(--button-hover-background);
+    background-color: var(--border-color);
+    color: white;
 }
 
 .category-button.active {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
     color: white;
 }
 
 .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: var(--spacing-lg);
 }
 
 .news-card {
     display: flex;
     flex-direction: column;
     background-color: var(--card-background);
-    border-radius: 12px;
+    border-radius: var(--border-radius-lg);
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform var(--transition-speed) var(--transition-timing), box-shadow var(--transition-speed) var(--transition-timing);
     height: 100%;
 }
 
 .news-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
 }
 
 .news-card img {
@@ -70,7 +71,7 @@
 }
 
 .news-card-body {
-    padding: 1.5rem;
+    padding: var(--spacing-md);
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -78,32 +79,44 @@
 }
 
 .news-card-title {
-    font-size: 1.3rem;
+    font-size: var(--font-size-xl);
     font-weight: 700;
     margin-top: 0;
-    margin-bottom: 0.8rem;
+    margin-bottom: var(--spacing-sm);
     color: var(--text-color);
 }
 
 .news-card-source {
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
     color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
+.news-card-description {
+    font-size: var(--font-size-md);
+    color: var(--text-color);
+    margin-top: var(--spacing-xs);
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+}
+
 .load-more-button {
     display: block;
-    margin: 3rem auto 0 auto;
+    margin: var(--spacing-xl) auto 0 auto;
     background-color: var(--accent-color);
     color: white;
     border: none;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-size: 1.1rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-lg);
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color var(--transition-speed) var(--transition-timing);
 }
 
 .load-more-button:hover {
@@ -113,6 +126,6 @@
 .error-message {
     text-align: center;
     color: var(--error-color);
-    font-size: 1.2rem;
-    margin-top: 2rem;
+    font-size: var(--font-size-lg);
+    margin-top: var(--spacing-xl);
 }

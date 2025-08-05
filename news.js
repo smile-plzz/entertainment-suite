@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="news-card-body">
                             <h3 class="news-card-title">\${article.title}</h3>
                             <p class="news-card-source">\${article.source.name}</p>
+                            <p class="news-card-description">\${article.description || ''}</p>
                         </div>
                     `;
                     newsGrid.appendChild(newsCard);

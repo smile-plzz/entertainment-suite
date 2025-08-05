@@ -35,3 +35,15 @@
 *   **Removed associated event listeners:** Cleaned up event listeners that were tied to the removed DOM elements and functions.
 *   **Updated `createMovieCard`:** Modified the function to redirect to `detail.html` with the `imdbID` as a query parameter when a movie card is clicked.
 *   **Simplified `init` function:** Removed theme-related logic and the `moodGenreMapping` fetch, as these will be handled elsewhere or are no longer needed in `app.js`'s scope.
+
+### Visual Design and Styling Overhaul
+
+**Objective:** Enhance the overall visual design and consistency of the application, fix the news preview bug, and refactor styling for better maintainability.
+
+**Changes Made:**
+
+*   **News Preview Bug Fix:** Modified `news.js` to include `article.description` in news cards and updated `news.css` to style the new description, resolving the news preview bug.
+*   **Centralized Design Tokens:** Introduced a comprehensive `:root` section in `style.css` to define CSS variables for colors, fonts, spacing, shadows, and transitions, establishing a consistent design system.
+*   **CSS File Alignment:** Updated `news.css`, `detail.css`, and `carousels.css` to utilize the newly defined CSS variables, ensuring all styling adheres to the new design tokens.
+*   **HTML Refactoring:** Removed inline `style="display: none;"` attributes from `index.html` sections and buttons.
+*   **JavaScript Refactoring:** Updated `app.js` to use `classList.add()` and `classList.remove()` with new `hidden-section` and `hidden-button` classes (defined in `style.css`) for managing element visibility, replacing direct `style.display` manipulations. This improves maintainability and aligns with modern CSS practices.
