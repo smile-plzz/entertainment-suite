@@ -36,23 +36,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const api = {
         async fetchMovieDetails(imdbID) {
             try {
-                const url = `/api/omdb-proxy?imdbID=\${imdbID}&plot=full`;
+                const url = `/api/omdb-proxy?imdbID=${imdbID}&plot=full`;
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: \${response.status}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 return await response.json();
             } catch (error) {
-                console.error(`Error fetching movie details (\${imdbID}):`, error);
+                console.error(`Error fetching movie details (${imdbID}):`, error);
                 return { Response: 'False', Error: error.message };
             }
         },
         async fetchTvShowSeason(imdbID, seasonNumber) {
             try {
-                const url = `/api/omdb-proxy?imdbID=\${imdbID}&seasonNumber=\${seasonNumber}`;
+                const url = `/api/omdb-proxy?imdbID=${imdbID}&seasonNumber=${seasonNumber}`;
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: \${response.status}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 return await response.json();
             } catch (error) {
-                console.error(`Error fetching season \${seasonNumber} for \${imdbID}:`, error);
+                console.error(`Error fetching season ${seasonNumber} for ${imdbID}:`, error);
                 return { Response: 'False', Error: error.message };
             }
         },
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 return data.available;
             } catch (error) {
-                console.error(`Error checking video availability for \${url}:`, error);
+                console.error(`Error checking video availability for ${url}:`, error);
                 return false;
             }
         },
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayMovieDetails(details) {
             heroImage.src = details.Poster !== 'N/A' ? details.Poster : '';
             titleElement.textContent = details.Title;
-            ratingElement.textContent = `IMDb: \${details.imdbRating}`;
+            ratingElement.textContent = `IMDb: ${details.imdbRating}`;
             yearElement.textContent = details.Year;
             runtimeElement.textContent = details.Runtime;
             plotElement.textContent = details.Plot;
@@ -112,17 +112,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Details section
             detailsContainer.innerHTML = `
-                <p><strong>Director:</strong> \${details.Director}</p>
-                <p><strong>Writer:</strong> \${details.Writer}</p>
-                <p><strong>Actors:</strong> \${details.Actors}</p>
-                <p><strong>Awards:</strong> \${details.Awards}</p>
-                <p><strong>Language:</strong> \${details.Language}</p>
-                <p><strong>Country:</strong> \${details.Country}</p>
-                <p><strong>Rated:</strong> \${details.Rated}</p>
-                <p><strong>Released:</strong> \${details.Released}</p>
-                <p><strong>Box Office:</strong> \${details.BoxOffice}</p>
-                <p><strong>Production:</strong> \${details.Production}</p>
-                <p><strong>Website:</strong> <a href="\${details.Website}" target="_blank">\${details.Website}</a></p>
+                <p><strong>Director:</strong> ${details.Director}</p>
+                <p><strong>Writer:</strong> ${details.Writer}</p>
+                <p><strong>Actors:</strong> ${details.Actors}</p>
+                <p><strong>Awards:</strong> ${details.Awards}</p>
+                <p><strong>Language:</strong> ${details.Language}</p>
+                <p><strong>Country:</strong> ${details.Country}</p>
+                <p><strong>Rated:</strong> ${details.Rated}</p>
+                <p><strong>Released:</strong> ${details.Released}</p>
+                <p><strong>Box Office:</strong> ${details.BoxOffice}</p>
+                <p><strong>Production:</strong> ${details.Production}</p>
+                <p><strong>Website:</strong> <a href="${details.Website}" target="_blank">${details.Website}</a></p>
             `;
 
             // Ratings & Reviews
@@ -130,13 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (details.Ratings && details.Ratings.length > 0) {
                 details.Ratings.forEach(rating => {
                     const p = document.createElement('p');
-                    p.innerHTML = `<strong>\${rating.Source}:</strong> \${rating.Value}`;
+                    p.innerHTML = `<strong>${rating.Source}:</strong> ${rating.Value}`;
                     ratingsReviewsContainer.appendChild(p);
                 });
             }
 
             // Cast (simplified for now, would need more data/carousel logic)
-            castCarousel.innerHTML = `<p><strong>Cast:</strong> \${details.Actors}</p>`;
+            castCarousel.innerHTML = `<p><strong>Cast:</strong> ${details.Actors}</p>`;
 
             // Related Titles (placeholder)
             relatedTitlesContainer.innerHTML = '<p>Related titles coming soon...</p>';
@@ -150,14 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 seasonData.Episodes.forEach(episode => {
                     const option = document.createElement('option');
                     option.value = episode.Episode;
-                    option.textContent = `Episode \${episode.Episode}: \${episode.Title}`;
+                    option.textContent = `Episode ${episode.Episode}: ${episode.Title}`;
                     episodeSelect.appendChild(option);
 
                     const episodeDiv = document.createElement('div');
                     episodeDiv.className = 'episode-item';
                     episodeDiv.innerHTML = `
-                        <h4>E\${episode.Episode}: \${episode.Title}</h4>
-                        <p>\${episode.Plot}</p>
+                        <h4>E${episode.Episode}: ${episode.Title}</h4>
+                        <p>${episode.Plot}</p>
                     `;
                     episodesListContainer.appendChild(episodeDiv);
                 });
@@ -174,27 +174,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (mediaType === 'series' && !source.tvUrl) return null;
 
             let baseUrl = mediaType === 'series' && source.tvUrl ? source.tvUrl : source.url;
-            let url = `\${baseUrl}\${id}`;
+            let url = `${baseUrl}${id}`;
 
             if (mediaType === 'series' && season && episode) {
                 if (source.name.includes('VidSrc')) {
-                    url = `\${baseUrl}\${id}/\${season}/\${episode}`;
+                    url = `${baseUrl}${id}/${season}/${episode}`;
                 } else if (source.name === 'VidCloud') {
-                    url = `\${baseUrl}\${id}-S\${season}-E\${episode}.html`;
+                    url = `${baseUrl}${id}-S${season}-E${episode}.html`;
                 } else if (source.name === 'fsapi.xyz') {
-                    url = `\${baseUrl}\${id}-\${season}-\${episode}`;
+                    url = `${baseUrl}${id}-${season}-${episode}`;
                 } else if (source.name === '2Embed') {
-                    url = `\${baseUrl}tv?id=\${id}&s=\${season}&e=\${episode}`;
+                    url = `${baseUrl}tv?id=${id}&s=${season}&e=${episode}`;
                 } else if (source.name === 'SuperEmbed') {
-                    url = `\${baseUrl}\${id}-\${season}-\${episode}`;
+                    url = `${baseUrl}${id}-${season}-${episode}`;
                 } else if (source.name === 'MoviesAPI') {
-                    url = `\${baseUrl}\${id}/season/\${season}/episode/\${episode}`;
+                    url = `${baseUrl}${id}/season/${season}/episode/${episode}`;
                 } else if (source.name === 'Fmovies') {
-                    url = `\${baseUrl}tv/\${id}/season/\${season}/episode/\${episode}`;
+                    url = `${baseUrl}tv/${id}/season/${season}/episode/${episode}`;
                 } else if (source.name === 'LookMovie') {
-                    url = `\${baseUrl}tv/\${id}/season/\${season}/episode/\${episode}`;
+                    url = `${baseUrl}tv/${id}/season/${season}/episode/${episode}`;
                 } else {
-                    url = `\${baseUrl}\${id}-S\${season}E\${episode}`;
+                    url = `${baseUrl}${id}-S${season}E${episode}`;
                 }
             }
             return url;
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let i = 1; i <= parseInt(details.totalSeasons); i++) {
                     const option = document.createElement('option');
                     option.value = i;
-                    option.textContent = `Season \${i}`;
+                    option.textContent = `Season ${i}`;
                     seasonSelect.appendChild(option);
                 }
 
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
         } else {
-            document.querySelector('main').innerHTML = `<p class="error-message">Could not fetch details for this title: \${details.Error || 'Unknown error.'}</p>`;
+            document.querySelector('main').innerHTML = `<p class="error-message">Could not fetch details for this title: ${details.Error || 'Unknown error.'}</p>`;
         }
     }
 
