@@ -300,13 +300,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Add event listener for episode selection change
                 episodeSelect.addEventListener('change', () => {
-                    document.querySelector('.play-trailer').dispatchEvent(new Event('click'));
+                    document.querySelector('.watch-now').dispatchEvent(new Event('click'));
                 });
 
             }
 
-            // Attach play trailer button event listener
-            document.querySelector('.play-trailer').addEventListener('click', () => {
+            // Attach watch now button event listener
+            document.querySelector('.watch-now').addEventListener('click', () => {
                 const mediaType = details.Type;
                 let season = null;
                 let episode = null;
