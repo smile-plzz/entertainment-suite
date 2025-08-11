@@ -4,16 +4,278 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entertainment Suite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Entertainment Suite!</h1>
-        <p>Choose your entertainment:</p>
-        <ul>
-            <li><a href="src/movie-recommendations/index.html">Movie Recommendations (Based on Mood)</a></li>
-            <li><a href="src/now-showing/index.html">Now Showing (Movie Streaming)</a></li>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="#">Entertainment Suite</a>
+        </div>
+        <ul class="navbar-nav" id="main-nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#" id="movies-nav-link">Movies</a></li>
+            <li><a href="#" id="tv-shows-nav-link">TV Shows</a></li>
+        </ul>
+        <div class="theme-switch">
+            <input type="checkbox" id="theme-toggle" class="theme-toggle">
+            <label for="theme-toggle"></label>
+        </div>
+        <button class="notification-button" id="notification-button" aria-label="Notifications">
+            <i class="fas fa-bell" aria-hidden="true"></i>
+        </button>
+        <button class="developer-message-button" id="developer-message-button" aria-label="Developer Message">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+        </button>
+        <button class="hamburger-menu" id="hamburger-menu" aria-label="Open mobile menu">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+    </nav>
+
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+        <ul class="mobile-nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#" id="mobile-movies-nav-link">Movies</a></li>
+            <li><a href="#" id="mobile-tv-shows-nav-link">TV Shows</a></li>
         </ul>
     </div>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Find Your Next Favorite Movie</h1>
+            <p class="hero-subtitle">Stream thousands of movies and TV shows for free.</p>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for a movie or TV show...">
+                <button id="search-button" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section class="movies-section">
+            <h2>Movie Recommendations Based on Mood</h2>
+            <div class="mood-selector">
+                <button class="mood-btn" data-mood="Happy">Happy</button>
+                <button class="mood-btn" data-mood="Sad">Sad</button>
+                <button class="mood-btn" data-mood="Excited">Excited</button>
+                <button class="mood-btn" data-mood="Relaxed">Relaxed</button>
+                <button class="mood-btn" data-mood="Angry">Angry</button>
+                <button class="mood-btn" data-mood="Scared">Scared</button>
+                <button class="mood-btn" data-mood="Inspired">Inspired</button>
+                <button class="mood-btn" data-mood="Nostalgic">Nostalgic</button>
+                <button class="mood-btn" data-mood="Curious">Curious</button>
+                <button class="mood-btn" data-mood="Romantic">Romantic</button>
+                <button class="mood-btn" data-mood="Adventurous">Adventurous</button>
+                <button class="mood-btn" data-mood="Thoughtful">Thoughtful</button>
+                <button class="mood-btn" data-mood="Anxious">Anxious</button>
+                <button class="mood-btn" data-mood="Hopeful">Hopeful</button>
+                <button class="mood-btn" data-mood="Playful">Playful</button>
+                <button class="mood-btn" data-mood="Adult">Adult</button>
+            </div>
+            <div class="category-selector">
+                <h2>Browse by Category</h2>
+                <div id="category-buttons">
+                    <!-- Category buttons will be loaded here by JavaScript -->
+                </div>
+            </div>
+            <div class="controls">
+                <label for="sort-by">Sort by:</label>
+                <select id="sort-by">
+                    <option value="popularity">Popularity</option>
+                    <option value="title">Title</option>
+                    <option value="year">Year</option>
+                </select>
+
+                <label for="filter-text">Filter:</label>
+                <input type="text" id="filter-text" placeholder="Filter by title...">
+            </div>
+            <div id="movie-recommendations" class="movies-grid"></div>
+            <button id="load-more-mood-btn" class="load-more-button" style="display: none;">Load More Mood Movies</button>
+            <div id="search-history">
+                <h2>Recent Mood Searches</h2>
+                <ul id="history-list"></ul>
+            </div>
+        </section>
+
+        <section class="movies-section">
+            <h2>Popular Movies</h2>
+            <div class="movies-grid" id="popular-movies" aria-live="polite"></div>
+            <button id="load-more-popular" class="load-more-button">Load More</button>
+        </section>
+
+        <section class="movies-section" style="display: none;">
+            <h2>Search Results</h2>
+            <div class="movies-grid" id="search-results" aria-live="polite"></div>
+            <button id="load-more-search" class="load-more-button">Load More</button>
+        </section>
+
+        <section class="movies-section" style="display: none;">
+            <h2>Popular TV Shows</h2>
+            <div class="movies-grid" id="popular-tv-shows" aria-live="polite"></div>
+            <button id="load-more-popular-tv" class="load-more-button">Load More</button>
+        </section>
+
+        <section class="movies-section">
+            <h2>Mood-matched picks</h2>
+            <div id="mood-matched-carousel" class="carousel-container"></div>
+        </section>
+
+        <section class="movies-section">
+            <h2>Because you watched...</h2>
+            <div id="because-you-watched-carousel" class="carousel-container"></div>
+        </section>
+
+        <section class="movies-section">
+            <h2>Top 10</h2>
+            <div id="top-10-carousel" class="carousel-container"></div>
+        </section>
+
+        <section class="movies-section">
+            <h2>Originals</h2>
+            <div id="originals-carousel" class="carousel-container"></div>
+        </section>
+
+        <section class="movies-section">
+            <h2>Continue Watching</h2>
+            <div id="continue-watching-carousel" class="carousel-container"></div>
+        </section>
+
+        <section class="news-section">
+            <h2>Latest News</h2>
+            <div class="news-grid" id="news-grid" aria-live="polite"></div>
+            <button id="load-more-news" class="load-more-button" style="display: none;">Load More News</button>
+        </section>
+    </main>
+
+    <div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-labelledby="modal-movie-title">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div class="source-buttons" id="source-buttons"></div>
+            <div id="season-episode-selector" style="display: none;">
+                <label for="season-select">Season:</label>
+                <select id="season-select"></select>
+                <label for="episode-select">Episode:</label>
+                <select id="episode-select"></select>
+            </div>
+            <div id="video-availability-status"></div>
+            <div class="video-player-container">
+                <iframe id="video-player" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+                <div class="play-overlay" id="video-play-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="video-details-container">
+                <img id="modal-movie-poster" src="" alt="Movie Poster">
+                <div class="video-details">
+                    <h2 id="modal-movie-title"></h2>
+                    <p id="modal-movie-plot"></p>
+                    <p><strong>Genre:</strong> <span id="modal-movie-genre"></span></p>
+                    <p><strong>Released:</strong> <span id="modal-movie-released"></span></p>
+                    <p><strong>Rating:</strong> <span id="modal-movie-rating"></span></p>
+                    <p><strong>Rated:</strong> <span id="modal-movie-rated"></span></p>
+                    <div id="modal-movie-other-ratings"></div>
+                    <p><strong>Director:</strong> <span id="modal-movie-director"></span></p>
+                    <p><strong>Writer:</strong> <span id="modal-movie-writer"></span></p>
+                    <p><strong>Actors:</strong> <span id="modal-movie-actors"></span></p>
+                    <p><strong>Awards:</strong> <span id="modal-movie-awards"></span></p>
+                    <p><strong>Runtime:</strong> <span id="modal-movie-runtime"></span></p>
+                    <p><strong>Language:</strong> <span id="modal-movie-language"></span></p>
+                    <p><strong>Country:</strong> <span id="modal-movie-country"></span></p>
+                    <p><strong>Metascore:</strong> <span id="modal-movie-metascore"></span></p>
+                    <p><strong>Box Office:</strong> <span id="modal-movie-boxoffice"></span></p>
+                    <p><strong>Production:</strong> <span id="modal-movie-production"></span></p>
+                    <p><strong>Website:</strong> <span id="modal-movie-website"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification-modal" id="notification-modal" role="dialog" aria-modal="true" aria-labelledby="notification-title">
+        <div class="modal-content">
+            <span class="close-button" id="close-notification-modal">&times;</span>
+            <h2 class="notification-title">⚠️ Best Viewed on Brave Browser</h2>
+            <p>NowShowing works best with Brave Browser due to its aggressive ad and tracker blocking capabilities, which significantly improve performance and reduce interruptions from third-party streaming sources.</p>
+            <p>While other browsers may work, Brave offers:</p>
+            <ul>
+                <li><strong>Better playback stability</strong> across streaming sources</li>
+                <li><strong>Fewer pop-ups, redirects, and unwanted ads</strong></li>
+                <li><strong>Faster loading</strong> with enhanced privacy</li>
+            </ul>
+            <p>We highly recommend Brave for the smoothest viewing experience.</p>
+            <h3 class="notification-subtitle">Why This Matters</h3>
+            <p>NowShowing pulls in video streams via third-party embedded players like VidSrc, SuperEmbed, 2Embed, and others. These sources often:</p>
+            <ul>
+                <li>Inject ads/popups before or during playback</li>
+                <li>Redirect users to unrelated pages</li>
+                <li>Load extra scripts that slow down or break the experience</li>
+                <li>Behave inconsistently across browsers depending on ad blockers or script permissions</li>
+            <li><strong>Reduced resource consumption:</strong> Less data downloaded, faster page loads.</li>
+                <li><strong>Enhanced privacy:</strong> Protection against unwanted tracking.</li>
+                <li><strong>Fewer interruptions:</b> A cleaner viewing experience without pop-ups or redirects.</li>
+            </ul>
+            <p>While we strive to make NowShowing work across all browsers, the nature of third-party video sources means that a browser like Brave, with its built-in protections, can offer a significantly smoother and more reliable streaming experience.</p>
+        </div>
+    </div>
+
+    <div class="notification-modal" id="switch-source-notification-modal" role="dialog" aria-modal="true" aria-labelledby="switch-source-notification-title">
+        <div class="modal-content">
+            <span class="close-button" id="close-switch-source-notification">&times;</span>
+            <h2 class="notification-title">Having trouble with this stream?</h2>
+            <p>Video streams can sometimes be unreliable due to various factors, including:</p>
+            <ul>
+                <li><strong>Browser Ad Blockers:</strong> Aggressive ad blockers might interfere with the video player.</li>
+                <li><strong>Geographical Restrictions:</strong> Some sources may not be available in your region.</li>
+                <li><strong>Source Overload:</strong> High traffic on a source can lead to buffering or playback issues.</li>
+                <li><strong>Temporary Issues:</strong> The video source might be temporarily down or experiencing technical difficulties.</li>
+            </ul>
+            <p><strong>What you can do:</strong></p>
+            <ul>
+                <li><strong>Try Other Sources:</strong> Click the green or red source buttons below the video player to switch to an alternative. Green indicates a likely available source, but all are worth trying.</li>
+                <li><strong>Disable Ad Blocker (Temporarily):</strong> If you're using an ad blocker, try disabling it for this site and reloading the page.</li>
+                <li><strong>Try a Different Browser:</strong> Some browsers handle embeds differently.</li>
+                <li><strong>Check Your Internet Connection:</strong> Ensure your network is stable.</li>
+            </ul>
+            <p>We strive to provide multiple options for a seamless experience. Thank you for your patience!</p>
+        </div>
+    </div>
+
+    <div class="notification-modal" id="developer-message-modal" role="dialog" aria-modal="true" aria-labelledby="developer-message-title">
+        <div class="modal-content">
+            <span class="close-button" id="close-developer-message-modal">&times;</span>
+            <h2 class="notification-title" id="developer-message-title">A Message from the Developer</h2>
+            <p>Hey there — I’m Ismail Hossain, a developer, educator, and media tinkerer from Dhaka, Bangladesh.
+            When I’m not flying my drone for documentary shoots or helping teachers level up with tech, I like to build weekend projects that make life a little easier (or just more fun).</p>
+
+            <p>NowShowing is one of those.
+            I was tired of bouncing between unreliable streaming sites, so I built this app to:</p>
+            <ul>
+                <li>Help you search for movies & shows easily</li>
+                <li>Stream from multiple sources — switch anytime</li>
+                <li>Catch up on the latest movie buzz via the built-in news widget</li>
+                <li>Enjoy a clean, responsive UI that works on any device</li>
+                <li>Get smart stream status indicators (green = probably working)</li>
+            </ul>
+            <p>This isn’t backed by a studio or company — just something I put together with a lot of coffee and curiosity.
+            Hope it makes your watchlist nights smoother.</p>
+
+            <p>If you run into any issues or want to share feedback, feel free to reach out!</p>
+
+            <p><strong>Contact me:</strong> ismailhossain013@gmail.com | <a href="https://github.com/smile-plzz" target="_blank">GitHub: smile-plzz</a></p>
+
+            <p>Thanks for being here!
+            — Ismail</p>
+
+            <p>(Fun fact: I also run a small video production firm called 15 Miles — we make drone films, documentaries, and creative content.)</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Entertainment Suite. All Rights Reserved.</p>
+        <p>Powered by OMDb and VidSrc</p>
+    </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>

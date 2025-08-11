@@ -1,5 +1,26 @@
 # UI/UX Development Track
 
+## 2025-08-11 (Later)
+
+### UI/UX Refinements and Consistency Updates
+
+**Objective:** Further refine UI/UX elements and ensure consistency across the application.
+
+**Changes Made:**
+
+*   **File Structure Alignment:**
+    *   Ensured `index.html` and `style.css` are correctly located at the project root, serving as the unified main page and stylesheet.
+*   **`app.js` UI Logic Streamlining:**
+    *   Removed redundant video modal UI elements and associated JavaScript logic from `app.js`, centralizing video playback handling within `detail.js`.
+    *   Cleaned up unused search input elements and their event listeners.
+*   **`detail.js` UI/UX Enhancements:**
+    *   Implemented `trapFocus` for the `trailerModal` to improve accessibility and keyboard navigation.
+*   **`news.js` UI/UX Cleanup:**
+    *   Removed unused category filtering UI elements and JavaScript logic, as there is no dedicated `news.html` page.
+*   **Home Screen Carousel Integration:**
+    *   Added necessary HTML container elements to `index.html` to enable rendering of carousels from `carousels.js` on the home screen.
+    *   Updated `carousels.js` to redirect to `detail.html` upon movie card click, aligning with the dedicated detail page approach.
+
 This document tracks the implementation of the new UI/UX design based on the `platform-outline.markdown`.
 
 ## 2025-08-05
@@ -50,8 +71,8 @@ This document tracks the implementation of the new UI/UX design based on the `pl
 3.  **Hero Banner "Ambient Video Background on Scroll":** Implemented JavaScript to create a dynamic opacity effect on the hero video background during scroll. - **DONE**
 4.  **Loaders (Emoji Spinning Loader):** Replaced skeleton loaders with an emoji spinning loader. - **DONE**
 5.  **Bottom Navigation:** Implemented a persistent bottom navigation bar for mobile viewports (HTML and CSS). - **DONE**
-6.  **Mood Selector (Bottom Drawer):** Redesigned the mood selector for mobile as a bottom drawer with open/close functionality. - **DONE**
-7.  **Swipe Carousel with Haptic Feedback:** Enhanced carousels to support swipe gestures for navigation and integrated haptic feedback. - **DONE**
+6.  **Mood Selector (Bottom Drawer):** Redesigned the mood selector for mobile as a bottom drawer with open/close functionality. - **DONE`
+7.  **Swipe Carousel with Haptic Feedback:** Enhanced carousels to support swipe gestures for navigation and integrated haptic feedback. - **DONE`
 
 ### Phase 5: Visual Design Refinement and Consistency
 

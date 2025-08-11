@@ -21,11 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             carouselItem.addEventListener('click', () => {
-                // This assumes the existence of a global `ui` object with an `openVideoModal` method.
-                // This is not ideal, but it's consistent with the existing codebase.
-                if (window.ui && typeof window.ui.openVideoModal === 'function') {
-                    window.ui.openVideoModal(item.imdbID);
-                }
+                window.location.href = `detail.html?imdbID=${item.imdbID}`;
             });
             track.appendChild(carouselItem);
         });

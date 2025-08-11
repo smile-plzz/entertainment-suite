@@ -1,5 +1,56 @@
 # Development Log
 
+## 2025-08-11 (Even Later)
+
+### Codebase Refactoring and Alignment with Documentation
+
+**Objective:** Clean up the codebase, resolve discrepancies with documentation, and improve maintainability.
+
+**Changes Made:**
+
+*   **File Structure Consolidation:**
+    *   Moved `src/index.html` to project root `index.html`.
+    *   Moved `src/style.css` to project root `style.css`.
+    *   Deleted redundant `src/index.html` and `src/style.css`.
+    *   Removed redundant `src/api/api` directory.
+*   **Configuration Updates:**
+    *   Updated `vercel.json` to reflect correct paths for `detail.html`, `detail.js`, and removed references to `src/movie-recommendations` files.
+*   **`app.js` Refactoring:**
+    *   Removed all video modal related DOM element declarations, functions (`openVideoModal`, `populateEpisodes`, `loadVideoForMovie`, `loadVideoForSelectedEpisode`, `closeVideoModal`, `handleModalTabKey`, `trapFocus`, `constructVideoUrl`), and associated event listeners.
+    *   Corrected `createMovieCard` redirection path to `detail.html`.
+    *   Corrected `config.json` fetch path to `config.json`.
+    *   Removed unused `generalSearchInputMood`, `generalSearchBtnMood` declarations and their event listeners.
+*   **Shared Utilities:**
+    *   Created `src/utils/api.js` to centralize `api` object and `videoSources` array.
+    *   Updated `app.js` and `detail.js` to import these shared utilities.
+*   **`detail.js` Enhancements:**
+    *   Implemented `trapFocus` function for modal accessibility.
+*   **`news.js` Cleanup:**
+    *   Removed unused `categoryButtons` declaration and event listeners (as `news.html` does not exist).
+*   **`index.html` Enhancements:**
+    *   Added carousel container `div` elements (`mood-matched-carousel`, `because-you-watched-carousel`, `top-10-carousel`, `originals-carousel`, `continue-watching-carousel`) to support `carousels.js` rendering.
+
+## 2025-08-11 (Later)
+
+### Deep Integration of Movie Recommendation and Now Showing into a single Entertainment Suite application.
+
+**Objective:** Integrate the features of "Movie Recommendation Based on Mood" and "Now Showing" into a single, unified "Entertainment Suite" application for a more cohesive user experience.
+
+**Changes Made:**
+
+*   **Unified Frontend Structure:**
+    *   Created a new `src/index.html` combining UI elements from both applications.
+    *   Merged JavaScript logic into a central `src/app.js`.
+    *   Consolidated CSS into a single `src/style.css`.
+    *   Utilized `src/now-showing/detail.html` and `src/now-showing/detail.js` as the unified detail page.
+*   **Removed Redundant Files:**
+    *   Removed the now redundant `src/movie-recommendations/` and `src/now-showing/` directories.
+*   **Configuration Updates:**
+    *   Updated `vercel.json` to reflect the new unified structure.
+*   **Testing:**
+    *   Implemented and passed basic E2E tests (`scripts/e2e.sh`) for the integrated application.
+
+
 ## 2025-08-11
 
 ### Implemented Suggested Improvements

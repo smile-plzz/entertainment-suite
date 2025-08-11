@@ -1,0 +1,79 @@
+Vercel CLI 44.6.4
+Retrieving project…
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+> Ready! Available at http://localhost:3000
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}
+WARN! You defined 1 build that did not match any source files (please ensure they are NOT defined in .vercelignore):
+- {"src":"src/style.css","use":"@vercel/static"}

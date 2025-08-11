@@ -1,27 +1,13 @@
+import { api } from './utils/api.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const newsGrid = document.getElementById('news-grid');
     const loadMoreNewsButton = document.getElementById('load-more-news');
-    const categoryButtons = document.querySelectorAll('.category-button');
+    
 
     let newsPage = 1;
 
-    const api = {
-        async fetchNews(page = 1) {
-            const url = `/api/fetch-news?page=\${page}`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-                return data;
-            } catch (error) {
-                console.error('Error fetching news:', error);
-                return { error: error.message };
-            }
-        }
-    };
+    
 
     const ui = {
         renderNews(articles, append = false) {
@@ -73,16 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.loadNews(true);
     });
 
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            // Implement category filtering logic here if needed
-            // For now, just reload all news
-            newsPage = 1;
-            ui.loadNews();
-        });
-    });
+    
 
     // Initial load
     ui.loadNews();

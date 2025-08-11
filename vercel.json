@@ -18,75 +18,19 @@
       "use": "@vercel/static"
     },
     {
-      "src": "style.css",
+      "src": "src/app.js",
       "use": "@vercel/static"
     },
     {
-      "src": "src/now-showing/app.js",
+      "src": "src/style.css",
       "use": "@vercel/static"
     },
     {
-      "src": "src/now-showing/style.css",
+      "src": "src/detail.html",
       "use": "@vercel/static"
     },
     {
-      "src": "src/now-showing/index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/carousels.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/carousels.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/news.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/news.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/news.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/detail.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/detail.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/now-showing/detail.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/movie-recommendations/index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/movie-recommendations/style.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/movie-recommendations/script.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/movie-recommendations/movie-details.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/movie-recommendations/service-worker.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "src/movie-recommendations/config.json",
+      "src": "src/detail.js",
       "use": "@vercel/static"
     }
   ],
@@ -104,12 +48,12 @@
       "dest": "src/api/omdb-proxy.js"
     },
     {
-      "src": "/src/now-showing/(.*)",
-      "dest": "src/now-showing/$1"
+      "src": "/src/detail.html",
+      "dest": "src/detail.html"
     },
     {
-      "src": "/src/movie-recommendations/(.*)",
-      "dest": "src/movie-recommendations/$1"
+      "src": "/src/detail.js",
+      "dest": "src/detail.js"
     },
     {
       "src": "/(.*)",

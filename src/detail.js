@@ -1,6 +1,10 @@
+import { api, videoSources } from './utils/api.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const imdbID = urlParams.get('imdbID');
+
+    let lastFocusedElement = null; // To store the element that had focus before modal opened
 
     if (!imdbID) {
         document.querySelector('main').innerHTML = '<p class="error-message">No movie ID provided.</p>';
@@ -33,61 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sourceButtonsContainer = document.getElementById('source-buttons-container');
 
     // --- API Calls (re-using from app.js for consistency) ---
-    const api = {
-        async fetchMovieDetails(imdbID) {
-            try {
-                const url = `/api/omdb-proxy?imdbID=${imdbID}&plot=full`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return await response.json();
-            } catch (error) {
-                console.error(`Error fetching movie details (${imdbID}):`, error);
-                return { Response: 'False', Error: error.message };
-            }
-        },
-        async fetchTvShowSeason(imdbID, seasonNumber) {
-            try {
-                const url = `/api/omdb-proxy?imdbID=${imdbID}&seasonNumber=${seasonNumber}`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                return await response.json();
-            } catch (error) {
-                console.error(`Error fetching season ${seasonNumber} for ${imdbID}:`, error);
-                return { Response: 'False', Error: error.message };
-            }
-        },
-        async checkVideoAvailability(url) {
-            try {
-                const response = await fetch('/api/check-video', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url }),
-                });
-                const data = await response.json();
-                return data.available;
-            } catch (error) {
-                console.error(`Error checking video availability for ${url}:`, error);
-                return false;
-            }
-        },
-    };
+    
 
     // --- Video Sources (re-using from app.js) ---
-    const videoSources = [
-        { name: 'VidCloud', url: 'https://vidcloud.stream/', tvUrl: 'https://vidcloud.stream/' },
-        { name: 'fsapi.xyz', url: 'https://fsapi.xyz/movie/', tvUrl: 'https://fsapi.xyz/tv-imdb/' },
-        { name: 'CurtStream', url: 'https://curtstream.com/movies/imdb/', tvUrl: null },
-        { name: 'VidSrc.to', url: 'https://vidsrc.to/embed/movie/', tvUrl: 'https://vidsrc.to/embed/tv/' },
-        { name: 'VidSrc.xyz', url: 'https://vidsrc.xyz/embed/movie/', tvUrl: 'https://vidsrc.xyz/embed/tv/' },
-        { name: 'VidSrc.in', url: 'https://vidsrc.in/embed/movie/', tvUrl: 'https://vidsrc.in/embed/tv/' },
-        { name: 'SuperEmbed', url: 'https://superembed.stream/movie/', tvUrl: 'https://superembed.stream/tv/' },
-        { name: 'MoviesAPI', url: 'https://moviesapi.club/movie/', tvUrl: 'https://moviesapi.club/tv/' },
-        { name: '2Embed', url: 'https://2embed.cc/embed/', tvUrl: 'https://2embed.cc/embed/' },
-        { name: 'Fmovies', url: 'https://fmovies.to/embed/', tvUrl: 'https://fmovies.to/embed/' },
-        { name: 'LookMovie', url: 'https://lookmovie.io/player/', tvUrl: 'https://lookmovie.io/player/' },
-    ];
+    
 
     // --- UI Rendering Functions ---
     const ui = {
@@ -200,6 +153,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return url;
         },
 
+        handleModalTabKey: null, // To store the function reference for removal
+        trapFocus(modalElement) {
+            const focusableElements = modalElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstFocusableElement = focusableElements[0];
+            const lastFocusableElement = focusableElements[focusableableElements.length - 1];
+
+            this.handleModalTabKey = (event) => {
+                const isTabPressed = (event.key === 'Tab' || event.keyCode === 9);
+
+                if (!isTabPressed) {
+                    return;
+                }
+
+                if (event.shiftKey) { // if shift key pressed for shift + tab combination
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus(); // add focus to the last focusable element
+                        event.preventDefault();
+                    }
+                } else { // if tab key is pressed
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus(); // add focus to the first focusable element
+                        event.preventDefault();
+                    }
+                }
+            };
+
+            document.addEventListener('keydown', this.handleModalTabKey);
+        },
+
         async loadVideoPlayer(id, type, season = null, episode = null) {
             trailerPlayer.src = '';
             sourceButtonsContainer.innerHTML = '';
@@ -207,6 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
             videoAvailabilityStatus.style.display = 'block';
 
             trailerModal.style.display = 'flex';
+            lastFocusedElement = document.activeElement; // Save the element that had focus
+            trailerModal.focus(); // Set focus to the modal
+            this.trapFocus(trailerModal);
 
             let defaultSource = null;
             if (type === 'movie') {
@@ -261,12 +246,22 @@ document.addEventListener('DOMContentLoaded', () => {
             closeButton.onclick = () => {
                 trailerModal.style.display = 'none';
                 trailerPlayer.src = ''; // Stop video playback
+                if (lastFocusedElement) {
+                    lastFocusedElement.focus(); // Return focus to the element that opened the modal
+                    lastFocusedElement = null;
+                }
+                document.removeEventListener('keydown', this.handleModalTabKey);
             };
 
             window.onclick = (event) => {
                 if (event.target === trailerModal) {
                     trailerModal.style.display = 'none';
                     trailerPlayer.src = ''; // Stop video playback
+                    if (lastFocusedElement) {
+                        lastFocusedElement.focus(); // Return focus to the element that opened the modal
+                        lastFocusedElement = null;
+                    }
+                    document.removeEventListener('keydown', this.handleModalTabKey);
                 }
             };
         }
