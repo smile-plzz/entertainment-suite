@@ -22,7 +22,7 @@
       "use": "@vercel/static"
     },
     {
-      "src": "src/style.css",
+      "src": "style.css",
       "use": "@vercel/static"
     },
     {
@@ -31,6 +31,10 @@
     },
     {
       "src": "src/detail.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/utils/api.js",
       "use": "@vercel/static"
     }
   ],
@@ -54,6 +58,10 @@
     {
       "src": "/src/detail.js",
       "dest": "src/detail.js"
+    },
+    {
+      "src": "/src/utils/api.js",
+      "dest": "src/utils/api.js"
     },
     {
       "src": "/(.*)",
