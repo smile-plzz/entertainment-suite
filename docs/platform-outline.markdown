@@ -182,7 +182,7 @@ Core differentiator in your platform
 3. **Loaders**: Themed loaders (e.g., film reel for movies).
 4. **General**: GPU-accelerated animations, `prefers-reduced-motion` support.
 
-### 📱 Mobile-First Design Features
+### 📱 Mobile-first Design Features
 1. **Mood Selector**: Gesture-based shortcut (e.g., double-tap).
 2. **Voice Search**: Natural language support (e.g., “funny and short”).
 3. **Bottom Nav**: Dynamic badges for new content.

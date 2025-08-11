@@ -50,3 +50,4 @@ Entertainment Suite is a web application that combines the features of two previ
 *   **Development Log:** A log of the development process can be found in [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md).
 *   **UI/UX Development Track:** A log of the UI/UX development process can be found in [UI_UX_DEVELOPMENT_TRACK.md](UI_UX_DEVELOPMENT_TRACK.md).
 *   **Platform Outline:** The high-level design and feature roadmap can be found in [platform-outline.markdown](platform-outline.markdown).
+*   **News Section:** Detailed information on the news section integration can be found in [UI_UX_DEVELOPMENT_TRACK.md#news-section-integration-new](UI_UX_DEVELOPMENT_TRACK.md#news-section-integration-new).

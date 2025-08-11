@@ -112,3 +112,24 @@
 *   **CSS File Alignment:** Updated `news.css`, `detail.css`, and `carousels.css` to utilize the newly defined CSS variables, ensuring all styling adheres to the new design tokens.
 *   **HTML Refactoring:** Removed inline `style="display: none;"` attributes from `index.html` sections and buttons.
 *   **JavaScript Refactoring:** Updated `app.js` to use `classList.add()` and `classList.remove()` with new `hidden-section` and `hidden-button` classes (defined in `style.css`) for managing element visibility, replacing direct `style.display` manipulations. This improves maintainability and aligns with modern CSS practices.
+
+## News Section Integration (New)
+
+### Objectives:
+*   Integrate a dedicated news section into the application.
+*   Display news articles related to movies and TV shows.
+*   Provide a "Load More" functionality for news.
+
+### Implementations:
+*   **`news.html`:** Created a new HTML page for the news section.
+*   **`news.css`:** Developed a dedicated CSS file for styling the news page.
+*   **`news.js`:** Implemented JavaScript to:
+    *   Fetch news articles from the `/api/fetch-news` endpoint.
+    *   Render news articles in a grid layout.
+    *   Handle "Load More" functionality to paginate news results.
+*   **Navigation Link:** Added a "News" link to the main navigation bar in `index.html` and `detail.html`.
+
+### Decisions & Rationale:
+*   **Dedicated Page:** A separate page for news provides a better user experience for browsing articles, rather than embedding a small widget on the home page.
+*   **Load More:** Improves performance by loading news articles incrementally.
+*   **API Endpoint:** Utilizes the existing `/api/fetch-news` serverless function for fetching news data securely.

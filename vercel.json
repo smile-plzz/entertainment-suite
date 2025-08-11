@@ -40,6 +40,38 @@
   ],
   "routes": [
     {
+      "src": "/style.css",
+      "dest": "style.css"
+    },
+    {
+      "src": "/src/app.js",
+      "dest": "src/app.js"
+    },
+    {
+      "src": "/src/carousels.css",
+      "dest": "src/carousels.css"
+    },
+    {
+      "src": "/src/carousels.js",
+      "dest": "src/carousels.js"
+    },
+    {
+      "src": "/src/detail.css",
+      "dest": "src/detail.css"
+    },
+    {
+      "src": "/src/news.css",
+      "dest": "src/news.css"
+    },
+    {
+      "src": "/src/news.js",
+      "dest": "src/news.js"
+    },
+    {
+      "src": "/src/onboarding.css",
+      "dest": "src/onboarding.css"
+    },
+    {
       "src": "/api/check-video",
       "dest": "src/api/check-video.js"
     },

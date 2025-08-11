@@ -76,6 +76,33 @@ main {
     z-index: 100;
 }
 
+/* --- Mood Nav Button --- */
+.mood-nav-button {
+    background: linear-gradient(to right, var(--mood-btn-gradient-start), var(--mood-btn-gradient-end));
+    border: none;
+    border-radius: 25px;
+    padding: 0.7rem 1.2rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px var(--mood-btn-shadow-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.mood-nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--mood-btn-shadow-color);
+}
+
+.mood-nav-button i {
+    font-size: 1.2rem;
+}
+
 .navbar-brand a {
     color: var(--primary-color);
     font-size: 1.9rem;
@@ -739,49 +766,66 @@ main {
 }
 
 /* --- Responsive Design --- */
+/* --- Responsive Design --- */
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem 1.5rem;
+        flex-wrap: wrap;
     }
 
     .navbar-nav {
-        display: none;
+        display: none; /* Hide desktop nav */
     }
-
-    .search-container {
-        order: 1;
-        width: 100%;
-        margin-top: 1rem;
-    }
-
-    .search-input {
-        width: 100%;
-    }
-
-    .theme-switch {
-        margin-left: 0.8rem;
-    }
-
-    .notification-button,
-    .developer-message-button {
-        margin-left: 0.8rem;
+    
+    .navbar-brand {
+        flex-grow: 1; /* Allow logo to take space */
     }
 
     .hamburger-menu {
-        display: block;
+        display: block; /* Show hamburger menu */
+        order: 3; /* Move to the end */
+    }
+    
+    .search-container {
+        order: 2; /* Keep search in the middle */
+        width: auto;
+        margin: 0 1rem;
     }
 
-    .movies-section {
-        padding: 1.5rem;
+    #search-input {
+        width: 150px; /* Adjust search input width */
     }
 
-    .movies-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    .theme-switch {
+        order: 1; /* Move theme switch to the start */
+        margin-left: 0;
+        margin-right: 1rem;
+    }
+
+    .hero-section {
+        height: 50vh; /* Reduce hero height */
+        padding: 0 1rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem; /* Reduce hero title size */
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem; /* Reduce hero subtitle size */
+    }
+
+    .movies-section, .news-section {
+        padding: 2rem 1rem; /* Adjust section padding */
+    }
+
+    .movies-grid, .news-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Use auto-fit and adjust min size */
         gap: 1rem;
     }
 
     .movie-card img {
-        height: 225px; /* Adjusted for smaller card size */
+        height: 210px; /* Adjust for new card size */
     }
 
     .modal-content {
@@ -799,31 +843,50 @@ main {
     }
 
     .footer {
-        padding: 1.5rem;
+        padding: 2rem 1rem;
     }
 }
 
 @media (max-width: 480px) {
     .navbar {
-        flex-wrap: wrap;
+        justify-content: space-between;
     }
-
+    
     .navbar-brand {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 1rem;
+        width: auto; /* Reset width */
+        text-align: left;
+        margin-bottom: 0;
+        order: 2;
     }
-
-    .theme-switch {
-        margin: 0 auto;
-    }
-
+    
     .search-container {
-        margin-top: 0.5rem;
+        order: 4;
+        width: 100%; /* Make search full width */
+        margin: 1rem 0 0 0;
     }
 
-    .movies-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    #search-input {
+        width: 100%;
+    }
+
+    .hamburger-menu {
+        order: 3;
+    }
+    
+    .theme-switch {
+        order: 1;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .movies-grid, .news-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Further adjust for small screens */
     }
 
     .movie-card img {
@@ -831,7 +894,7 @@ main {
     }
 
     .modal-content iframe {
-        height: 250px;
+        height: 220px;
     }
 }
 

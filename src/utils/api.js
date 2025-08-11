@@ -152,4 +152,8 @@ export const api = {
             return { error: error.message };
         }
     },
+
+    async fetchPopularMovies(page = 1) {
+        return this.fetchMoviesBySearch('popular', page);
+    },
 };

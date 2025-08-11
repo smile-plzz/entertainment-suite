@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         trapFocus(modalElement) {
             const focusableElements = modalElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
             const firstFocusableElement = focusableElements[0];
-            const lastFocusableElement = focusableElements[focusableableElements.length - 1];
+            const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
             this.handleModalTabKey = (event) => {
                 const isTabPressed = (event.key === 'Tab' || event.keyCode === 9);
@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             videoAvailabilityStatus.textContent = 'Loading video sources...';
             videoAvailabilityStatus.style.display = 'block';
 
+            console.log('Attempting to display trailer modal.'); // Debug log
             trailerModal.style.display = 'flex';
             lastFocusedElement = document.activeElement; // Save the element that had focus
             trailerModal.focus(); // Set focus to the modal
@@ -301,7 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Attach watch now button event listener
-            document.querySelector('.watch-now').addEventListener('click', () => {
+            document.querySelector('.watch-now').addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default action to avoid page reload
                 const mediaType = details.Type;
                 let season = null;
                 let episode = null;
@@ -310,7 +312,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     season = seasonSelect.value;
                     episode = episodeSelect.value;
                 }
-                ui.loadVideoPlayer(imdbID, mediaType, season, episode);
+                try {
+                    ui.loadVideoPlayer(imdbID, mediaType, season, episode);
+                } catch (error) {
+                    console.error('Error loading video player:', error);
+                }
             });
 
         } else {
