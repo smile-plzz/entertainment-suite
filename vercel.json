@@ -1,16 +1,16 @@
 {
-  "name": "nowshowing-app",
+  "name": "entertainment-suite",
   "builds": [
     {
-      "src": "api/check-video.js",
+      "src": "src/api/check-video.js",
       "use": "@vercel/node"
     },
     {
-      "src": "api/fetch-news.js",
+      "src": "src/api/fetch-news.js",
       "use": "@vercel/node"
     },
     {
-      "src": "api/omdb-proxy.js",
+      "src": "src/api/omdb-proxy.js",
       "use": "@vercel/node"
     },
     {
@@ -22,94 +22,94 @@
       "use": "@vercel/static"
     },
     {
-      "src": "app.js",
+      "src": "src/now-showing/app.js",
       "use": "@vercel/static"
     },
     {
-      "src": "carousels.js",
+      "src": "src/now-showing/style.css",
       "use": "@vercel/static"
     },
     {
-      "src": "carousels.css",
+      "src": "src/now-showing/index.html",
       "use": "@vercel/static"
     },
     {
-      "src": "news.html",
+      "src": "src/now-showing/carousels.js",
       "use": "@vercel/static"
     },
     {
-      "src": "news.js",
+      "src": "src/now-showing/carousels.css",
       "use": "@vercel/static"
     },
     {
-      "src": "news.css",
+      "src": "src/now-showing/news.html",
       "use": "@vercel/static"
     },
     {
-      "src": "detail.html",
+      "src": "src/now-showing/news.js",
       "use": "@vercel/static"
     },
     {
-      "src": "detail.js",
+      "src": "src/now-showing/news.css",
       "use": "@vercel/static"
     },
     {
-      "src": "detail.css",
+      "src": "src/now-showing/detail.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/now-showing/detail.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/now-showing/detail.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/movie-recommendations/index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/movie-recommendations/style.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/movie-recommendations/script.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/movie-recommendations/movie-details.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/movie-recommendations/service-worker.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/movie-recommendations/config.json",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/app.js",
-      "dest": "/app.js"
-    },
-    {
-      "src": "/style.css",
-      "dest": "/style.css"
-    },
-    {
-      "src": "/carousels.js",
-      "dest": "/carousels.js"
-    },
-    {
-      "src": "/carousels.css",
-      "dest": "/carousels.css"
-    },
-    {
-      "src": "/news.html",
-      "dest": "/news.html"
-    },
-    {
-      "src": "/news.js",
-      "dest": "/news.js"
-    },
-    {
-      "src": "/news.css",
-      "dest": "/news.css"
-    },
-    {
-      "src": "/detail.html",
-      "dest": "/detail.html"
-    },
-    {
-      "src": "/detail.js",
-      "dest": "/detail.js"
-    },
-    {
-      "src": "/detail.css",
-      "dest": "/detail.css"
-    },
-    {
       "src": "/api/check-video",
-      "dest": "/api/check-video.js"
+      "dest": "src/api/check-video.js"
     },
     {
       "src": "/api/fetch-news",
-      "dest": "/api/fetch-news.js"
+      "dest": "src/api/fetch-news.js"
     },
     {
       "src": "/api/omdb-proxy",
-      "dest": "/api/omdb-proxy.js"
+      "dest": "src/api/omdb-proxy.js"
+    },
+    {
+      "src": "/src/now-showing/(.*)",
+      "dest": "src/now-showing/$1"
+    },
+    {
+      "src": "/src/movie-recommendations/(.*)",
+      "dest": "src/movie-recommendations/$1"
     },
     {
       "src": "/(.*)",

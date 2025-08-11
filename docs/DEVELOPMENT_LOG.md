@@ -1,5 +1,19 @@
 # Development Log
 
+## 2025-08-11
+
+### Implemented Suggested Improvements
+
+**Objective:** Improve the user experience by implementing suggestions from the `platform-outline.markdown` file.
+
+**Changes Made:**
+
+*   **Onboarding Flow**: Added a brief animated tutorial on first login to explain the mood selector.
+*   **Light/Dark Theme Toggle**: Implemented a theme toggle to switch between light and dark modes.
+*   **Accessibility Improvements**:
+    *   Added `aria-label` to carousels.
+    *   Added screen reader support for mood tags.
+
 ## 2025-08-05
 
 ### Project Combination: `MovieRecommendationBasedOnMood` and `NowShowing`

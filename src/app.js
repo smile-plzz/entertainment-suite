@@ -360,6 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
         moodDrawer.classList.remove('open');
     });
 
+    const moodSrAnnouncer = document.getElementById('mood-sr-announcer');
+
     moodOptionButtons.forEach(button => {
         button.addEventListener('click', () => {
             const mood = button.dataset.mood;
@@ -371,10 +373,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (mood === 'all') {
                 ui.showHomeView();
+                moodSrAnnouncer.textContent = 'Showing all movies and TV shows.';
             } else {
                 // Implement mood-based filtering here
                 // For now, just log the mood
                 console.log(`Selected mood: ${mood}`);
+                moodSrAnnouncer.textContent = `Selected mood: ${mood}`;
             }
             moodDrawer.classList.remove('open'); // Close drawer after selection
         });
@@ -443,6 +447,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 lastFocusedElement.focus();
             }
         }
+    });
+
+    // --- ONBOARDING LOGIC ---
+    const onboardingModal = document.getElementById('onboarding-modal');
+    const closeOnboardingModal = document.getElementById('close-onboarding-modal');
+    const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+
+    if (!hasSeenOnboarding) {
+        onboardingModal.classList.add('open');
+    }
+
+    closeOnboardingModal.addEventListener('click', () => {
+        onboardingModal.classList.remove('open');
+        localStorage.setItem('hasSeenOnboarding', 'true');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === onboardingModal) {
+            onboardingModal.classList.remove('open');
+            localStorage.setItem('hasSeenOnboarding', 'true');
+        }
+    });
+
+    // --- THEME SWITCHING LOGIC ---
+    const themeToggleButton = document.getElementById('theme-toggle-button');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-theme');
+        themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+    } else {
+        themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    themeToggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        let theme = 'dark';
+        if (document.body.classList.contains('light-theme')) {
+            theme = 'light';
+            themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        localStorage.setItem('theme', theme);
     });
 
     // --- INITIAL LOAD ---

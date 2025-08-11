@@ -169,7 +169,7 @@
     height: 0;
     overflow: hidden;
     max-width: 100%;
-    background: #000;
+    background: var(--background-dark);
     border-radius: var(--border-radius-md);
 }
 
@@ -257,7 +257,7 @@
 }
 
 .source-button.is-available {
-    border-color: #4CAF50; /* Green */
+    border-color: var(--success-color); /* Green */
 }
 
 .source-button.is-unavailable {

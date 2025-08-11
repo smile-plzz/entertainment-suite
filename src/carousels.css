@@ -45,5 +45,5 @@
 }
 
 .carousel-nav button:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(var(--background-dark-rgb), 0.7);
 }
