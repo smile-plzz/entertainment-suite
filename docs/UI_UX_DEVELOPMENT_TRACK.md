@@ -106,3 +106,15 @@ This document tracks the implementation of the new UI/UX design based on the `pl
 *   **Dedicated Page:** A separate page for news provides a better user experience for browsing articles, rather than embedding a small widget on the home page.
 *   **Load More:** Improves performance by loading news articles incrementally.
 *   **API Endpoint:** Utilizes the existing `/api/fetch-news` serverless function for fetching news data securely.
+
+## 2025-08-12
+
+### UI/UX Overhaul
+
+**Objective:** Enhance mobile-friendliness and overall visual consistency.
+
+**Changes Made:**
+
+*   Replaced responsive CSS media queries in `style.css` with improved rules for better mobile-friendliness.
+*   Restructured the navbar, hero section, and movie grids to adapt gracefully to smaller screen sizes.
+*   Refined padding, font sizes, and layout for a cleaner mobile experience.
